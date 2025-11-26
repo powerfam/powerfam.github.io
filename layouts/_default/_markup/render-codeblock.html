@@ -1,0 +1,9 @@
+{{ if eq .Type "mermaid" }}
+<div class="mermaid">
+  {{- .Inner | safeHTML }}
+</div>
+{{ else }}
+<div class="highlight">
+  <pre tabindex="0"><code class="language-{{ .Type }}">{{- .Inner -}}</code></pre>
+</div>
+{{ end }}
