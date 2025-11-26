@@ -12,17 +12,35 @@ collections:
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Publish Date", name: "date", widget: "datetime"}
-      - {label: "Draft", name: "draft", widget: "boolean", default: false}
-      - {label: "Author", name: "author", widget: "string", default: 
-"Voti"}
-      - {label: "Description", name: "description", widget: "string", 
-required: false}
-      - {label: "Categories", name: "categories", widget: "list", default: 
-["Papa's Letter"]}
-      - {label: "Tags", name: "tags", widget: "list", required: false}
-      - {label: "Body", name: "body", widget: "markdown"}
+      - label: "Title"
+        name: "title"
+        widget: "string"
+      - label: "Publish Date"
+        name: "date"
+        widget: "datetime"
+      - label: "Draft"
+        name: "draft"
+        widget: "boolean"
+        default: false
+      - label: "Author"
+        name: "author"
+        widget: "string"
+        default: "Voti"
+      - label: "Description"
+        name: "description"
+        widget: "string"
+        required: false
+      - label: "Categories"
+        name: "categories"
+        widget: "list"
+        default: ["Papa's Letter"]
+      - label: "Tags"
+        name: "tags"
+        widget: "list"
+        required: false
+      - label: "Body"
+        name: "body"
+        widget: "markdown"
   
   - name: "pages"
     label: "Pages"
@@ -30,7 +48,16 @@ required: false}
     create: true
     slug: "{{slug}}"
     fields:
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Date", name: "date", widget: "datetime"}
-      - {label: "Draft", name: "draft", widget: "boolean", default: false}
-      - {label: "Body", name: "body", widget: "markdown"}
+      - label: "Title"
+        name: "title"
+        widget: "string"
+      - label: "Date"
+        name: "date"
+        widget: "datetime"
+      - label: "Draft"
+        name: "draft"
+        widget: "boolean"
+        default: false
+      - label: "Body"
+        name: "body"
+        widget: "markdown"
