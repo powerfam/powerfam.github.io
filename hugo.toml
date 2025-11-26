@@ -1,4 +1,4 @@
-baseURL = "https://powerfam.github.io/"
+baseURL = "/"
 languageCode = "ko-kr"
 title = "Voti's Blog"
 theme = "PaperMod"
