@@ -12,19 +12,11 @@ theme = "PaperMod"
   ShowBreadCrumbs = true
   ShowCodeCopyButtons = true
   
-  # profileMode 대신 이거 시도
-  homeInfoParams.Title = "Voti's Blog"
-  homeInfoParams.Content = "Life, Feeling, Thinking"
-<<<<<<< HEAD
-  
-  # 아바타 이미지
-  avatar = "/images/green.png"
-
   [params.profileMode]
     enabled = true
     title = "Voti's Blog"
     subtitle = "Life, Feeling, Thinking"
-    imageUrl = "https://github.com/powerfam/powerfam.github.io/blob/main/static/images/green.png?raw=true"
+    imageUrl = "/images/green.png"
     imageWidth = 300
     imageHeight = 300
     imageTitle = "Profile"
