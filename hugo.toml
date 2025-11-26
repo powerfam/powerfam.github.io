@@ -12,9 +12,10 @@ theme = "PaperMod"
   ShowBreadCrumbs = true
   ShowCodeCopyButtons = true
   
-  [params.homeInfoParams]
-    Title = "Voti's Blog"
-    Content = "Life, Feeling, Thinking"
+  # profileMode 대신 이거 시도
+  homeInfoParams.Title = "Voti's Blog"
+  homeInfoParams.Content = "Life, Feeling, Thinking"
+  avatar = "/images/green.png"
 
   [params.profileMode]
     enabled = true
