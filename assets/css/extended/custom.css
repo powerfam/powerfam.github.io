@@ -22,10 +22,19 @@
     --theme: #2f261f;
 }
 
-/* 배경 색상 */
+/* 배경 색상 통일 */
 body {
     background: var(--theme);
     color: var(--content);
+}
+
+/* 모든 메인 영역 배경 제거 */
+.main,
+.profile,
+.profile .profile_inner,
+.first-entry,
+#main {
+    background: transparent !important;
 }
 
 /* 링크 색상 */
@@ -43,22 +52,20 @@ a:hover {
     border-bottom: 1px solid var(--border);
 }
 
-/* 헤더 메뉴 링크 - 다크모드에서도 보이게 */
+/* 헤더 메뉴 링크 */
 .header .logo,
 .header #menu a {
     color: var(--content) !important;
 }
 
-/* 다크모드 토글 버튼 스타일 */
+/* 다크모드 토글 버튼 */
 #theme-toggle {
-    background: var(--border);
-    border-radius: 20px;
-    padding: 4px;
-    width: 48px;
-    height: 26px;
-    position: relative;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    opacity: 1 !important;
+}
+
+#theme-toggle svg {
+    height: 22px;
+    width: 22px;
 }
 
 /* 포스트 카드 */
@@ -90,15 +97,6 @@ code {
     color: var(--content);
 }
 
-/* 프로필 모드 - 배경 통일 */
-.profile {
-    background: transparent !important;
-}
-
-.profile .profile_inner {
-    background: transparent !important;
-}
-
 /* 검색 */
 .search-input {
     background: var(--theme);
@@ -114,11 +112,6 @@ code {
 
 .tag:hover {
     background: var(--border);
-}
-
-/* 메인 컨테이너 */
-.main {
-    background: var(--theme);
 }
 
 /* 푸터 */
