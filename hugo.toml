@@ -20,7 +20,7 @@ theme = "PaperMod"
     enabled = true
     title = "Voti's Blog"
     subtitle = "Life, Feeling, Thinking"
-    imageUrl = "/images/green.png"
+    imageUrl = "https://github.com/powerfam/powerfam.github.io/blob/main/static/images/green.png?raw=true"
     imageWidth = 300
     imageHeight = 300
     imageTitle = "Profile"
