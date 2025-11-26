@@ -122,3 +122,40 @@ code {
 .footer a {
     color: var(--secondary);
 }
+
+/* 커스텀 토글 스위치 */
+#theme-toggle {
+    position: relative;
+    width: 60px;
+    height: 30px;
+    background: var(--border);
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    padding: 0;
+}
+
+/* 토글 원형 버튼 */
+#theme-toggle::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: var(--theme);
+    border-radius: 50%;
+    left: 3px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* 다크모드일 때 버튼 이동 */
+.dark #theme-toggle::after {
+    left: 33px;
+}
+
+/* 기존 SVG 아이콘 숨기기 */
+#theme-toggle svg {
+    display: none;
+}
