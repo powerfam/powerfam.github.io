@@ -1,0 +1,95 @@
+/* 라이트 모드 */
+:root {
+    --primary: #2f261f;
+    --secondary: #594431;
+    --tertiary: #f2e2c8;
+    --content: #2f261f;
+    --hljs-bg: #f2e2c8;
+    --code-bg: #e8d4b8;
+    --border: #594431;
+    --theme: #f2e2c8;
+}
+
+/* 다크 모드 */
+.dark {
+    --primary: #f2e2c8;
+    --secondary: #594431;
+    --tertiary: #2f261f;
+    --content: #f2e2c8;
+    --hljs-bg: #2f261f;
+    --code-bg: #3d3228;
+    --border: #594431;
+    --theme: #2f261f;
+}
+
+/* 배경 색상 */
+body {
+    background: var(--theme);
+    color: var(--content);
+}
+
+/* 링크 색상 */
+a {
+    color: var(--secondary);
+}
+
+a:hover {
+    color: var(--primary);
+}
+
+/* 헤더 */
+.header {
+    background: var(--theme);
+    border-bottom: 1px solid var(--border);
+}
+
+/* 포스트 카드 */
+.post-entry {
+    background: var(--theme);
+    border: 1px solid var(--border);
+}
+
+.post-entry:hover {
+    border-color: var(--secondary);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+/* 버튼 */
+.button, button {
+    background: var(--secondary);
+    color: var(--theme);
+    border: 1px solid var(--border);
+}
+
+.button:hover, button:hover {
+    background: var(--primary);
+}
+
+/* 코드 블록 */
+code {
+    background: var(--code-bg);
+    color: var(--content);
+}
+
+/* 프로필 모드 */
+.profile {
+    background: var(--theme);
+}
+
+/* 검색 */
+.search-input {
+    background: var(--theme);
+    border: 1px solid var(--border);
+    color: var(--content);
+}
+
+/* 태그 */
+.tag {
+    background: var(--secondary);
+    color: var(--theme);
+}
+
+.tag:hover {
+    background: var(--border);
+}
