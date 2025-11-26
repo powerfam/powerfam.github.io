@@ -13,7 +13,7 @@
 /* 다크 모드 */
 .dark {
     --primary: #f2e2c8;
-    --secondary: #594431;
+    --secondary: #8b6f47;
     --tertiary: #2f261f;
     --content: #f2e2c8;
     --hljs-bg: #2f261f;
@@ -41,6 +41,24 @@ a:hover {
 .header {
     background: var(--theme);
     border-bottom: 1px solid var(--border);
+}
+
+/* 헤더 메뉴 링크 - 다크모드에서도 보이게 */
+.header .logo,
+.header #menu a {
+    color: var(--content) !important;
+}
+
+/* 다크모드 토글 버튼 스타일 */
+#theme-toggle {
+    background: var(--border);
+    border-radius: 20px;
+    padding: 4px;
+    width: 48px;
+    height: 26px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 /* 포스트 카드 */
@@ -72,9 +90,13 @@ code {
     color: var(--content);
 }
 
-/* 프로필 모드 */
+/* 프로필 모드 - 배경 통일 */
 .profile {
-    background: var(--theme);
+    background: transparent !important;
+}
+
+.profile .profile_inner {
+    background: transparent !important;
 }
 
 /* 검색 */
@@ -92,4 +114,18 @@ code {
 
 .tag:hover {
     background: var(--border);
+}
+
+/* 메인 컨테이너 */
+.main {
+    background: var(--theme);
+}
+
+/* 푸터 */
+.footer {
+    color: var(--content);
+}
+
+.footer a {
+    color: var(--secondary);
 }
