@@ -1,4 +1,6 @@
 baseURL = "https://powerfam.github.io/Voti-blog/"
+canonifyURLs = true
+relativeURLs = false
 languageCode = "ko-kr"
 title = "Voti's Blog"
 theme = "PaperMod"
