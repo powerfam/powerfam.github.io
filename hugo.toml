@@ -18,19 +18,19 @@ theme = "PaperMod"
     enabled = true
     title = "Voti's Blog"
     subtitle = "Life, Feeling, Thinking"
-    imageUrl = "/images/green.png"
+    imageUrl = ""/Voti-blog/images/green.png""
     imageWidth = 300
     imageHeight = 300
     imageTitle = "Profile"
 
 [[menu.main]]
   name = "Papa's Letter"
-  url = "/letter/"
+  url = "/Voti-blog/letter/"
   weight = 10
 
 [[menu.main]]
   name = "Categories"
-  url = "/categories/"
+  url = "/Voti-blog/categories/"
   weight = 20
 
 [[menu.main]]
