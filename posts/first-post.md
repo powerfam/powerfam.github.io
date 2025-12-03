@@ -1,6 +1,6 @@
 ---
 title: 첫 번째 글
-date: 2024-12-03
+date: 2025-12-03
 description: Next.js 첫 번째 테스트 글입니다.
 tags:
   - nextjs
@@ -23,3 +23,4 @@ console.log('Hello, World!');
 ```
 
 잘 작동하나요?
+이번엔 글 에디트 기능을 추가했습니다.
