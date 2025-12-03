@@ -25,7 +25,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
         <h1 className="text-4xl font-bold mb-4" style={{ color: 'var(--menu-main)' }}>
           {post.title}
         </h1>
-        <div className="flex items-center gap-4 text-sm opacity-60">
+        <div className="flex items-center gap-4 text-sm" style={{ color: 'var(--foreground)', opacity: 0.6 }}>
           <time dateTime={post.date}>
             {format(new Date(post.date), 'yyyy년 MM월 dd일')}
           </time>
@@ -34,7 +34,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
               {post.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="px-2 py-1 rounded text-xs"
+                  className="px-3 py-1 rounded-full text-xs font-medium"
                   style={{
                     backgroundColor: 'var(--menu-sub)',
                     color: 'var(--menu-sub-text)',
@@ -50,7 +50,8 @@ export default function PostPage({ params }: { params: { slug: string } }) {
 
       {/* 본문 */}
       <article
-        className="prose prose-lg max-w-none mb-12"
+        className="prose prose-lg max-w-none mb-12 dark:prose-invert"
+        style={{ color: 'var(--foreground)' }}
         dangerouslySetInnerHTML={{ __html: post.body.html }}
       />
 
@@ -65,7 +66,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
               className="data-[state=on]:bg-transparent data-[state=on]:*:[svg]:fill-red-500 data-[state=on]:*:[svg]:stroke-red-500 px-6 py-3 text-base"
             >
               <HeartIcon className="mr-2 h-5 w-5" />
-              <span>Likes</span>
+              <span>좋아요</span>
             </ToggleGroupItem>
 
             {/* 공유 버튼 */}
@@ -75,14 +76,14 @@ export default function PostPage({ params }: { params: { slug: string } }) {
               className="data-[state=on]:bg-transparent data-[state=on]:*:[svg]:fill-blue-500 data-[state=on]:*:[svg]:stroke-blue-500 px-6 py-3 text-base"
             >
               <Share2Icon className="mr-2 h-5 w-5" />
-              <span>Share</span>
+              <span>공유</span>
             </ToggleGroupItem>
           </ToggleGroup>
         </div>
 
         {/* 좋아요 개수 표시 */}
         <div className="mt-4 text-center text-sm opacity-60">
-          <p>Likes 0</p>
+          <p>좋아요 0개</p>
         </div>
       </div>
     </div>

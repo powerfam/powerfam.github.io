@@ -25,3 +25,85 @@ body {
   background: var(--background);
   font-family: var(--font-noto-serif-kr), serif;
 }
+
+.prose img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 2rem auto;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* 다크모드 prose 스타일 */
+.dark .prose {
+  color: #e5e5e5;
+}
+
+.dark .prose h1,
+.dark .prose h2,
+.dark .prose h3,
+.dark .prose h4 {
+  color: #D99058;
+}
+
+.dark .prose strong {
+  color: #e5e5e5;
+}
+
+.dark .prose a {
+  color: #D99058;
+}
+
+.dark .prose code {
+  color: #e5e5e5;
+}
+
+.dark .prose pre {
+  background-color: #2a2a2a;
+  border: 1px solid #3a3a3a;
+}
+
+/* Bullet 포인트 색상 */
+.dark .prose ul > li::marker,
+.dark .prose ol > li::marker {
+  color: #D99058;
+}
+
+.dark .prose ul,
+.dark .prose ol {
+  color: #e5e5e5;
+}
+
+/* 스크롤바 숨기기 */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE, Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari */
+}
+
+/* 얇은 스크롤바 */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--menu-sub) transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: var(--menu-sub);
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background-color: var(--menu-main);
+}

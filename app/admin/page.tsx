@@ -1,14 +1,19 @@
 'use client';
 
+import MarkdownAssistant from '@/components/MarkdownAssistant';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { useState, useEffect } from 'react';
 import { Trash2Icon, PlusIcon, FileTextIcon, EditIcon, ImageIcon, LinkIcon } from 'lucide-react';
 
+
+// 에디터 도구바 컴포넌트
 // 에디터 도구바 컴포넌트
 function EditorToolbar({ onInsert }: { onInsert: (text: string) => void }) {
   const [showLinkDialog, setShowLinkDialog] = useState(false);
+  const [showImageSizeMenu, setShowImageSizeMenu] = useState(false);
   const [linkText, setLinkText] = useState('');
   const [linkUrl, setLinkUrl] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -47,8 +52,30 @@ function EditorToolbar({ onInsert }: { onInsert: (text: string) => void }) {
     }
   };
 
+  const insertImageWithSize = (size: 'small' | 'medium' | 'large' | 'full') => {
+    if (!imageUrl) {
+      alert('이미지 URL을 입력해주세요');
+      return;
+    }
+
+    const widths = {
+      small: '200',
+      medium: '500',
+      large: '800',
+      full: '100%'
+    };
+
+    const markdown = size === 'full'
+      ? `<img src="${imageUrl}" alt="이미지" style="width: 100%;" />`
+      : `<img src="${imageUrl}" alt="이미지" width="${widths[size]}" />`;
+
+    onInsert('\n' + markdown + '\n');
+    setImageUrl('');
+    setShowImageSizeMenu(false);
+  };
+
   return (
-    <div className="mb-2 p-3 border rounded-t flex gap-2 items-center bg-gray-50">
+    <div className="mb-2 p-3 border rounded-t flex gap-2 items-center bg-gray-50 flex-wrap">
       {/* 이미지 업로드 버튼 */}
       <label className="px-3 py-1.5 rounded border cursor-pointer hover:bg-gray-100 flex items-center gap-1.5">
         <ImageIcon size={16} />
@@ -61,6 +88,16 @@ function EditorToolbar({ onInsert }: { onInsert: (text: string) => void }) {
         />
       </label>
 
+      {/* 이미지 크기 조절 버튼 */}
+      <button
+        type="button"
+        onClick={() => setShowImageSizeMenu(!showImageSizeMenu)}
+        className="px-3 py-1.5 rounded border hover:bg-gray-100 flex items-center gap-1.5 relative"
+      >
+        <ImageIcon size={16} />
+        <span className="text-sm">크기</span>
+      </button>
+
       {/* 링크 삽입 버튼 */}
       <button
         type="button"
@@ -71,7 +108,68 @@ function EditorToolbar({ onInsert }: { onInsert: (text: string) => void }) {
         <span className="text-sm">링크</span>
       </button>
 
-      {/* 링크 입력 다이얼로그 */}
+      {/* 이미지 크기 메뉴 */}
+      {showImageSizeMenu && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full mx-4">
+            <h3 className="text-lg font-bold mb-4">이미지 크기 조절</h3>
+            <div className="space-y-3">
+              <div>
+                <label className="block text-sm mb-1">이미지 URL</label>
+                <input
+                  type="url"
+                  value={imageUrl}
+                  onChange={(e) => setImageUrl(e.target.value)}
+                  placeholder="https://..."
+                  className="w-full px-3 py-2 border rounded"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => insertImageWithSize('small')}
+                  className="py-2 rounded border hover:bg-gray-100"
+                >
+                  🖼️ 작게 (200px)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => insertImageWithSize('medium')}
+                  className="py-2 rounded border hover:bg-gray-100"
+                >
+                  🖼️ 중간 (500px)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => insertImageWithSize('large')}
+                  className="py-2 rounded border hover:bg-gray-100"
+                >
+                  🖼️ 크게 (800px)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => insertImageWithSize('full')}
+                  className="py-2 rounded border hover:bg-gray-100"
+                >
+                  🖼️ 전체
+                </button>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowImageSizeMenu(false);
+                  setImageUrl('');
+                }}
+                className="w-full py-2 rounded border"
+              >
+                취소
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 링크 입력 다이얼로그 (기존 코드 유지) */}
       {showLinkDialog && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full mx-4">
@@ -125,7 +223,6 @@ function EditorToolbar({ onInsert }: { onInsert: (text: string) => void }) {
     </div>
   );
 }
-
 
 interface Post {
   slug: string;
@@ -556,6 +653,8 @@ export default function AdminPage() {
           </div>
         </div>
       )}
+      {/* 마크다운 어시스턴트 추가 */}
+      <MarkdownAssistant />
     </div>
   );
 }
