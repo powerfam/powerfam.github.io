@@ -58,7 +58,7 @@ export default function Home() {
         className="max-w-2xl space-y-4 text-center"
       >
         <p className="text-lg opacity-70">
-          이곳은 생각을 기록하고 공유하는 공간입니다.
+          이곳은 메인화면에 들어갈 메시지입니다.
         </p>
 
         <div

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Noto_Serif_KR } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
+import { Providers } from "./providers";
 
 const notoSerifKR = Noto_Serif_KR({
   subsets: ["latin"],
@@ -10,8 +11,8 @@ const notoSerifKR = Noto_Serif_KR({
 });
 
 export const metadata: Metadata = {
-  title: "Voti test",
-  description: "보티 test",
+  title: "Voti Web",
+  description: "보티의 웹페이지",
 };
 
 export default function RootLayout({
@@ -22,10 +23,12 @@ export default function RootLayout({
   return (
     <html lang="ko" className={notoSerifKR.variable}>
       <body>
-        <Header />
-        <main className="max-w-4xl mx-auto px-4 py-8">
-          {children}
-        </main>
+        <Providers>
+          <Header />
+          <main className="max-w-4xl mx-auto px-4 py-8">
+            {children}
+          </main>
+        </Providers>
       </body>
     </html>
   );

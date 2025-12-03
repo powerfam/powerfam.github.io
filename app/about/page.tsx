@@ -1,22 +1,38 @@
 export default function About() {
   return (
-    <div className="space-y-6">
-      <h1 className="text-4xl font-bold">About</h1>
-      
-      <div className="space-y-4">
-        <p className="text-lg">
-          안녕하세요, Voti입니다.
-        </p>
-        
+    <div className="max-w-4xl mx-auto px-4 py-12">
+      <h1 
+        className="text-5xl font-bold mb-8"
+        style={{ color: 'var(--menu-main)' }}
+      >
+        About
+      </h1>
+
+      <div className="space-y-6 text-lg leading-relaxed">
         <p>
-          이 블로그는 Next.js 14 + TypeScript + Tailwind CSS로 제작되었습니다.
+          this is the test "ABOUT" page.
         </p>
-        
-        <div className="border-l-4 border-[#826644] pl-4 py-2">
-          <p className="italic">
-            "좋은 글을 통해 생각을 나누는 공간"
+
+        <div 
+          className="p-6 rounded-lg border-l-4 my-8"
+          style={{
+            backgroundColor: 'rgba(130, 102, 68, 0.05)',
+            borderColor: 'var(--menu-main)',
+          }}
+        >
+          <p className="font-medium mb-2" style={{ color: 'var(--menu-main)' }}>
+            주요 주제
           </p>
+          <ul className="space-y-2 ml-4">
+            <li>• type1</li>
+            <li>• type2</li>
+            <li>• type13</li>
+          </ul>
         </div>
+
+        <p>
+          test sentence
+        </p>
       </div>
     </div>
   );
