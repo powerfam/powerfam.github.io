@@ -303,13 +303,14 @@ export default function AdminPage() {
 
       if (res.ok) {
         alert('글이 작성되었습니다!');
-        e.currentTarget.reset();
-        setShowEditor(false);
-        fetchPosts();
+        // 페이지 새로고침으로 contentlayer가 새 글을 인식하도록 함
+        window.location.reload();
       } else {
-        alert('글 작성 실패');
+        const errorData = await res.json();
+        alert(`글 작성 실패: ${errorData.error || '알 수 없는 오류'}`);
       }
     } catch (error) {
+      console.error('글 작성 에러:', error);
       alert('에러 발생');
     } finally {
       setIsSubmitting(false);
@@ -340,14 +341,14 @@ export default function AdminPage() {
 
       if (res.ok) {
         alert('글이 수정되었습니다!');
-        setShowEditor(false);
-        setEditingPost(null);
-        setEditContent({ title: '', description: '', summary: '', tags: '', content: '' });
-        fetchPosts();
+        // 페이지 새로고침으로 contentlayer가 변경사항을 인식하도록 함
+        window.location.reload();
       } else {
-        alert('글 수정 실패');
+        const errorData = await res.json();
+        alert(`글 수정 실패: ${errorData.error || '알 수 없는 오류'}`);
       }
     } catch (error) {
+      console.error('글 수정 에러:', error);
       alert('에러 발생');
     } finally {
       setIsSubmitting(false);

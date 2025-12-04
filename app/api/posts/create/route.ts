@@ -13,26 +13,33 @@ export async function POST(req: NextRequest) {
 
     const { title, description, summary, tags, content } = await req.json();
 
+    // YAML에서 안전하게 사용하기 위해 따옴표 이스케이프
+    const escapeYaml = (str: string) => str.replace(/"/g, '\\"');
+
     // 마크다운 frontmatter 생성
     const frontmatter = [
       '---',
-      `title: "${title}"`,
+      `title: "${escapeYaml(title)}"`,
       `date: "${new Date().toISOString()}"`,
-      description ? `description: "${description}"` : '',
-      summary ? `summary: "${summary}"` : '',
-      tags ? `tags: [${tags.split(',').map((t: string) => `"${t.trim()}"`).join(', ')}]` : '',
+      description ? `description: "${escapeYaml(description)}"` : '',
+      summary ? `summary: "${escapeYaml(summary)}"` : '',
+      tags ? `tags: [${tags.split(',').map((t: string) => `"${escapeYaml(t.trim())}"`).join(', ')}]` : '',
       '---',
       '',
       content
     ].filter(Boolean).join('\n');
 
-    // slug 생성 (제목을 URL 친화적으로 변환)
+    // slug 생성 (영문과 숫자만 사용하여 URL 친화적으로 변환)
     const slug = title
       .toLowerCase()
-      .replace(/[^a-z0-9가-힣\s-]/g, '')
+      .replace(/[^a-z0-9\s-]/g, '') // 영문, 숫자, 공백, 하이픈만 유지 (한글 제거)
       .replace(/\s+/g, '-')
       .replace(/-+/g, '-')
-      .trim() + '-' + Date.now();
+      .trim()
+      .replace(/^-+|-+$/g, '') || 'post'; // 빈 문자열 방지
+
+    const timestamp = Date.now();
+    const finalSlug = slug ? `${slug}-${timestamp}` : `post-${timestamp}`;
 
     const octokit = new Octokit({
       auth: session.user.accessToken,
@@ -41,7 +48,7 @@ export async function POST(req: NextRequest) {
     const response = await octokit.repos.createOrUpdateFileContents({
       owner: process.env.GITHUB_OWNER!,
       repo: process.env.GITHUB_REPO!,
-      path: `posts/${slug}.md`,
+      path: `posts/${finalSlug}.md`,
       message: `Add post: ${title}`,
       content: Buffer.from(frontmatter).toString('base64'),
     });
