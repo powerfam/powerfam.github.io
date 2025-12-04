@@ -8,6 +8,7 @@ var Post = defineDocumentType(() => ({
     title: { type: "string", required: true },
     date: { type: "date", required: true },
     description: { type: "string" },
+    summary: { type: "string" },
     tags: { type: "list", of: { type: "string" } }
   },
   computedFields: {
@@ -28,4 +29,4 @@ export {
   Post,
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-CYJATAR5.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-2EDJFAPS.mjs.map

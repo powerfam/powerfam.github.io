@@ -11,7 +11,28 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { slug, content } = await req.json();
+    const { title, description, summary, tags, content } = await req.json();
+
+    // 마크다운 frontmatter 생성
+    const frontmatter = [
+      '---',
+      `title: "${title}"`,
+      `date: "${new Date().toISOString()}"`,
+      description ? `description: "${description}"` : '',
+      summary ? `summary: "${summary}"` : '',
+      tags ? `tags: [${tags.split(',').map((t: string) => `"${t.trim()}"`).join(', ')}]` : '',
+      '---',
+      '',
+      content
+    ].filter(Boolean).join('\n');
+
+    // slug 생성 (제목을 URL 친화적으로 변환)
+    const slug = title
+      .toLowerCase()
+      .replace(/[^a-z0-9가-힣\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .trim() + '-' + Date.now();
 
     const octokit = new Octokit({
       auth: session.user.accessToken,
@@ -21,8 +42,8 @@ export async function POST(req: NextRequest) {
       owner: process.env.GITHUB_OWNER!,
       repo: process.env.GITHUB_REPO!,
       path: `posts/${slug}.md`,
-      message: `Add post: ${slug}`,
-      content: Buffer.from(content).toString('base64'),
+      message: `Add post: ${title}`,
+      content: Buffer.from(frontmatter).toString('base64'),
     });
 
     return NextResponse.json({ success: true, data: response.data });

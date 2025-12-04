@@ -6,6 +6,7 @@ import {
   ToggleGroup,
   ToggleGroupItem,
 } from '@/components/ui/toggle-group';
+import Giscus from '@/components/Giscus';
 
 export async function generateStaticParams() {
   return allPosts.map((post) => ({
@@ -86,6 +87,16 @@ export default function PostPage({ params }: { params: { slug: string } }) {
           <p>좋아요 0개</p>
         </div>
       </div>
+
+      {/* 댓글 섹션 - Giscus 설정 완료 후 활성화 */}
+      {process.env.NEXT_PUBLIC_GISCUS_REPO && process.env.NEXT_PUBLIC_GISCUS_REPO !== 'username/repo' && (
+        <div className="mt-12 pt-8 border-t" style={{ borderColor: 'var(--menu-main)' }}>
+          <h3 className="text-2xl font-bold mb-6" style={{ color: 'var(--menu-main)' }}>
+            💬 댓글
+          </h3>
+          <Giscus />
+        </div>
+      )}
     </div>
   );
 }

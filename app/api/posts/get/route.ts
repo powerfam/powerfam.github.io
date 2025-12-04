@@ -46,6 +46,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({
         title: '',
         description: '',
+        summary: '',
         tags: [],
         content: content,
       });
@@ -57,6 +58,7 @@ export async function GET(request: NextRequest) {
     // Frontmatter 파싱
     const title = frontmatter.match(/title:\s*(.+)/)?.[1] || '';
     const description = frontmatter.match(/description:\s*(.+)/)?.[1] || '';
+    const summary = frontmatter.match(/summary:\s*(.+)/)?.[1] || '';
     const tagsMatch = frontmatter.match(/tags:\s*\n((?:\s*-\s*.+\n?)*)/);
     const tags = tagsMatch
       ? tagsMatch[1]
@@ -68,6 +70,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       title,
       description,
+      summary,
       tags,
       content: body.trim(),
     });

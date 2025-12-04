@@ -239,6 +239,7 @@ export default function AdminPage() {
   const [editContent, setEditContent] = useState({
     title: '',
     description: '',
+    summary: '',
     tags: '',
     content: '',
   });
@@ -268,6 +269,7 @@ export default function AdminPage() {
       setEditContent({
         title: data.title || '',
         description: data.description || '',
+        summary: data.summary || '',
         tags: data.tags ? data.tags.join(', ') : '',
         content: data.content || '',
       });
@@ -287,6 +289,7 @@ export default function AdminPage() {
     const data = {
       title: formData.get('title'),
       description: formData.get('description'),
+      summary: formData.get('summary'),
       tags: formData.get('tags'),
       content: formData.get('content'),
     };
@@ -323,6 +326,7 @@ export default function AdminPage() {
       slug: editingPost,
       title: formData.get('title'),
       description: formData.get('description'),
+      summary: formData.get('summary'),
       tags: formData.get('tags'),
       content: formData.get('content'),
     };
@@ -338,7 +342,7 @@ export default function AdminPage() {
         alert('글이 수정되었습니다!');
         setShowEditor(false);
         setEditingPost(null);
-        setEditContent({ title: '', description: '', tags: '', content: '' });
+        setEditContent({ title: '', description: '', summary: '', tags: '', content: '' });
         fetchPosts();
       } else {
         alert('글 수정 실패');
@@ -378,7 +382,7 @@ export default function AdminPage() {
   // 새 글 작성 모드로 전환
   const startNewPost = () => {
     setEditingPost(null);
-    setEditContent({ title: '', description: '', tags: '', content: '' });
+    setEditContent({ title: '', description: '', summary: '', tags: '', content: '' });
     setShowEditor(true);
   };
 
@@ -491,6 +495,21 @@ export default function AdminPage() {
             </div>
 
             <div>
+              <label className="block mb-2 font-medium">요약문 (선택)</label>
+              <textarea
+                name="summary"
+                rows={3}
+                placeholder="글 목록에 표시될 요약문을 작성해주세요 (2-3줄 권장)"
+                defaultValue={editContent.summary}
+                className="w-full px-4 py-2 rounded border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
+                style={{ borderColor: 'var(--menu-main)' }}
+              />
+              <p className="text-xs opacity-60 mt-1">
+                💡 팁: 글의 핵심 내용을 간결하게 요약해주세요
+              </p>
+            </div>
+
+            <div>
               <label className="block mb-2 font-medium">태그 (쉼표로 구분)</label>
               <input
                 name="tags"
@@ -595,7 +614,7 @@ export default function AdminPage() {
                   onClick={() => {
                     setShowEditor(false);
                     setEditingPost(null);
-                    setEditContent({ title: '', description: '', tags: '', content: '' });
+                    setEditContent({ title: '', description: '', summary: '', tags: '', content: '' });
                   }}
                   className="px-6 py-3 rounded-lg font-medium border"
                   style={{ borderColor: 'var(--menu-main)' }}

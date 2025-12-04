@@ -16,6 +16,7 @@ export type Post = {
   title: string
   date: IsoDateTimeString
   description?: string | undefined
+  summary?: string | undefined
   tags?: string[] | undefined
   /** Markdown file body */
   body: Markdown
