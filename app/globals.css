@@ -26,8 +26,18 @@ body {
   font-family: var(--font-noto-serif-kr), serif;
 }
 
+/* 이미지 다음에 오는 em 태그 (캡션)를 중앙 정렬 */
+.prose img + em {
+  display: block;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--foreground);
+  opacity: 0.7;
+  margin-top: 0.5rem;
+}
+
 .prose img {
-  max-width: 100%;
+  max-width: 300px;
   height: auto;
   display: block;
   margin: 2rem auto;

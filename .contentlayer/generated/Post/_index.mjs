@@ -2,5 +2,7 @@
 
 import firstPostMd from './first-post.md.json' assert { type: 'json' }
 import undefinedMd from './undefined.md.json' assert { type: 'json' }
+import _7_1764859348566Md from './_7-1764859348566.md.json' assert { type: 'json' }
+import _13_1764860855854Md from './_13-1764860855854.md.json' assert { type: 'json' }
 
-export const allPosts = [firstPostMd, undefinedMd]
+export const allPosts = [firstPostMd, undefinedMd, _7_1764859348566Md, _13_1764860855854Md]
