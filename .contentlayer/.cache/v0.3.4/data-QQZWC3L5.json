@@ -1,0 +1,59 @@
+{
+  "cacheItemsMap": {
+    "first-post.md": {
+      "document": {
+        "title": "첫 번째 글",
+        "date": "2025-12-03T00:00:00.000Z",
+        "description": "Next.js 첫 번째 테스트 글입니다.",
+        "tags": [
+          "nextjs",
+          "test\r"
+        ],
+        "body": {
+          "raw": "\r\n# 안녕하세요!\r\n\r\n이것은 **첫 번째 포스트**입니다.\r\n\r\n## 마크다운 테스트\r\n\r\n- 목록 1\r\n- 목록 2\r\n- 목록 3\r\n\r\n### 코드 블록\r\n```javascript\r\nconsole.log('Hello, World!');\r\n```\r\n\r\n잘 작동하나요?\r\n\r\n이번엔 글 에디트 기능을 추가했습니다.",
+          "html": "<h1>안녕하세요!</h1>\n<p>이것은 <strong>첫 번째 포스트</strong>입니다.</p>\n<h2>마크다운 테스트</h2>\n<ul>\n<li>목록 1</li>\n<li>목록 2</li>\n<li>목록 3</li>\n</ul>\n<h3>코드 블록</h3>\n<pre><code class=\"language-javascript\">console.log('Hello, World!');\n</code></pre>\n<p>잘 작동하나요?</p>\n<p>이번엔 글 에디트 기능을 추가했습니다.</p>"
+        },
+        "_id": "first-post.md",
+        "_raw": {
+          "sourceFilePath": "first-post.md",
+          "sourceFileName": "first-post.md",
+          "sourceFileDir": ".",
+          "contentType": "markdown",
+          "flattenedPath": "first-post"
+        },
+        "type": "Post",
+        "url": "/posts/first-post"
+      },
+      "documentHash": "1764738062716",
+      "hasWarnings": false,
+      "documentTypeName": "Post"
+    },
+    "undefined.md": {
+      "document": {
+        "title": "dfd",
+        "date": "2025-12-03T00:00:00.000Z",
+        "description": "dfdf",
+        "tags": [
+          "dfdf\r"
+        ],
+        "body": {
+          "raw": "\r\n\r\n\r\n![이미지 설명](https://raw.githubusercontent.com/powerfam/voti-blog-nextjs/main/public/images/1764738391438-logo.png)\r\n\r\n키움 로고 테스트",
+          "html": "<p><img src=\"https://raw.githubusercontent.com/powerfam/voti-blog-nextjs/main/public/images/1764738391438-logo.png\" alt=\"이미지 설명\"></p>\n<p>키움 로고 테스트</p>"
+        },
+        "_id": "undefined.md",
+        "_raw": {
+          "sourceFilePath": "undefined.md",
+          "sourceFileName": "undefined.md",
+          "sourceFileDir": ".",
+          "contentType": "markdown",
+          "flattenedPath": "undefined"
+        },
+        "type": "Post",
+        "url": "/posts/undefined"
+      },
+      "documentHash": "1764738527113",
+      "hasWarnings": false,
+      "documentTypeName": "Post"
+    }
+  }
+}

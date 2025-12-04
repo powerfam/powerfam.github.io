@@ -7,7 +7,6 @@ import { Trash2Icon, PlusIcon, FileTextIcon, EditIcon, ImageIcon, LinkIcon } fro
 
 
 // 에디터 도구바 컴포넌트
-// 에디터 도구바 컴포넌트
 function EditorToolbar({ onInsert }: { onInsert: (text: string) => void }) {
   const [showLinkDialog, setShowLinkDialog] = useState(false);
   const [showImageSizeMenu, setShowImageSizeMenu] = useState(false);
@@ -75,9 +74,9 @@ function EditorToolbar({ onInsert }: { onInsert: (text: string) => void }) {
   };
 
   return (
-    <div className="mb-2 p-3 border rounded-t flex gap-2 items-center bg-gray-50 flex-wrap">
+    <div className="mb-2 p-3 border rounded-t flex gap-2 items-center bg-gray-50 dark:bg-gray-800 flex-wrap">
       {/* 이미지 업로드 버튼 */}
-      <label className="px-3 py-1.5 rounded border cursor-pointer hover:bg-gray-100 flex items-center gap-1.5">
+      <label className="px-3 py-1.5 rounded border cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-1.5">
         <ImageIcon size={16} />
         <span className="text-sm">이미지</span>
         <input
@@ -92,7 +91,7 @@ function EditorToolbar({ onInsert }: { onInsert: (text: string) => void }) {
       <button
         type="button"
         onClick={() => setShowImageSizeMenu(!showImageSizeMenu)}
-        className="px-3 py-1.5 rounded border hover:bg-gray-100 flex items-center gap-1.5 relative"
+        className="px-3 py-1.5 rounded border hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-1.5 relative"
       >
         <ImageIcon size={16} />
         <span className="text-sm">크기</span>
@@ -102,7 +101,7 @@ function EditorToolbar({ onInsert }: { onInsert: (text: string) => void }) {
       <button
         type="button"
         onClick={() => setShowLinkDialog(!showLinkDialog)}
-        className="px-3 py-1.5 rounded border hover:bg-gray-100 flex items-center gap-1.5"
+        className="px-3 py-1.5 rounded border hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-1.5"
       >
         <LinkIcon size={16} />
         <span className="text-sm">링크</span>
@@ -111,7 +110,7 @@ function EditorToolbar({ onInsert }: { onInsert: (text: string) => void }) {
       {/* 이미지 크기 메뉴 */}
       {showImageSizeMenu && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full mx-4">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-md w-full mx-4">
             <h3 className="text-lg font-bold mb-4">이미지 크기 조절</h3>
             <div className="space-y-3">
               <div>
@@ -121,35 +120,35 @@ function EditorToolbar({ onInsert }: { onInsert: (text: string) => void }) {
                   value={imageUrl}
                   onChange={(e) => setImageUrl(e.target.value)}
                   placeholder="https://..."
-                  className="w-full px-3 py-2 border rounded"
+                  className="w-full px-3 py-2 border rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                 />
               </div>
               <div className="grid grid-cols-2 gap-2">
                 <button
                   type="button"
                   onClick={() => insertImageWithSize('small')}
-                  className="py-2 rounded border hover:bg-gray-100"
+                  className="py-2 rounded border hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   🖼️ 작게 (200px)
                 </button>
                 <button
                   type="button"
                   onClick={() => insertImageWithSize('medium')}
-                  className="py-2 rounded border hover:bg-gray-100"
+                  className="py-2 rounded border hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   🖼️ 중간 (500px)
                 </button>
                 <button
                   type="button"
                   onClick={() => insertImageWithSize('large')}
-                  className="py-2 rounded border hover:bg-gray-100"
+                  className="py-2 rounded border hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   🖼️ 크게 (800px)
                 </button>
                 <button
                   type="button"
                   onClick={() => insertImageWithSize('full')}
-                  className="py-2 rounded border hover:bg-gray-100"
+                  className="py-2 rounded border hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   🖼️ 전체
                 </button>
@@ -160,7 +159,7 @@ function EditorToolbar({ onInsert }: { onInsert: (text: string) => void }) {
                   setShowImageSizeMenu(false);
                   setImageUrl('');
                 }}
-                className="w-full py-2 rounded border"
+                className="w-full py-2 rounded border hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 취소
               </button>
@@ -169,10 +168,10 @@ function EditorToolbar({ onInsert }: { onInsert: (text: string) => void }) {
         </div>
       )}
 
-      {/* 링크 입력 다이얼로그 (기존 코드 유지) */}
+      {/* 링크 입력 다이얼로그 */}
       {showLinkDialog && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full mx-4">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-md w-full mx-4">
             <h3 className="text-lg font-bold mb-4">링크 삽입</h3>
             <div className="space-y-3">
               <div>
@@ -182,7 +181,7 @@ function EditorToolbar({ onInsert }: { onInsert: (text: string) => void }) {
                   value={linkText}
                   onChange={(e) => setLinkText(e.target.value)}
                   placeholder="예: 여기를 클릭"
-                  className="w-full px-3 py-2 border rounded"
+                  className="w-full px-3 py-2 border rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                 />
               </div>
               <div>
@@ -192,7 +191,7 @@ function EditorToolbar({ onInsert }: { onInsert: (text: string) => void }) {
                   value={linkUrl}
                   onChange={(e) => setLinkUrl(e.target.value)}
                   placeholder="https://example.com"
-                  className="w-full px-3 py-2 border rounded"
+                  className="w-full px-3 py-2 border rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                 />
               </div>
               <div className="flex gap-2">
@@ -211,7 +210,7 @@ function EditorToolbar({ onInsert }: { onInsert: (text: string) => void }) {
                     setLinkText('');
                     setLinkUrl('');
                   }}
-                  className="flex-1 py-2 rounded border"
+                  className="flex-1 py-2 rounded border hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   취소
                 </button>
@@ -463,151 +462,151 @@ export default function AdminPage() {
 
       {/* 에디터 */}
       {showEditor && (
-  <div className="mb-12 p-6 rounded-lg border" style={{ borderColor: 'var(--menu-main)' }}>
-    <h2 className="text-2xl font-bold mb-6" style={{ color: 'var(--menu-main)' }}>
-      {editingPost ? '글 수정' : '새 글 작성'}
-    </h2>
-    <form onSubmit={editingPost ? handleUpdate : handleSubmit} className="space-y-4">
-      <div>
-        <label className="block mb-2 font-medium">제목</label>
-        <input
-          name="title"
-          type="text"
-          required
-          defaultValue={editContent.title}
-          className="w-full px-4 py-2 rounded border"
-          style={{ borderColor: 'var(--menu-main)' }}
-        />
-      </div>
+        <div className="mb-12 p-6 rounded-lg border" style={{ borderColor: 'var(--menu-main)' }}>
+          <h2 className="text-2xl font-bold mb-6" style={{ color: 'var(--menu-main)' }}>
+            {editingPost ? '글 수정' : '새 글 작성'}
+          </h2>
+          <form onSubmit={editingPost ? handleUpdate : handleSubmit} className="space-y-4">
+            <div>
+              <label className="block mb-2 font-medium">제목</label>
+              <input
+                name="title"
+                type="text"
+                required
+                defaultValue={editContent.title}
+                className="w-full px-4 py-2 rounded border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
+                style={{ borderColor: 'var(--menu-main)' }}
+              />
+            </div>
 
-      <div>
-        <label className="block mb-2 font-medium">설명 (선택)</label>
-        <input
-          name="description"
-          type="text"
-          defaultValue={editContent.description}
-          className="w-full px-4 py-2 rounded border"
-          style={{ borderColor: 'var(--menu-main)' }}
-        />
-      </div>
+            <div>
+              <label className="block mb-2 font-medium">설명 (선택)</label>
+              <input
+                name="description"
+                type="text"
+                defaultValue={editContent.description}
+                className="w-full px-4 py-2 rounded border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
+                style={{ borderColor: 'var(--menu-main)' }}
+              />
+            </div>
 
-      <div>
-        <label className="block mb-2 font-medium">태그 (쉼표로 구분)</label>
-        <input
-          name="tags"
-          type="text"
-          placeholder="예: 일상, 생각, 기록"
-          defaultValue={editContent.tags}
-          className="w-full px-4 py-2 rounded border"
-          style={{ borderColor: 'var(--menu-main)' }}
-        />
-      </div>
+            <div>
+              <label className="block mb-2 font-medium">태그 (쉼표로 구분)</label>
+              <input
+                name="tags"
+                type="text"
+                placeholder="예: 일상, 생각, 기록"
+                defaultValue={editContent.tags}
+                className="w-full px-4 py-2 rounded border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
+                style={{ borderColor: 'var(--menu-main)' }}
+              />
+            </div>
 
-      <div>
-        <label className="block mb-2 font-medium">본문 (마크다운)</label>
-        
-        {/* 에디터 도구 버튼들 */}
-        <EditorToolbar onInsert={(text) => {
-          const textarea = document.querySelector('textarea[name="content"]') as HTMLTextAreaElement;
-          if (textarea) {
-            const start = textarea.selectionStart;
-            const end = textarea.selectionEnd;
-            const currentValue = textarea.value;
-            const newValue = currentValue.substring(0, start) + text + currentValue.substring(end);
-            textarea.value = newValue;
-            textarea.focus();
-            textarea.selectionStart = textarea.selectionEnd = start + text.length;
-          }
-        }} />
-
-        <textarea
-          name="content"
-          required
-          rows={15}
-          defaultValue={editContent.content}
-          className="w-full px-4 py-2 rounded border font-mono text-sm"
-          style={{ borderColor: 'var(--menu-main)' }}
-          placeholder="# 제목&#10;&#10;본문 내용을 작성하세요..."
-          onPaste={async (e) => {
-            // 클립보드에서 이미지 감지
-            const items = e.clipboardData?.items;
-            if (!items) return;
-
-            for (let i = 0; i < items.length; i++) {
-              if (items[i].type.indexOf('image') !== -1) {
-                e.preventDefault();
-                const file = items[i].getAsFile();
-                if (file) {
-                  const textarea = e.currentTarget;
-                  const originalPlaceholder = textarea.placeholder;
-                  textarea.placeholder = '이미지 업로드 중...';
-                  textarea.disabled = true;
-
-                  const formData = new FormData();
-                  formData.append('image', file);
-
-                  try {
-                    const res = await fetch('/api/posts/upload-image', {
-                      method: 'POST',
-                      body: formData,
-                    });
-
-                    if (res.ok) {
-                      const data = await res.json();
-                      const start = textarea.selectionStart;
-                      const end = textarea.selectionEnd;
-                      const currentValue = textarea.value;
-                      const newValue = currentValue.substring(0, start) + '\n' + data.markdown + '\n' + currentValue.substring(end);
-                      textarea.value = newValue;
-                      alert('이미지가 삽입되었습니다!');
-                    } else {
-                      alert('이미지 업로드 실패');
-                    }
-                  } catch (error) {
-                    alert('이미지 업로드 중 오류 발생');
-                  } finally {
-                    textarea.disabled = false;
-                    textarea.placeholder = originalPlaceholder;
-                    textarea.focus();
-                  }
+            <div>
+              <label className="block mb-2 font-medium">본문 (마크다운)</label>
+              
+              {/* 에디터 도구 버튼들 */}
+              <EditorToolbar onInsert={(text) => {
+                const textarea = document.querySelector('textarea[name="content"]') as HTMLTextAreaElement;
+                if (textarea) {
+                  const start = textarea.selectionStart;
+                  const end = textarea.selectionEnd;
+                  const currentValue = textarea.value;
+                  const newValue = currentValue.substring(0, start) + text + currentValue.substring(end);
+                  textarea.value = newValue;
+                  textarea.focus();
+                  textarea.selectionStart = textarea.selectionEnd = start + text.length;
                 }
-              }
-            }
-          }}
-        />
-        
-        <p className="text-xs opacity-60 mt-2">
-          💡 팁: 스크린샷을 복사(Ctrl+C) 후 에디터에 붙여넣기(Ctrl+V)하면 자동 업로드됩니다
-        </p>
-      </div>
+              }} />
 
-      <div className="flex gap-3">
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="flex-1 py-3 rounded-lg font-medium text-white disabled:opacity-50"
-          style={{ backgroundColor: 'var(--menu-main)' }}
-        >
-          {isSubmitting ? '처리 중...' : editingPost ? '글 수정하기' : '글 작성하기'}
-        </button>
-        {editingPost && (
-          <button
-            type="button"
-            onClick={() => {
-              setShowEditor(false);
-              setEditingPost(null);
-              setEditContent({ title: '', description: '', tags: '', content: '' });
-            }}
-            className="px-6 py-3 rounded-lg font-medium border"
-            style={{ borderColor: 'var(--menu-main)' }}
-          >
-            취소
-          </button>
-        )}
-      </div>
-    </form>
-  </div>
-)}
+              <textarea
+                name="content"
+                required
+                rows={15}
+                defaultValue={editContent.content}
+                className="w-full px-4 py-2 rounded border font-mono text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
+                style={{ borderColor: 'var(--menu-main)' }}
+                placeholder="# 제목&#10;&#10;본문 내용을 작성하세요..."
+                onPaste={async (e) => {
+                  // 클립보드에서 이미지 감지
+                  const items = e.clipboardData?.items;
+                  if (!items) return;
+
+                  for (let i = 0; i < items.length; i++) {
+                    if (items[i].type.indexOf('image') !== -1) {
+                      e.preventDefault();
+                      const file = items[i].getAsFile();
+                      if (file) {
+                        const textarea = e.currentTarget;
+                        const originalPlaceholder = textarea.placeholder;
+                        textarea.placeholder = '이미지 업로드 중...';
+                        textarea.disabled = true;
+
+                        const formData = new FormData();
+                        formData.append('image', file);
+
+                        try {
+                          const res = await fetch('/api/posts/upload-image', {
+                            method: 'POST',
+                            body: formData,
+                          });
+
+                          if (res.ok) {
+                            const data = await res.json();
+                            const start = textarea.selectionStart;
+                            const end = textarea.selectionEnd;
+                            const currentValue = textarea.value;
+                            const newValue = currentValue.substring(0, start) + '\n' + data.markdown + '\n' + currentValue.substring(end);
+                            textarea.value = newValue;
+                            alert('이미지가 삽입되었습니다!');
+                          } else {
+                            alert('이미지 업로드 실패');
+                          }
+                        } catch (error) {
+                          alert('이미지 업로드 중 오류 발생');
+                        } finally {
+                          textarea.disabled = false;
+                          textarea.placeholder = originalPlaceholder;
+                          textarea.focus();
+                        }
+                      }
+                    }
+                  }
+                }}
+              />
+              
+              <p className="text-xs opacity-60 mt-2">
+                💡 팁: 스크린샷을 복사(Ctrl+C) 후 에디터에 붙여넣기(Ctrl+V)하면 자동 업로드됩니다
+              </p>
+            </div>
+
+            <div className="flex gap-3">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="flex-1 py-3 rounded-lg font-medium text-white disabled:opacity-50"
+                style={{ backgroundColor: 'var(--menu-main)' }}
+              >
+                {isSubmitting ? '처리 중...' : editingPost ? '글 수정하기' : '글 작성하기'}
+              </button>
+              {editingPost && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowEditor(false);
+                    setEditingPost(null);
+                    setEditContent({ title: '', description: '', tags: '', content: '' });
+                  }}
+                  className="px-6 py-3 rounded-lg font-medium border"
+                  style={{ borderColor: 'var(--menu-main)' }}
+                >
+                  취소
+                </button>
+              )}
+            </div>
+          </form>
+        </div>
+      )}
 
       {/* 글 목록 */}
       {!showEditor && (
@@ -632,7 +631,7 @@ export default function AdminPage() {
                   <div className="flex gap-2">
                     <button
                       onClick={() => fetchPostContent(post.slug)}
-                      className="px-4 py-2 rounded-lg hover:bg-blue-50 flex items-center gap-2"
+                      className="px-4 py-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900 flex items-center gap-2"
                       style={{ color: 'var(--menu-main)' }}
                     >
                       <EditIcon size={18} />
@@ -641,7 +640,7 @@ export default function AdminPage() {
                     <button
                       onClick={() => handleDelete(post.slug)}
                       disabled={deleteLoading === post.slug}
-                      className="px-4 py-2 rounded-lg text-red-500 hover:bg-red-50 disabled:opacity-50 flex items-center gap-2"
+                      className="px-4 py-2 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900 disabled:opacity-50 flex items-center gap-2"
                     >
                       <Trash2Icon size={18} />
                       {deleteLoading === post.slug ? '삭제 중...' : '삭제'}

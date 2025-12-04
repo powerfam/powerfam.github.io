@@ -107,3 +107,38 @@ body {
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
   background-color: var(--menu-main);
 }
+
+/* 라이트모드 커서 */
+* {
+  cursor: url('/cursors/default.png') 0 0, auto;
+}
+
+a, button, [role="button"] {
+  cursor: url('/cursors/pointer.png') 12 12, pointer !important;
+}
+
+input, textarea {
+  cursor: url('/cursors/text.png') 10 12, text !important;
+}
+
+/* 체크박스/라디오는 기본 유지 */
+input[type="checkbox"],
+input[type="radio"] {
+  cursor: pointer !important;
+}
+
+/* 다크모드 커서 (밝은 색) */
+.dark * {
+  cursor: url('/cursors/default-dark.png') 0 0, auto;
+}
+
+.dark a, 
+.dark button, 
+.dark [role="button"] {
+  cursor: url('/cursors/pointer-dark.png') 12 12, pointer !important;
+}
+
+.dark input, 
+.dark textarea {
+  cursor: url('/cursors/text-dark.png') 10 12, text !important;
+}
