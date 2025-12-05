@@ -230,10 +230,26 @@ interface Post {
   date: string;
 }
 
+type TabType = 'write' | 'list' | 'about' | 'test';
+
+interface AboutContent {
+  title: string;
+  intro: string;
+  topics: string[];
+  outro: string;
+}
+
+interface TestContent {
+  title: string;
+  description: string;
+  mainColorDesc: string;
+  subColorDesc: string;
+}
+
 export default function AdminPage() {
   const { data: session, status } = useSession();
   const [posts, setPosts] = useState<Post[]>([]);
-  const [showEditor, setShowEditor] = useState(false);
+  const [activeTab, setActiveTab] = useState<TabType>('list');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState<string | null>(null);
   const [editingPost, setEditingPost] = useState<string | null>(null);
@@ -249,6 +265,18 @@ export default function AdminPage() {
     title: '',
     content: '',
   });
+  const [aboutContent, setAboutContent] = useState<AboutContent>({
+    title: 'About',
+    intro: '',
+    topics: ['', '', ''],
+    outro: ''
+  });
+  const [testContent, setTestContent] = useState<TestContent>({
+    title: '테스트 페이지',
+    description: '',
+    mainColorDesc: '',
+    subColorDesc: ''
+  });
 
   // 기존 글 목록 가져오기
   useEffect(() => {
@@ -257,6 +285,20 @@ export default function AdminPage() {
     }
   }, [session]);
 
+  // About 페이지 내용 불러오기
+  useEffect(() => {
+    if (session && activeTab === 'about') {
+      fetchAboutContent();
+    }
+  }, [session, activeTab]);
+
+  // 테스트 페이지 내용 불러오기
+  useEffect(() => {
+    if (session && activeTab === 'test') {
+      fetchTestContent();
+    }
+  }, [session, activeTab]);
+
   const fetchPosts = async () => {
     try {
       const res = await fetch('/api/posts/list');
@@ -264,6 +306,26 @@ export default function AdminPage() {
       setPosts(data.posts || []);
     } catch (error) {
       console.error('글 목록 로드 실패:', error);
+    }
+  };
+
+  const fetchAboutContent = async () => {
+    try {
+      const res = await fetch('/api/pages/get?page=about');
+      const data = await res.json();
+      setAboutContent(data);
+    } catch (error) {
+      console.error('About 내용 로드 실패:', error);
+    }
+  };
+
+  const fetchTestContent = async () => {
+    try {
+      const res = await fetch('/api/pages/get?page=test');
+      const data = await res.json();
+      setTestContent(data);
+    } catch (error) {
+      console.error('테스트 내용 로드 실패:', error);
     }
   };
 
@@ -281,7 +343,7 @@ export default function AdminPage() {
         date: data.date || new Date().toISOString().split('T')[0],
       });
       setEditingPost(slug);
-      setShowEditor(true);
+      setActiveTab('write');
     } catch (error) {
       alert('글을 불러오는데 실패했습니다');
     }
@@ -393,7 +455,51 @@ export default function AdminPage() {
   const startNewPost = () => {
     setEditingPost(null);
     setEditContent({ title: '', description: '', summary: '', tags: '', content: '', date: new Date().toISOString().split('T')[0] });
-    setShowEditor(true);
+    setActiveTab('write');
+  };
+
+  // About 페이지 업데이트
+  const handleUpdateAbout = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      const res = await fetch('/api/pages/update', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ page: 'about', content: aboutContent }),
+      });
+      if (res.ok) {
+        alert('About 페이지가 업데이트되었습니다!');
+      } else {
+        alert('업데이트 실패');
+      }
+    } catch (error) {
+      alert('에러 발생');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // 테스트 페이지 업데이트
+  const handleUpdateTest = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      const res = await fetch('/api/pages/update', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ page: 'test', content: testContent }),
+      });
+      if (res.ok) {
+        alert('테스트 페이지가 업데이트되었습니다!');
+      } else {
+        alert('업데이트 실패');
+      }
+    } catch (error) {
+      alert('에러 발생');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // 로딩 중
@@ -426,14 +532,16 @@ export default function AdminPage() {
 
   // 로그인 됨
   return (
-    <div className="max-w-5xl mx-auto px-4 py-12">
+    <div className="max-w-5xl mx-auto px-4 py-8">
       {/* 헤더 */}
-      <div className="flex justify-between items-center mb-8">
-        <div>
-          <h1 className="text-4xl font-bold mb-2" style={{ color: 'var(--menu-main)' }}>
+      <div className="flex justify-between items-center mb-6">
+        <div className="flex items-center gap-3">
+          <h1 className="text-3xl md:text-4xl font-bold" style={{ color: 'var(--menu-main)' }}>
             관리자 페이지
           </h1>
-          <p className="opacity-60">환영합니다, {session.user?.name}님</p>
+          <span className="px-3 py-1 rounded-full text-xs font-medium bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200">
+            Admin
+          </span>
         </div>
         <button
           onClick={() => signOut()}
@@ -443,39 +551,67 @@ export default function AdminPage() {
         </button>
       </div>
 
-      {/* 새 글 작성 버튼 */}
+      <p className="mb-6 opacity-60">환영합니다, {session.user?.name}님</p>
+
+      {/* 탭 네비게이션 */}
       <div className="mb-8">
-        <button
-          onClick={() => {
-            if (showEditor) {
-              setShowEditor(false);
-              setEditingPost(null);
-            } else {
-              startNewPost();
-            }
-          }}
-          className="px-6 py-3 rounded-lg font-medium flex items-center gap-2"
-          style={{
-            backgroundColor: showEditor ? 'var(--menu-sub)' : 'var(--menu-main)',
-            color: 'white',
-          }}
+        <div
+          className="flex gap-2 p-1.5 rounded-lg inline-flex"
+          style={{ backgroundColor: 'var(--menu-main)' }}
         >
-          {showEditor ? (
-            <>
-              <FileTextIcon size={20} />
-              글 목록 보기
-            </>
-          ) : (
-            <>
-              <PlusIcon size={20} />
-              새 글 작성
-            </>
-          )}
-        </button>
+          <button
+            onClick={() => setActiveTab('list')}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+              activeTab === 'list' ? 'shadow-md' : 'hover:opacity-80'
+            }`}
+            style={{
+              backgroundColor: activeTab === 'list' ? 'var(--menu-sub)' : 'transparent',
+              color: activeTab === 'list' ? 'var(--menu-sub-text)' : 'var(--menu-main-text)',
+            }}
+          >
+            글 목록
+          </button>
+          <button
+            onClick={startNewPost}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+              activeTab === 'write' ? 'shadow-md' : 'hover:opacity-80'
+            }`}
+            style={{
+              backgroundColor: activeTab === 'write' ? 'var(--menu-sub)' : 'transparent',
+              color: activeTab === 'write' ? 'var(--menu-sub-text)' : 'var(--menu-main-text)',
+            }}
+          >
+            새 글 작성
+          </button>
+          <button
+            onClick={() => setActiveTab('about')}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+              activeTab === 'about' ? 'shadow-md' : 'hover:opacity-80'
+            }`}
+            style={{
+              backgroundColor: activeTab === 'about' ? 'var(--menu-sub)' : 'transparent',
+              color: activeTab === 'about' ? 'var(--menu-sub-text)' : 'var(--menu-main-text)',
+            }}
+          >
+            About
+          </button>
+          <button
+            onClick={() => setActiveTab('test')}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+              activeTab === 'test' ? 'shadow-md' : 'hover:opacity-80'
+            }`}
+            style={{
+              backgroundColor: activeTab === 'test' ? 'var(--menu-sub)' : 'transparent',
+              color: activeTab === 'test' ? 'var(--menu-sub-text)' : 'var(--menu-main-text)',
+            }}
+          >
+            테스트
+          </button>
+        </div>
       </div>
 
-      {/* 에디터 */}
-      {showEditor && (
+      {/* 글 작성/수정 탭 */}
+      {activeTab === 'write' && (
         <div className="mb-12 p-6 rounded-lg border" style={{ borderColor: 'var(--menu-main)' }}>
           <h2 className="text-2xl font-bold mb-6" style={{ color: 'var(--menu-main)' }}>
             {editingPost ? '글 수정' : '새 글 작성'}
@@ -638,7 +774,7 @@ export default function AdminPage() {
                 <button
                   type="button"
                   onClick={() => {
-                    setShowEditor(false);
+                    setActiveTab('list');
                     setEditingPost(null);
                     setEditContent({ title: '', description: '', summary: '', tags: '', content: '', date: new Date().toISOString().split('T')[0] });
                   }}
@@ -653,8 +789,8 @@ export default function AdminPage() {
         </div>
       )}
 
-      {/* 글 목록 */}
-      {!showEditor && (
+      {/* 글 목록 탭 */}
+      {activeTab === 'list' && (
         <div>
           <h2 className="text-2xl font-bold mb-6" style={{ color: 'var(--menu-main)' }}>
             글 목록 ({posts.length}개)
@@ -697,6 +833,141 @@ export default function AdminPage() {
           </div>
         </div>
       )}
+
+      {/* About 탭 */}
+      {activeTab === 'about' && (
+        <div className="p-6 rounded-lg border" style={{ borderColor: 'var(--menu-main)' }}>
+          <h2 className="text-2xl font-bold mb-6" style={{ color: 'var(--menu-main)' }}>
+            About 페이지 편집
+          </h2>
+          <form onSubmit={handleUpdateAbout} className="space-y-4">
+            <div>
+              <label className="block mb-2 font-medium">제목</label>
+              <input
+                type="text"
+                value={aboutContent.title}
+                onChange={(e) => setAboutContent({ ...aboutContent, title: e.target.value })}
+                className="w-full px-4 py-2 rounded border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                style={{ borderColor: 'var(--menu-main)' }}
+              />
+            </div>
+
+            <div>
+              <label className="block mb-2 font-medium">첫 번째 문단</label>
+              <textarea
+                value={aboutContent.intro}
+                onChange={(e) => setAboutContent({ ...aboutContent, intro: e.target.value })}
+                rows={3}
+                className="w-full px-4 py-2 rounded border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                style={{ borderColor: 'var(--menu-main)' }}
+              />
+            </div>
+
+            <div>
+              <label className="block mb-2 font-medium">주요 주제 (3개)</label>
+              {aboutContent.topics.map((topic, idx) => (
+                <input
+                  key={idx}
+                  type="text"
+                  value={topic}
+                  onChange={(e) => {
+                    const newTopics = [...aboutContent.topics];
+                    newTopics[idx] = e.target.value;
+                    setAboutContent({ ...aboutContent, topics: newTopics });
+                  }}
+                  placeholder={`주제 ${idx + 1}`}
+                  className="w-full px-4 py-2 rounded border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 mb-2"
+                  style={{ borderColor: 'var(--menu-main)' }}
+                />
+              ))}
+            </div>
+
+            <div>
+              <label className="block mb-2 font-medium">마지막 문단</label>
+              <textarea
+                value={aboutContent.outro}
+                onChange={(e) => setAboutContent({ ...aboutContent, outro: e.target.value })}
+                rows={3}
+                className="w-full px-4 py-2 rounded border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                style={{ borderColor: 'var(--menu-main)' }}
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full py-3 rounded-lg font-medium text-white disabled:opacity-50"
+              style={{ backgroundColor: 'var(--menu-main)' }}
+            >
+              {isSubmitting ? '저장 중...' : 'About 페이지 저장'}
+            </button>
+          </form>
+        </div>
+      )}
+
+      {/* 테스트 탭 */}
+      {activeTab === 'test' && (
+        <div className="p-6 rounded-lg border" style={{ borderColor: 'var(--menu-main)' }}>
+          <h2 className="text-2xl font-bold mb-6" style={{ color: 'var(--menu-main)' }}>
+            테스트 페이지 편집
+          </h2>
+          <form onSubmit={handleUpdateTest} className="space-y-4">
+            <div>
+              <label className="block mb-2 font-medium">제목</label>
+              <input
+                type="text"
+                value={testContent.title}
+                onChange={(e) => setTestContent({ ...testContent, title: e.target.value })}
+                className="w-full px-4 py-2 rounded border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                style={{ borderColor: 'var(--menu-main)' }}
+              />
+            </div>
+
+            <div>
+              <label className="block mb-2 font-medium">색상 테스트 설명</label>
+              <textarea
+                value={testContent.description}
+                onChange={(e) => setTestContent({ ...testContent, description: e.target.value })}
+                rows={2}
+                className="w-full px-4 py-2 rounded border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                style={{ borderColor: 'var(--menu-main)' }}
+              />
+            </div>
+
+            <div>
+              <label className="block mb-2 font-medium">메인 색상 설명</label>
+              <input
+                type="text"
+                value={testContent.mainColorDesc}
+                onChange={(e) => setTestContent({ ...testContent, mainColorDesc: e.target.value })}
+                className="w-full px-4 py-2 rounded border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                style={{ borderColor: 'var(--menu-main)' }}
+              />
+            </div>
+
+            <div>
+              <label className="block mb-2 font-medium">서브 색상 설명</label>
+              <input
+                type="text"
+                value={testContent.subColorDesc}
+                onChange={(e) => setTestContent({ ...testContent, subColorDesc: e.target.value })}
+                className="w-full px-4 py-2 rounded border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                style={{ borderColor: 'var(--menu-main)' }}
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full py-3 rounded-lg font-medium text-white disabled:opacity-50"
+              style={{ backgroundColor: 'var(--menu-main)' }}
+            >
+              {isSubmitting ? '저장 중...' : '테스트 페이지 저장'}
+            </button>
+          </form>
+        </div>
+      )}
+
       {/* 마크다운 어시스턴트 추가 */}
       <MarkdownAssistant />
 

@@ -3,12 +3,14 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 
 export default function Header() {
   const [isDark, setIsDark] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
+  const { data: session } = useSession();
 
   useEffect(() => {
     setMounted(true);
@@ -39,11 +41,17 @@ export default function Header() {
     }
   };
 
-  const navItems = [
+  // 기본 메뉴
+  const baseNavItems = [
     { href: '/about', label: 'About' },
     { href: '/test', label: '테스트' },
     { href: '/test_2', label: '글목록' },
   ];
+
+  // 로그인한 경우 Admin 메뉴 추가
+  const navItems = session
+    ? [...baseNavItems, { href: '/admin', label: 'Admin' }]
+    : baseNavItems;
 
   if (!mounted) {
     return null;

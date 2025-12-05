@@ -10,10 +10,10 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const { message, model, currentContent = '', currentTitle = '', chatHistory = [] } = await request.json();
+    const { message, image, model, currentContent = '', currentTitle = '', chatHistory = [] } = await request.json();
 
-    if (!message) {
-      return NextResponse.json({ error: 'Message required' }, { status: 400 });
+    if (!message && !image) {
+      return NextResponse.json({ error: 'Message or image required' }, { status: 400 });
     }
 
     const systemPrompt = `당신은 블로그 글쓰기 전문 어시스턴트입니다. 사용자가 더 나은 글을 쓸 수 있도록 도와줍니다.
@@ -38,20 +38,53 @@ ${currentTitle || currentContent ? `
         apiKey: process.env.ANTHROPIC_API_KEY,
       });
 
+      // 채팅 히스토리 변환
+      const historyMessages = chatHistory.map((msg: any) => ({
+        role: msg.role,
+        content: msg.content,
+      }));
+
+      // 현재 메시지 구성 (텍스트 + 이미지)
+      const currentMessageContent: any[] = [];
+
+      if (image) {
+        // base64 이미지 데이터에서 헤더와 데이터 분리
+        const matches = image.match(/^data:([^;]+);base64,(.+)$/);
+        if (matches) {
+          const mediaType = matches[1];
+          const base64Data = matches[2];
+
+          currentMessageContent.push({
+            type: 'image',
+            source: {
+              type: 'base64',
+              media_type: mediaType,
+              data: base64Data,
+            },
+          });
+        }
+      }
+
+      if (message) {
+        currentMessageContent.push({
+          type: 'text',
+          text: message,
+        });
+      }
+
       const messages = [
-        ...chatHistory.map((msg: any) => ({
-          role: msg.role,
-          content: msg.content,
-        })),
+        ...historyMessages,
         {
           role: 'user',
-          content: message,
+          content: currentMessageContent.length === 1 && currentMessageContent[0].type === 'text'
+            ? currentMessageContent[0].text
+            : currentMessageContent,
         },
       ];
 
       const completion = await anthropic.messages.create({
-        model: 'claude-sonnet-4-5',
-        max_tokens: 500,
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
         system: systemPrompt,
         messages: messages as any,
       });
@@ -62,9 +95,28 @@ ${currentTitle || currentContent ? `
         apiKey: process.env.OPENAI_API_KEY,
       });
 
+      // 현재 메시지 구성 (텍스트 + 이미지)
+      const currentMessageContent: any[] = [];
+
+      if (image) {
+        currentMessageContent.push({
+          type: 'image_url',
+          image_url: {
+            url: image, // data:image/jpeg;base64,... 형식 그대로 사용
+          },
+        });
+      }
+
+      if (message) {
+        currentMessageContent.push({
+          type: 'text',
+          text: message,
+        });
+      }
+
       const completion = await openai.chat.completions.create({
-        model: 'gpt-5.1',
-        max_tokens: 500,
+        model: 'gpt-4-vision-preview',
+        max_tokens: 1000,
         messages: [
           {
             role: 'system',
@@ -76,7 +128,9 @@ ${currentTitle || currentContent ? `
           })),
           {
             role: 'user',
-            content: message,
+            content: currentMessageContent.length === 1 && currentMessageContent[0].type === 'text'
+              ? currentMessageContent[0].text
+              : currentMessageContent,
           },
         ],
       });

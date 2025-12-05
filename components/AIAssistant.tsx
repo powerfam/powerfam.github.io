@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { MessageCircle, X, Send, Sparkles, RotateCcw } from 'lucide-react';
+import { useState, useRef } from 'react';
+import { MessageCircle, X, Send, Sparkles, RotateCcw, Image as ImageIcon } from 'lucide-react';
 
 interface AIAssistantProps {
   currentContent?: string;
@@ -12,6 +12,7 @@ interface ChatMessage {
   role: 'user' | 'assistant';
   content: string;
   model?: string;
+  image?: string; // base64 이미지 데이터
 }
 
 export default function AIAssistant({ currentContent = '', currentTitle = '' }: AIAssistantProps) {
@@ -20,17 +21,44 @@ export default function AIAssistant({ currentContent = '', currentTitle = '' }: 
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedModel, setSelectedModel] = useState<'claude' | 'openai'>('claude');
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // 이미지 파일인지 확인
+    if (!file.type.startsWith('image/')) {
+      alert('이미지 파일만 업로드 가능합니다.');
+      return;
+    }
+
+    // 파일 크기 제한 (5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      alert('이미지 크기는 5MB 이하여야 합니다.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setUploadedImage(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!message.trim() || isLoading) return;
+    if ((!message.trim() && !uploadedImage) || isLoading) return;
 
     const userMessage = message.trim();
+    const imageData = uploadedImage;
     setMessage('');
+    setUploadedImage(null);
     setIsLoading(true);
 
     // 사용자 메시지 추가
-    setChatHistory(prev => [...prev, { role: 'user', content: userMessage }]);
+    setChatHistory(prev => [...prev, { role: 'user', content: userMessage, image: imageData || undefined }]);
 
     try {
       const res = await fetch('/api/ai-assistant', {
@@ -38,6 +66,7 @@ export default function AIAssistant({ currentContent = '', currentTitle = '' }: 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: userMessage,
+          image: imageData,
           model: selectedModel,
           currentContent,
           currentTitle,
@@ -112,39 +141,6 @@ export default function AIAssistant({ currentContent = '', currentTitle = '' }: 
             </div>
           </div>
 
-          {/* 모델 선택 */}
-          <div className="p-3 border-b dark:border-gray-700 flex gap-2">
-            <button
-              onClick={() => setSelectedModel('claude')}
-              className={`flex-1 py-2 px-3 rounded text-sm font-medium transition-colors ${
-                selectedModel === 'claude'
-                  ? 'text-white'
-                  : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600'
-              }`}
-              style={
-                selectedModel === 'claude'
-                  ? { backgroundColor: 'var(--menu-main)' }
-                  : {}
-              }
-            >
-              Claude 4.5
-            </button>
-            <button
-              onClick={() => setSelectedModel('openai')}
-              className={`flex-1 py-2 px-3 rounded text-sm font-medium transition-colors ${
-                selectedModel === 'openai'
-                  ? 'text-white'
-                  : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600'
-              }`}
-              style={
-                selectedModel === 'openai'
-                  ? { backgroundColor: 'var(--menu-main)' }
-                  : {}
-              }
-            >
-              GPT-4.1
-            </button>
-          </div>
 
           {/* 대화 영역 */}
           <div className="flex-1 p-4 overflow-y-auto space-y-3">
@@ -176,6 +172,13 @@ export default function AIAssistant({ currentContent = '', currentTitle = '' }: 
                         : 'GPT-4.1'}
                     </span>
                   </div>
+                  {msg.image && (
+                    <img
+                      src={msg.image}
+                      alt="Uploaded"
+                      className="max-w-full rounded-lg mb-2 max-h-48 object-contain"
+                    />
+                  )}
                   <p className="text-sm whitespace-pre-wrap leading-relaxed">{msg.content}</p>
                 </div>
               ))
@@ -192,6 +195,23 @@ export default function AIAssistant({ currentContent = '', currentTitle = '' }: 
 
           {/* 입력 폼 */}
           <form onSubmit={handleSubmit} className="p-4 border-t dark:border-gray-700">
+            {/* 이미지 미리보기 */}
+            {uploadedImage && (
+              <div className="mb-2 relative inline-block">
+                <img
+                  src={uploadedImage}
+                  alt="Preview"
+                  className="max-h-24 rounded-lg border dark:border-gray-600"
+                />
+                <button
+                  type="button"
+                  onClick={() => setUploadedImage(null)}
+                  className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+                >
+                  <X size={12} />
+                </button>
+              </div>
+            )}
             <div className="flex gap-2">
               <input
                 type="text"
@@ -204,7 +224,7 @@ export default function AIAssistant({ currentContent = '', currentTitle = '' }: 
               />
               <button
                 type="submit"
-                disabled={isLoading || !message.trim()}
+                disabled={isLoading || (!message.trim() && !uploadedImage)}
                 className="px-4 py-2 rounded-lg text-white disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
                 style={{ backgroundColor: 'var(--menu-main)' }}
               >
@@ -217,9 +237,32 @@ export default function AIAssistant({ currentContent = '', currentTitle = '' }: 
             </div>
           </form>
 
-          {/* 안내 문구 */}
-          <div className="px-4 pb-3 text-xs text-gray-500 dark:text-gray-400">
-            💡 간결하고 실용적으로 답변합니다 (최근 3턴 기억)
+          {/* 하단바: 모델 선택 + 이미지 업로드 */}
+          <div className="px-4 pb-3 pt-2 flex items-center gap-2">
+            <select
+              value={selectedModel}
+              onChange={(e) => setSelectedModel(e.target.value as 'claude' | 'openai')}
+              className="py-1 px-2 rounded text-xs font-medium bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-1"
+              style={{ '--tw-ring-color': 'var(--menu-main)' } as any}
+            >
+              <option value="claude">Claude Sonnet-4.5</option>
+              <option value="openai">GPT-5.1</option>
+            </select>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              className="hidden"
+            />
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              className="py-1 px-3 rounded text-xs font-medium bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors flex items-center gap-1"
+              title="이미지 업로드"
+            >
+              📷 이미지
+            </button>
           </div>
         </div>
       )}
