@@ -55,19 +55,38 @@ export async function GET(request: NextRequest) {
     const frontmatter = match[1];
     const body = match[2];
 
-    // Frontmatter 파싱
-    const title = frontmatter.match(/title:\s*(.+)/)?.[1] || '';
-    const description = frontmatter.match(/description:\s*(.+)/)?.[1] || '';
-    const summary = frontmatter.match(/summary:\s*(.+)/)?.[1] || '';
+    // Frontmatter 파싱 (따옴표 있든 없든 모두 지원)
+    const titleMatch = frontmatter.match(/title:\s*["']?(.+?)["']?\s*$/m);
+    const title = titleMatch ? titleMatch[1].replace(/^"|"$/g, '') : '';
+
+    const descMatch = frontmatter.match(/description:\s*["']?(.+?)["']?\s*$/m);
+    const description = descMatch ? descMatch[1].replace(/^"|"$/g, '') : '';
+
+    const summaryMatch = frontmatter.match(/summary:\s*["']?(.+?)["']?\s*$/m);
+    const summary = summaryMatch ? summaryMatch[1].replace(/^"|"$/g, '') : '';
+
     const dateMatch = frontmatter.match(/date:\s*["']?(.+?)["']?\s*$/m);
     const date = dateMatch ? dateMatch[1].split('T')[0] : new Date().toISOString().split('T')[0];
-    const tagsMatch = frontmatter.match(/tags:\s*\n((?:\s*-\s*.+\n?)*)/);
-    const tags = tagsMatch
-      ? tagsMatch[1]
-          .split('\n')
-          .map((line) => line.replace(/^\s*-\s*/, '').trim())
-          .filter(Boolean)
-      : [];
+
+    // tags 파싱 (배열 형식과 대괄호 형식 모두 지원)
+    let tags: string[] = [];
+    const tagsArrayMatch = frontmatter.match(/tags:\s*\n((?:\s*-\s*.+\n?)*)/);
+    if (tagsArrayMatch) {
+      // 배열 형식: tags:\n  - tag1\n  - tag2
+      tags = tagsArrayMatch[1]
+        .split('\n')
+        .map((line) => line.replace(/^\s*-\s*/, '').trim())
+        .filter(Boolean);
+    } else {
+      // 대괄호 형식: tags: [tag1, tag2]
+      const tagsBracketMatch = frontmatter.match(/tags:\s*\[(.*?)\]/);
+      if (tagsBracketMatch) {
+        tags = tagsBracketMatch[1]
+          .split(',')
+          .map(t => t.trim().replace(/^"|"$/g, ''))
+          .filter(Boolean);
+      }
+    }
 
     return NextResponse.json({
       title,

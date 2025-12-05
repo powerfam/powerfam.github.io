@@ -30,23 +30,26 @@ export async function PUT(request: NextRequest) {
       throw new Error('Invalid file');
     }
 
-    // 마크다운 생성
+    // tags 배열 형식으로 변환
     const tagsArray = tags
-      ? tags
-          .split(',')
-          .map((t: string) => t.trim())
-          .filter(Boolean)
+      ? tags.split(',').map((t: string) => t.trim()).filter(Boolean)
       : [];
 
-    const tagsYaml = tagsArray.length > 0 ? `\ntags:\n${tagsArray.map((t: string) => `  - ${t}`).join('\n')}` : '';
+    // 날짜 처리: YYYY-MM-DD 형식으로 (따옴표 없음)
+    const postDate = date || new Date().toISOString().split('T')[0];
 
-    // 날짜 처리: 사용자가 선택한 날짜 사용, 없으면 오늘 날짜
-    const postDate = date ? new Date(date).toISOString() : new Date().toISOString();
+    // frontmatter 생성 (first-post.md 형식에 맞춤)
+    const frontmatterLines = [
+      '---',
+      `title: ${title}`,
+      `date: ${postDate}`,
+      description ? `description: ${description}` : '',
+      tagsArray.length > 0 ? 'tags:' : '',
+      ...tagsArray.map((tag: string) => `  - ${tag}`),
+      '---',
+    ].filter(Boolean);
 
-    const markdown = `---
-title: ${title}
-date: ${postDate}${description ? `\ndescription: ${description}` : ''}${summary ? `\nsummary: ${summary}` : ''}${tagsYaml}
----
+    const markdown = `${frontmatterLines.join('\n')}
 
 ${content}`;
 

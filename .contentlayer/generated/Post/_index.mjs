@@ -2,5 +2,6 @@
 
 import firstPostMd from './first-post.md.json' assert { type: 'json' }
 import undefinedMd from './undefined.md.json' assert { type: 'json' }
+import Post2 from './워렌-버핏의-마지막-주주서한이-우리에게-남긴-것-1764909974192.md.json' assert { type: 'json' }
 
-export const allPosts = [firstPostMd, undefinedMd]
+export const allPosts = [firstPostMd, undefinedMd, Post2]

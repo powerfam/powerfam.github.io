@@ -15,7 +15,8 @@ export async function generateStaticParams() {
 }
 
 export default function PostPage({ params }: { params: { slug: string } }) {
-  const post = allPosts.find((post) => post._raw.flattenedPath === params.slug);
+  const decodedSlug = decodeURIComponent(params.slug);
+  const post = allPosts.find((post) => post._raw.flattenedPath === decodedSlug);
 
   if (!post) notFound();
 
