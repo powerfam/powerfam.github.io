@@ -11,16 +11,19 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { title, description, summary, tags, content } = await req.json();
+    const { title, description, summary, tags, content, date } = await req.json();
 
     // YAML에서 안전하게 사용하기 위해 따옴표 이스케이프
     const escapeYaml = (str: string) => str.replace(/"/g, '\\"');
+
+    // 날짜 처리: 사용자가 선택한 날짜 사용, 없으면 오늘 날짜
+    const postDate = date ? new Date(date).toISOString() : new Date().toISOString();
 
     // 마크다운 frontmatter 생성
     const frontmatter = [
       '---',
       `title: "${escapeYaml(title)}"`,
-      `date: "${new Date().toISOString()}"`,
+      `date: "${postDate}"`,
       description ? `description: "${escapeYaml(description)}"` : '',
       summary ? `summary: "${escapeYaml(summary)}"` : '',
       tags ? `tags: [${tags.split(',').map((t: string) => `"${escapeYaml(t.trim())}"`).join(', ')}]` : '',
@@ -29,17 +32,17 @@ export async function POST(req: NextRequest) {
       content
     ].filter(Boolean).join('\n');
 
-    // slug 생성 (영문과 숫자만 사용하여 URL 친화적으로 변환)
+    // slug 생성 (한글 포함, URL 안전한 문자로 변환)
     const slug = title
-      .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, '') // 영문, 숫자, 공백, 하이픈만 유지 (한글 제거)
-      .replace(/\s+/g, '-')
-      .replace(/-+/g, '-')
       .trim()
-      .replace(/^-+|-+$/g, '') || 'post'; // 빈 문자열 방지
+      .replace(/\s+/g, '-')      // 공백을 하이픈으로
+      .replace(/[\/\\?%*:|"<>]/g, '') // 파일명에 사용 불가한 문자 제거
+      .replace(/-+/g, '-')       // 연속 하이픈 정리
+      .replace(/^-+|-+$/g, '')   // 앞뒤 하이픈 제거
+      || 'post';                 // 빈 문자열 방지
 
     const timestamp = Date.now();
-    const finalSlug = slug ? `${slug}-${timestamp}` : `post-${timestamp}`;
+    const finalSlug = `${slug}-${timestamp}`;
 
     const octokit = new Octokit({
       auth: session.user.accessToken,

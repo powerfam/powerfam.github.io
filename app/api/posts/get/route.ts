@@ -59,6 +59,8 @@ export async function GET(request: NextRequest) {
     const title = frontmatter.match(/title:\s*(.+)/)?.[1] || '';
     const description = frontmatter.match(/description:\s*(.+)/)?.[1] || '';
     const summary = frontmatter.match(/summary:\s*(.+)/)?.[1] || '';
+    const dateMatch = frontmatter.match(/date:\s*["']?(.+?)["']?\s*$/m);
+    const date = dateMatch ? dateMatch[1].split('T')[0] : new Date().toISOString().split('T')[0];
     const tagsMatch = frontmatter.match(/tags:\s*\n((?:\s*-\s*.+\n?)*)/);
     const tags = tagsMatch
       ? tagsMatch[1]
@@ -72,6 +74,7 @@ export async function GET(request: NextRequest) {
       description,
       summary,
       tags,
+      date,
       content: body.trim(),
     });
   } catch (error) {

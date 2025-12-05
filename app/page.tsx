@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import TextType from '@/components/TextType';
 
 export default function Home() {
   return (
@@ -47,7 +48,7 @@ export default function Home() {
           }}
           className="space-y-4 text-left"
         >
-          <motion.h1
+          <motion.div
             initial={{ x: -50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{
@@ -58,10 +59,15 @@ export default function Home() {
             className="text-5xl md:text-6xl font-bold"
             style={{ color: 'var(--menu-main)' }}
           >
-            Voti Web
-          </motion.h1>
+            <TextType
+              text="Voti Web"
+              typingSpeed={100}
+              loop={false}
+              showCursor={false}
+            />
+          </motion.div>
 
-          <motion.p
+          <motion.div
             initial={{ x: -50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{
@@ -70,10 +76,16 @@ export default function Home() {
             }}
             className="text-2xl md:text-3xl font-medium"
           >
-            환영합니다
-          </motion.p>
+            <TextType
+              text="환영합니다"
+              typingSpeed={100}
+              initialDelay={1000}
+              loop={false}
+              showCursor={false}
+            />
+          </motion.div>
 
-          <motion.p
+          <motion.div
             initial={{ x: -50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{
@@ -82,8 +94,14 @@ export default function Home() {
             }}
             className="text-lg md:text-xl opacity-70"
           >
-            이곳은 메인화면에 들어갈 메시지입니다.
-          </motion.p>
+            <TextType
+              text={["이곳은 메인화면에 들어갈 메시지입니다.", "타이핑 효과로 표현됩니다.", "환영합니다!"]}
+              typingSpeed={75}
+              pauseDuration={1500}
+              showCursor={true}
+              cursorCharacter="|"
+            />
+          </motion.div>
         </motion.div>
       </div>
     </div>

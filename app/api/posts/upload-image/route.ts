@@ -25,9 +25,13 @@ export async function POST(request: NextRequest) {
 
     console.log('✅ File received:', file.name, file.size, 'bytes');
 
-    // 파일명 생성
+    // 파일명 생성 (한글 지원)
     const timestamp = Date.now();
-    const fileName = `${timestamp}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '-')}`;
+    // 파일명에서 사용 불가한 문자만 제거 (한글은 유지)
+    const safeName = file.name
+      .replace(/[\/\\?%*:|"<>]/g, '-')  // 파일시스템에서 금지된 문자만 제거
+      .replace(/-+/g, '-');              // 연속 하이픈 정리
+    const fileName = `${timestamp}-${safeName}`;
     const filePath = `public/images/${fileName}`;
 
     console.log('📂 Upload path:', filePath);

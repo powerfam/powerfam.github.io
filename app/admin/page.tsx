@@ -242,6 +242,7 @@ export default function AdminPage() {
     summary: '',
     tags: '',
     content: '',
+    date: new Date().toISOString().split('T')[0], // 기본값: 오늘
   });
 
   // 기존 글 목록 가져오기
@@ -272,6 +273,7 @@ export default function AdminPage() {
         summary: data.summary || '',
         tags: data.tags ? data.tags.join(', ') : '',
         content: data.content || '',
+        date: data.date || new Date().toISOString().split('T')[0],
       });
       setEditingPost(slug);
       setShowEditor(true);
@@ -292,6 +294,7 @@ export default function AdminPage() {
       summary: formData.get('summary'),
       tags: formData.get('tags'),
       content: formData.get('content'),
+      date: formData.get('date'),
     };
 
     try {
@@ -330,6 +333,7 @@ export default function AdminPage() {
       summary: formData.get('summary'),
       tags: formData.get('tags'),
       content: formData.get('content'),
+      date: formData.get('date'),
     };
 
     try {
@@ -383,7 +387,7 @@ export default function AdminPage() {
   // 새 글 작성 모드로 전환
   const startNewPost = () => {
     setEditingPost(null);
-    setEditContent({ title: '', description: '', summary: '', tags: '', content: '' });
+    setEditContent({ title: '', description: '', summary: '', tags: '', content: '', date: new Date().toISOString().split('T')[0] });
     setShowEditor(true);
   };
 
@@ -472,16 +476,30 @@ export default function AdminPage() {
             {editingPost ? '글 수정' : '새 글 작성'}
           </h2>
           <form onSubmit={editingPost ? handleUpdate : handleSubmit} className="space-y-4">
-            <div>
-              <label className="block mb-2 font-medium">제목</label>
-              <input
-                name="title"
-                type="text"
-                required
-                defaultValue={editContent.title}
-                className="w-full px-4 py-2 rounded border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
-                style={{ borderColor: 'var(--menu-main)' }}
-              />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block mb-2 font-medium">제목</label>
+                <input
+                  name="title"
+                  type="text"
+                  required
+                  defaultValue={editContent.title}
+                  className="w-full px-4 py-2 rounded border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
+                  style={{ borderColor: 'var(--menu-main)' }}
+                />
+              </div>
+
+              <div>
+                <label className="block mb-2 font-medium">작성일</label>
+                <input
+                  name="date"
+                  type="date"
+                  required
+                  defaultValue={editContent.date}
+                  className="w-full px-4 py-2 rounded border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
+                  style={{ borderColor: 'var(--menu-main)' }}
+                />
+              </div>
             </div>
 
             <div>
@@ -615,7 +633,7 @@ export default function AdminPage() {
                   onClick={() => {
                     setShowEditor(false);
                     setEditingPost(null);
-                    setEditContent({ title: '', description: '', summary: '', tags: '', content: '' });
+                    setEditContent({ title: '', description: '', summary: '', tags: '', content: '', date: new Date().toISOString().split('T')[0] });
                   }}
                   className="px-6 py-3 rounded-lg font-medium border"
                   style={{ borderColor: 'var(--menu-main)' }}
