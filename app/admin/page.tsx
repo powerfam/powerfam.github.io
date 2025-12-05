@@ -1,6 +1,7 @@
 'use client';
 
 import MarkdownAssistant from '@/components/MarkdownAssistant';
+import AIAssistant from '@/components/AIAssistant';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { useState, useEffect } from 'react';
 import { Trash2Icon, PlusIcon, FileTextIcon, EditIcon, ImageIcon, LinkIcon } from 'lucide-react';
@@ -244,6 +245,10 @@ export default function AdminPage() {
     content: '',
     date: new Date().toISOString().split('T')[0], // 기본값: 오늘
   });
+  const [currentEditorContent, setCurrentEditorContent] = useState({
+    title: '',
+    content: '',
+  });
 
   // 기존 글 목록 가져오기
   useEffect(() => {
@@ -484,6 +489,7 @@ export default function AdminPage() {
                   type="text"
                   required
                   defaultValue={editContent.title}
+                  onChange={(e) => setCurrentEditorContent(prev => ({ ...prev, title: e.target.value }))}
                   className="w-full px-4 py-2 rounded border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
                   style={{ borderColor: 'var(--menu-main)' }}
                 />
@@ -562,6 +568,7 @@ export default function AdminPage() {
                 required
                 rows={15}
                 defaultValue={editContent.content}
+                onChange={(e) => setCurrentEditorContent(prev => ({ ...prev, content: e.target.value }))}
                 className="w-full px-4 py-2 rounded border font-mono text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
                 style={{ borderColor: 'var(--menu-main)' }}
                 placeholder="# 제목&#10;&#10;본문 내용을 작성하세요..."
@@ -692,6 +699,12 @@ export default function AdminPage() {
       )}
       {/* 마크다운 어시스턴트 추가 */}
       <MarkdownAssistant />
+
+      {/* AI 글쓰기 어시스턴트 추가 */}
+      <AIAssistant
+        currentTitle={currentEditorContent.title}
+        currentContent={currentEditorContent.content}
+      />
     </div>
   );
 }
