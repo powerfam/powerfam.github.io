@@ -39,6 +39,9 @@ export const authOptions: AuthOptions = {
     signIn: '/admin',
     error: '/admin',
   },
+  secret: process.env.NEXTAUTH_SECRET,
+  useSecureCookies: process.env.NODE_ENV === 'production',
+  debug: process.env.NODE_ENV === 'development',
 };
 
 const handler = NextAuth(authOptions);

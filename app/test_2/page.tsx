@@ -1,9 +1,12 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { allPosts } from 'contentlayer/generated';
 import { compareDesc, format } from 'date-fns';
 import { ko } from 'date-fns/locale';
-import { CalendarIcon, FileTextIcon } from 'lucide-react';
+import { CalendarIcon, FileTextIcon, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState } from 'react';
 
 // 마크다운 본문에서 첫 번째 이미지 URL 추출
 function extractFirstImage(markdown: string): string | null {
@@ -12,10 +15,20 @@ function extractFirstImage(markdown: string): string | null {
   return match ? match[1] : null;
 }
 
+const POSTS_PER_PAGE = 6;
+
 export default function Test2() {
-  const posts = allPosts.sort((a, b) =>
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const allPostsSorted = allPosts.sort((a, b) =>
     compareDesc(new Date(a.date), new Date(b.date))
   );
+
+  // 페이지네이션 계산
+  const totalPages = Math.ceil(allPostsSorted.length / POSTS_PER_PAGE);
+  const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+  const endIndex = startIndex + POSTS_PER_PAGE;
+  const posts = allPostsSorted.slice(startIndex, endIndex);
 
   return (
     <div className="max-w-6xl mx-auto space-y-8">
@@ -111,11 +124,80 @@ export default function Test2() {
       </div>
 
       {/* 글이 없을 때 */}
-      {posts.length === 0 && (
+      {allPostsSorted.length === 0 && (
         <div className="text-center py-20">
           <FileTextIcon size={48} className="mx-auto mb-4 opacity-30" />
           <p className="text-lg opacity-60">작성된 글이 없습니다.</p>
         </div>
+      )}
+
+      {/* 페이지네이션 */}
+      {totalPages > 1 && (
+        <div className="flex justify-center items-center gap-2 mt-12">
+          {/* 이전 페이지 */}
+          <button
+            onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+            disabled={currentPage === 1}
+            className="p-2 rounded-lg border disabled:opacity-30 disabled:cursor-not-allowed hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            style={{ borderColor: 'var(--menu-main)' }}
+          >
+            <ChevronLeft size={20} />
+          </button>
+
+          {/* 페이지 번호 */}
+          <div className="flex gap-2">
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
+              // 현재 페이지 주변만 표시 (모바일 대응)
+              if (
+                page === 1 || // 첫 페이지
+                page === totalPages || // 마지막 페이지
+                (page >= currentPage - 1 && page <= currentPage + 1) // 현재 페이지 주변
+              ) {
+                return (
+                  <button
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                    className={`px-4 py-2 rounded-lg border font-medium transition-all ${
+                      currentPage === page
+                        ? 'text-white shadow-md'
+                        : 'hover:bg-gray-100 dark:hover:bg-gray-800'
+                    }`}
+                    style={
+                      currentPage === page
+                        ? { backgroundColor: 'var(--menu-main)', borderColor: 'var(--menu-main)' }
+                        : { borderColor: 'var(--menu-main)' }
+                    }
+                  >
+                    {page}
+                  </button>
+                );
+              } else if (
+                page === currentPage - 2 ||
+                page === currentPage + 2
+              ) {
+                return <span key={page} className="px-2 opacity-50">...</span>;
+              }
+              return null;
+            })}
+          </div>
+
+          {/* 다음 페이지 */}
+          <button
+            onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+            disabled={currentPage === totalPages}
+            className="p-2 rounded-lg border disabled:opacity-30 disabled:cursor-not-allowed hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            style={{ borderColor: 'var(--menu-main)' }}
+          >
+            <ChevronRight size={20} />
+          </button>
+        </div>
+      )}
+
+      {/* 페이지 정보 */}
+      {allPostsSorted.length > 0 && (
+        <p className="text-center text-sm opacity-60 mt-4">
+          전체 {allPostsSorted.length}개의 글 중 {startIndex + 1}-{Math.min(endIndex, allPostsSorted.length)}번째 글
+        </p>
       )}
     </div>
   );

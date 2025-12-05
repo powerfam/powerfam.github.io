@@ -9,6 +9,7 @@
   --menu-sub: #D99058;
   --menu-main-text: #FAF9F5;
   --menu-sub-text: #3B3C36;
+  --background-overlay: rgba(250, 249, 245, 0.9);
 }
 
 .dark {
@@ -18,12 +19,36 @@
   --menu-sub: #826644;
   --menu-main-text: #FAF9F5;
   --menu-sub-text: #FAF9F5;
+  --background-overlay: rgba(59, 60, 54, 0.9);
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: var(--font-noto-serif-kr), serif;
+}
+
+/* 모바일 prose 헤딩 사이즈 조정 */
+@media (max-width: 768px) {
+  .prose h1 {
+    font-size: 1.75rem;
+    line-height: 2rem;
+  }
+
+  .prose h2 {
+    font-size: 1.5rem;
+    line-height: 1.75rem;
+  }
+
+  .prose h3 {
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+  }
+
+  .prose h4 {
+    font-size: 1.125rem;
+    line-height: 1.5rem;
+  }
 }
 
 /* 이미지 다음에 오는 em 태그 (캡션)를 중앙 정렬 */

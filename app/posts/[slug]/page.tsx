@@ -24,35 +24,39 @@ export default function PostPage({ params }: { params: { slug: string } }) {
     <div className="max-w-3xl mx-auto px-4 py-12">
       {/* 헤더 */}
       <div className="mb-8 pb-8 border-b" style={{ borderColor: 'var(--menu-main)' }}>
-        <h1 className="text-4xl font-bold mb-4" style={{ color: 'var(--menu-main)' }}>
+        <h1 className="text-2xl md:text-4xl font-bold mb-4" style={{ color: 'var(--menu-main)' }}>
           {post.title}
         </h1>
-        <div className="flex items-center gap-4 text-sm" style={{ color: 'var(--foreground)', opacity: 0.6 }}>
+
+        {/* 작성날짜 */}
+        <div className="mb-3 text-sm" style={{ color: 'var(--foreground)', opacity: 0.6 }}>
           <time dateTime={post.date}>
             {format(new Date(post.date), 'yyyy년 MM월 dd일')}
           </time>
-          {post.tags && (
-            <div className="flex gap-2">
-              {post.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="px-3 py-1 rounded-full text-xs font-medium"
-                  style={{
-                    backgroundColor: 'var(--menu-sub)',
-                    color: 'var(--menu-sub-text)',
-                  }}
-                >
-                  #{tag}
-                </span>
-              ))}
-            </div>
-          )}
         </div>
+
+        {/* 태그 */}
+        {post.tags && post.tags.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {post.tags.map((tag) => (
+              <span
+                key={tag}
+                className="px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap"
+                style={{
+                  backgroundColor: 'var(--menu-sub)',
+                  color: 'var(--menu-sub-text)',
+                }}
+              >
+                #{tag}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* 본문 */}
       <article
-        className="prose prose-lg max-w-none mb-12 dark:prose-invert"
+        className="prose md:prose-lg max-w-none mb-12 dark:prose-invert"
         style={{ color: 'var(--foreground)' }}
         dangerouslySetInnerHTML={{ __html: post.body.html }}
       />

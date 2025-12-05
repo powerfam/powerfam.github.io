@@ -251,6 +251,7 @@ export default function AdminPage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [activeTab, setActiveTab] = useState<TabType>('list');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState<string | null>(null);
   const [editingPost, setEditingPost] = useState<string | null>(null);
   const [editContent, setEditContent] = useState({
@@ -511,6 +512,20 @@ export default function AdminPage() {
     );
   }
 
+  // 로그인 핸들러
+  const handleLogin = async () => {
+    try {
+      setIsLoggingIn(true);
+      await signIn('github', {
+        callbackUrl: window.location.origin + '/admin',
+      });
+    } catch (error) {
+      console.error('로그인 에러:', error);
+      alert('로그인 중 오류가 발생했습니다. 다시 시도해주세요.');
+      setIsLoggingIn(false);
+    }
+  };
+
   // 로그인 안 됨
   if (!session) {
     return (
@@ -520,12 +535,18 @@ export default function AdminPage() {
         </h1>
         <p className="text-lg opacity-70">로그인이 필요합니다</p>
         <button
-          onClick={() => signIn('github')}
-          className="px-8 py-3 rounded-lg font-medium text-white"
+          onClick={handleLogin}
+          disabled={isLoggingIn}
+          className="px-8 py-3 rounded-lg font-medium text-white disabled:opacity-50"
           style={{ backgroundColor: 'var(--menu-main)' }}
         >
-          GitHub으로 로그인
+          {isLoggingIn ? '로그인 중...' : 'GitHub으로 로그인'}
         </button>
+        {process.env.NODE_ENV === 'development' && (
+          <p className="text-xs opacity-50 mt-4">
+            환경변수 확인: GITHUB_ID={process.env.NEXT_PUBLIC_GITHUB_ID ? '설정됨' : '미설정'}
+          </p>
+        )}
       </div>
     );
   }
