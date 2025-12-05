@@ -2,12 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { Octokit } from '@octokit/rest';
-import { romanize } from 'hangul-romanization';
+import { convert } from 'hangul-romanization';
 
 // 한글 제목을 영문 파일명으로 변환하는 함수
 function generateSlug(title: string, date: string): string {
   // 한글을 로마자로 변환
-  const romanized = romanize(title);
+  const romanized = convert(title);
 
   // 파일명에 안전한 형태로 정리
   const slug = romanized

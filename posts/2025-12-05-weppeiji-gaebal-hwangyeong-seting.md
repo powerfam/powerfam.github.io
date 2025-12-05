@@ -19,8 +19,6 @@ tags:
 - 해당 컨텐츠 참여 여부에 따른 거래 지표 비교
 
 
-<figure style="text-align: center;">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/US_Stock_Market_-_Investing_in_the_United_States.jpg" alt="이미지" width="400" />
-  <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">여기에 사진 캡션 작성 @voti</figcaption>
-</figure>
+![미국 주식 시장](https://upload.wikimedia.org/wikipedia/commons/5/51/US_Stock_Market_-_Investing_in_the_United_States.jpg)
+*미국주식 @voti*
 

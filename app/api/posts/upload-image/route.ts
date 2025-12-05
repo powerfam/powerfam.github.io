@@ -61,11 +61,15 @@ export async function POST(request: NextRequest) {
 
     // GitHub Raw URL 생성
     const imageUrl = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/main/${filePath}`;
-    
-    return NextResponse.json({ 
-      success: true, 
+
+    // 순수 마크다운 형식 (이미지 + 캡션)
+    const markdown = `![이미지 설명](${imageUrl})
+*여기에 사진 캡션 작성 @voti*`;
+
+    return NextResponse.json({
+      success: true,
       url: imageUrl,
-      markdown: `![이미지 설명](${imageUrl})`
+      markdown: markdown
     });
   } catch (error: any) {
     console.error('❌ Upload error:', error.message);

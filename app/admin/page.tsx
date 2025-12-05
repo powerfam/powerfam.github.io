@@ -52,22 +52,15 @@ function EditorToolbar({ onInsert }: { onInsert: (text: string) => void }) {
     }
   };
 
-  const insertImageWithSize = (size: 'small' | 'medium' | 'large' | 'full') => {
+  const insertImageWithSize = (size: 'small' | 'thumbnail' | 'medium' | 'large' | 'full') => {
     if (!imageUrl) {
       alert('이미지 URL을 입력해주세요');
       return;
     }
 
-    const widths = {
-      small: '200',
-      medium: '500',
-      large: '800',
-      full: '100%'
-    };
-
-    const markdown = size === 'full'
-      ? `<img src="${imageUrl}" alt="이미지" style="width: 100%;" />`
-      : `<img src="${imageUrl}" alt="이미지" width="${widths[size]}" />`;
+    // 순수 마크다운 형식 (이미지 + 캡션)
+    const markdown = `![이미지](${imageUrl})
+*여기에 사진 캡션 작성 @voti*`;
 
     onInsert('\n' + markdown + '\n');
     setImageUrl('');
@@ -128,30 +121,37 @@ function EditorToolbar({ onInsert }: { onInsert: (text: string) => void }) {
                 <button
                   type="button"
                   onClick={() => insertImageWithSize('small')}
-                  className="py-2 rounded border hover:bg-gray-100 dark:hover:bg-gray-700"
+                  className="py-2 rounded border hover:bg-gray-100 dark:hover:bg-gray-700 text-sm"
                 >
                   🖼️ 작게 (200px)
                 </button>
                 <button
                   type="button"
+                  onClick={() => insertImageWithSize('thumbnail')}
+                  className="py-2 rounded border hover:bg-gray-100 dark:hover:bg-gray-700 text-sm"
+                >
+                  🖼️ 썸네일 (400px)
+                </button>
+                <button
+                  type="button"
                   onClick={() => insertImageWithSize('medium')}
-                  className="py-2 rounded border hover:bg-gray-100 dark:hover:bg-gray-700"
+                  className="py-2 rounded border hover:bg-gray-100 dark:hover:bg-gray-700 text-sm"
                 >
                   🖼️ 중간 (500px)
                 </button>
                 <button
                   type="button"
                   onClick={() => insertImageWithSize('large')}
-                  className="py-2 rounded border hover:bg-gray-100 dark:hover:bg-gray-700"
+                  className="py-2 rounded border hover:bg-gray-100 dark:hover:bg-gray-700 text-sm"
                 >
                   🖼️ 크게 (800px)
                 </button>
                 <button
                   type="button"
                   onClick={() => insertImageWithSize('full')}
-                  className="py-2 rounded border hover:bg-gray-100 dark:hover:bg-gray-700"
+                  className="py-2 rounded border hover:bg-gray-100 dark:hover:bg-gray-700 text-sm col-span-2"
                 >
-                  🖼️ 전체
+                  🖼️ 전체 너비
                 </button>
               </div>
               <button
