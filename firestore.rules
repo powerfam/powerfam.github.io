@@ -1,0 +1,47 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 댓글 컬렉션 규칙
+    match /comments/{commentId} {
+
+      // 모든 사용자가 댓글 읽기 가능
+      allow read: if true;
+
+      // 인증된 사용자 또는 익명 사용자 댓글 작성 가능
+      allow create: if request.auth != null &&
+        request.resource.data.authorId == request.auth.uid &&
+        request.resource.data.content is string &&
+        request.resource.data.content.size() > 0 &&
+        request.resource.data.content.size() <= 2000 &&
+        request.resource.data.postSlug is string;
+
+      // 댓글 수정: 작성자만 가능
+      allow update: if request.auth != null &&
+        (
+          // 로그인한 사용자의 경우
+          (resource.data.authorId == request.auth.uid) ||
+          // 익명 댓글의 경우 비밀번호 검증은 클라이언트에서 처리
+          (resource.data.password != null)
+        ) &&
+        // 수정 가능한 필드 제한
+        (!request.resource.data.diff(resource.data).affectedKeys()
+          .hasAny(['authorId', 'postSlug', 'createdAt', 'password']));
+
+      // 댓글 삭제: 작성자만 가능
+      allow delete: if request.auth != null &&
+        resource.data.authorId == request.auth.uid;
+
+      // 리액션 업데이트: 인증된 사용자만 가능
+      allow update: if request.auth != null &&
+        request.resource.data.diff(resource.data).affectedKeys()
+          .hasOnly(['reactions', 'reactedUsers', 'updatedAt']);
+    }
+
+    // 다른 컬렉션은 기본적으로 접근 불가
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

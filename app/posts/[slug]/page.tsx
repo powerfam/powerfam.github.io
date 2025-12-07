@@ -6,7 +6,7 @@ import {
   ToggleGroup,
   ToggleGroupItem,
 } from '@/components/ui/toggle-group';
-import Giscus from '@/components/Giscus';
+import FirebaseComments from '@/components/FirebaseComments';
 
 export async function generateStaticParams() {
   return allPosts.map((post) => ({
@@ -93,13 +93,13 @@ export default function PostPage({ params }: { params: { slug: string } }) {
         </div>
       </div>
 
-      {/* 댓글 섹션 - Giscus 설정 완료 후 활성화 */}
-      {process.env.NEXT_PUBLIC_GISCUS_REPO && process.env.NEXT_PUBLIC_GISCUS_REPO !== 'username/repo' && (
+      {/* 댓글 섹션 - Firebase */}
+      {process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID && (
         <div className="mt-12 pt-8 border-t" style={{ borderColor: 'var(--menu-main)' }}>
           <h3 className="text-2xl font-bold mb-6" style={{ color: 'var(--menu-main)' }}>
             💬 댓글
           </h3>
-          <Giscus />
+          <FirebaseComments postSlug={post._raw.flattenedPath} />
         </div>
       )}
     </div>
