@@ -11,8 +11,6 @@ tags:
 section: section3
 ---
 
-# AI 시대 데이터 분석가 역량 (2): 비즈니스 도메인 이해
-
 ![비즈니스 분석](https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80)
 
 ## AI는 "어떻게"를 해결하지만, "무엇을"은 사람의 몫

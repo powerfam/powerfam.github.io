@@ -616,7 +616,7 @@ export default function AdminPage() {
 
   // 로그인 됨
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8">
+    <div className="max-w-4xl mx-auto">
       {/* 헤더 */}
       <div className="flex justify-between items-center mb-6">
         <div className="flex items-center gap-3">

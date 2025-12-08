@@ -11,8 +11,6 @@ tags:
 section: section1
 ---
 
-# 라밋 세티의 투자 원칙: 자동화와 심리학의 힘
-
 ![개인 재무](https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80)
 
 ## 85% 솔루션의 힘

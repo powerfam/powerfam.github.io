@@ -11,8 +11,6 @@ tags:
 section: section2
 ---
 
-# 제임스 클리어 '아주 작은 습관의 힘': 1%의 개선이 만드는 기적
-
 ![습관의 힘](https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&q=80)
 
 ## 1%의 복리 효과

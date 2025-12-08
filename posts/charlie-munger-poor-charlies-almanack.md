@@ -11,8 +11,6 @@ tags:
 section: section2
 ---
 
-# 찰리 멍거 '가난한 찰리의 연감': 다학제적 사고의 힘
-
 ![멘탈 모델](https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=800&q=80)
 
 ## 망치만 가진 사람에게는 모든 것이 못으로 보인다

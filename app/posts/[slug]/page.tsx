@@ -7,6 +7,7 @@ import {
   ToggleGroupItem,
 } from '@/components/ui/toggle-group';
 import FirebaseComments from '@/components/FirebaseComments';
+import CopyUrlButton from '@/components/CopyUrlButton';
 
 export async function generateStaticParams() {
   return allPosts.map((post) => ({
@@ -35,23 +36,28 @@ export default function PostPage({ params }: { params: { slug: string } }) {
           </time>
         </div>
 
-        {/* 태그 */}
-        {post.tags && post.tags.length > 0 && (
-          <div className="flex flex-wrap gap-2">
-            {post.tags.map((tag) => (
-              <span
-                key={tag}
-                className="px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap"
-                style={{
-                  backgroundColor: 'var(--menu-sub)',
-                  color: 'var(--menu-sub-text)',
-                }}
-              >
-                #{tag}
-              </span>
-            ))}
-          </div>
-        )}
+        {/* 태그 및 URL 복사 */}
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          {post.tags && post.tags.length > 0 ? (
+            <div className="flex flex-wrap gap-2">
+              {post.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap"
+                  style={{
+                    backgroundColor: 'var(--menu-sub)',
+                    color: 'var(--menu-sub-text)',
+                  }}
+                >
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          ) : (
+            <div />
+          )}
+          <CopyUrlButton />
+        </div>
       </div>
 
       {/* 본문 */}

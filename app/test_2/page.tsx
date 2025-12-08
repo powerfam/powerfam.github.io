@@ -31,7 +31,7 @@ export default function Test2() {
   const posts = allPostsSorted.slice(startIndex, endIndex);
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8">
+    <div className="max-w-4xl mx-auto space-y-8">
       <div className="text-center">
         <h1 className="text-4xl md:text-5xl font-bold mb-3" style={{ color: 'var(--menu-main)' }}>
           글 목록

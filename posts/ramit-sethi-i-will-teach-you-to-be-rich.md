@@ -11,8 +11,6 @@ tags:
 section: section2
 ---
 
-# 라밋 세티 'I Will Teach You to Be Rich': 부자가 되는 6주 프로그램
-
 ![재정적 자유](https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=800&q=80)
 
 ## 돈에 대한 새로운 관점

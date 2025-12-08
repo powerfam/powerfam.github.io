@@ -29,11 +29,12 @@ function extractFirstImage(markdown: string): string | null {
   return match ? match[1] : null;
 }
 
-const POSTS_PER_PAGE = 6;
+const POSTS_PER_PAGE = 4; // 1개(featured) + 3개(grid) = 4개씩
 
 export default function ArticlesPage() {
   const [activeSection, setActiveSection] = useState<Section>('section1');
   const [currentPage, setCurrentPage] = useState(1);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   // 섹션별로 글 필터링
   const filteredPosts = allPosts
@@ -46,15 +47,30 @@ export default function ArticlesPage() {
   const endIndex = startIndex + POSTS_PER_PAGE;
   const paginatedPosts = filteredPosts.slice(startIndex, endIndex);
 
+  // 첫 번째 글 (Featured) 과 나머지 글 분리
+  const featuredPost = paginatedPosts[0];
+  const gridPosts = paginatedPosts.slice(1);
+
   // 섹션 변경 시 페이지를 1로 리셋
   useEffect(() => {
     setCurrentPage(1);
   }, [activeSection]);
 
+  // 페이지 변경 시 트랜지션 효과
+  const handlePageChange = (newPage: number) => {
+    if (newPage === currentPage || newPage < 1 || newPage > totalPages) return;
+
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentPage(newPage);
+      setIsTransitioning(false);
+    }, 300);
+  };
+
   const currentSectionInfo = sections.find(s => s.id === activeSection);
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8">
+    <div className="max-w-4xl mx-auto space-y-8">
       {/* 페이지 제목 */}
       <div>
         <h1 className="text-4xl md:text-5xl font-bold mb-3" style={{ color: 'var(--menu-main)' }}>
@@ -90,72 +106,84 @@ export default function ArticlesPage() {
         </p>
       </div>
 
-      {/* 글 목록 */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {paginatedPosts.map((post, index) => {
-          const firstImage = extractFirstImage(post.body.raw);
-
-          return (
-            <Link
-              key={post._id}
-              href={post.url}
-              className="group animate-fade-in-up"
+      {/* 글 목록 컨테이너 - 페이지 전환 애니메이션 */}
+      <div
+        className={`transition-all duration-300 ${
+          isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
+        }`}
+      >
+        {/* Featured Post - 최신 글 (전체 너비) */}
+        {featuredPost && (
+          <Link
+            href={featuredPost.url}
+            className="group block mb-8 animate-fade-in-up"
+            style={{
+              animationDelay: '0ms',
+              opacity: 0,
+              animationFillMode: 'forwards',
+            }}
+          >
+            <article
+              className="rounded-xl border-2 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 overflow-hidden"
               style={{
-                animationDelay: `${index * 100}ms`,
-                opacity: 0,
-                animationFillMode: 'forwards',
+                backgroundColor: 'rgba(130, 102, 68, 0.03)',
+                borderColor: 'var(--menu-main)',
               }}
             >
-              <article
-                className="h-full rounded-xl border-2 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 flex flex-col overflow-hidden"
-                style={{
-                  backgroundColor: 'rgba(130, 102, 68, 0.03)',
-                  borderColor: 'var(--menu-main)',
-                }}
-              >
-                {/* 썸네일 이미지 */}
-                {firstImage && (
-                  <div className="relative w-full h-48 overflow-hidden">
+              <div className="flex flex-col md:flex-row">
+                {/* 썸네일 이미지 - Featured 크기 */}
+                {extractFirstImage(featuredPost.body.raw) && (
+                  <div className="relative w-full md:w-1/2 h-64 md:h-80 overflow-hidden">
                     <Image
-                      src={firstImage}
-                      alt={post.title}
+                      src={extractFirstImage(featuredPost.body.raw)!}
+                      alt={featuredPost.title}
                       fill
                       unoptimized
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
+                    {/* Featured 라벨 */}
+                    <div
+                      className="absolute top-4 left-4 px-3 py-1 rounded-full text-sm font-bold"
+                      style={{
+                        backgroundColor: 'var(--menu-main)',
+                        color: 'var(--menu-main-text)'
+                      }}
+                    >
+                      Latest
+                    </div>
                   </div>
                 )}
 
                 {/* 콘텐츠 영역 */}
-                <div className="p-6 flex flex-col flex-grow">
+                <div className="p-8 flex flex-col justify-center md:w-1/2">
                   {/* 작성일 */}
-                  <div className="flex items-center gap-2 text-sm opacity-60 mb-3">
+                  <div className="flex items-center gap-2 text-sm opacity-60 mb-4">
                     <CalendarIcon size={14} />
-                    <time dateTime={post.date}>
-                      {format(new Date(post.date), 'yyyy년 M월 d일', { locale: ko })}
+                    <time dateTime={featuredPost.date}>
+                      {format(new Date(featuredPost.date), 'yyyy년 M월 d일', { locale: ko })}
                     </time>
                   </div>
 
                   {/* 제목 */}
                   <h2
-                    className="text-xl font-bold mb-3 group-hover:opacity-70 transition-opacity line-clamp-2"
+                    className="text-2xl md:text-3xl font-bold mb-4 group-hover:opacity-70 transition-opacity"
                     style={{ color: 'var(--menu-main)' }}
                   >
-                    {post.title}
+                    {featuredPost.title}
                   </h2>
 
                   {/* 요약문 */}
-                  <p className="opacity-70 mb-4 line-clamp-3 text-sm flex-grow">
-                    {post.summary || post.description || '요약문이 없습니다.'}
+                  <p className="opacity-70 mb-6 text-base line-clamp-3">
+                    {featuredPost.summary || featuredPost.description || '요약문이 없습니다.'}
                   </p>
 
                   {/* 태그 */}
-                  {post.tags && post.tags.length > 0 && (
-                    <div className="flex gap-2 flex-wrap pt-3 border-t" style={{ borderColor: 'rgba(130, 102, 68, 0.2)' }}>
-                      {post.tags.slice(0, 3).map((tag) => (
+                  {featuredPost.tags && featuredPost.tags.length > 0 && (
+                    <div className="flex gap-2 flex-wrap">
+                      {featuredPost.tags.slice(0, 4).map((tag) => (
                         <span
                           key={tag}
-                          className="px-2.5 py-1 text-xs rounded-full font-medium"
+                          className="px-3 py-1.5 text-sm rounded-full font-medium"
                           style={{
                             backgroundColor: 'var(--menu-sub)',
                             color: 'var(--menu-sub-text)'
@@ -164,18 +192,103 @@ export default function ArticlesPage() {
                           #{tag}
                         </span>
                       ))}
-                      {post.tags.length > 3 && (
-                        <span className="px-2.5 py-1 text-xs opacity-50">
-                          +{post.tags.length - 3}
-                        </span>
-                      )}
                     </div>
                   )}
                 </div>
-              </article>
-            </Link>
-          );
-        })}
+              </div>
+            </article>
+          </Link>
+        )}
+
+        {/* Grid Posts - 나머지 글 (3열 그리드) */}
+        {gridPosts.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {gridPosts.map((post, index) => {
+              const firstImage = extractFirstImage(post.body.raw);
+
+              return (
+                <Link
+                  key={post._id}
+                  href={post.url}
+                  className="group animate-fade-in-up"
+                  style={{
+                    animationDelay: `${(index + 1) * 100}ms`,
+                    opacity: 0,
+                    animationFillMode: 'forwards',
+                  }}
+                >
+                  <article
+                    className="h-full rounded-xl border-2 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 flex flex-col overflow-hidden"
+                    style={{
+                      backgroundColor: 'rgba(130, 102, 68, 0.03)',
+                      borderColor: 'var(--menu-main)',
+                    }}
+                  >
+                    {/* 썸네일 이미지 */}
+                    {firstImage && (
+                      <div className="relative w-full h-48 overflow-hidden">
+                        <Image
+                          src={firstImage}
+                          alt={post.title}
+                          fill
+                          unoptimized
+                          className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        />
+                      </div>
+                    )}
+
+                    {/* 콘텐츠 영역 */}
+                    <div className="p-6 flex flex-col flex-grow">
+                      {/* 작성일 */}
+                      <div className="flex items-center gap-2 text-sm opacity-60 mb-3">
+                        <CalendarIcon size={14} />
+                        <time dateTime={post.date}>
+                          {format(new Date(post.date), 'yyyy년 M월 d일', { locale: ko })}
+                        </time>
+                      </div>
+
+                      {/* 제목 */}
+                      <h2
+                        className="text-xl font-bold mb-3 group-hover:opacity-70 transition-opacity line-clamp-2"
+                        style={{ color: 'var(--menu-main)' }}
+                      >
+                        {post.title}
+                      </h2>
+
+                      {/* 요약문 */}
+                      <p className="opacity-70 mb-4 line-clamp-3 text-sm flex-grow">
+                        {post.summary || post.description || '요약문이 없습니다.'}
+                      </p>
+
+                      {/* 태그 */}
+                      {post.tags && post.tags.length > 0 && (
+                        <div className="flex gap-2 flex-wrap pt-3 border-t" style={{ borderColor: 'rgba(130, 102, 68, 0.2)' }}>
+                          {post.tags.slice(0, 3).map((tag) => (
+                            <span
+                              key={tag}
+                              className="px-2.5 py-1 text-xs rounded-full font-medium"
+                              style={{
+                                backgroundColor: 'var(--menu-sub)',
+                                color: 'var(--menu-sub-text)'
+                              }}
+                            >
+                              #{tag}
+                            </span>
+                          ))}
+                          {post.tags.length > 3 && (
+                            <span className="px-2.5 py-1 text-xs opacity-50">
+                              +{post.tags.length - 3}
+                            </span>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </article>
+                </Link>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       {/* 글이 없을 때 */}
@@ -191,9 +304,9 @@ export default function ArticlesPage() {
         <div className="flex justify-center items-center gap-2 mt-12">
           {/* 이전 페이지 */}
           <button
-            onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+            onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="p-2 rounded-lg border disabled:opacity-30 disabled:cursor-not-allowed hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            className="p-2 rounded-lg border disabled:opacity-30 disabled:cursor-not-allowed hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300"
             style={{ borderColor: 'var(--menu-main)' }}
           >
             <ChevronLeft size={20} />
@@ -211,11 +324,11 @@ export default function ArticlesPage() {
                 return (
                   <button
                     key={page}
-                    onClick={() => setCurrentPage(page)}
-                    className={`px-4 py-2 rounded-lg border font-medium transition-all ${
+                    onClick={() => handlePageChange(page)}
+                    className={`px-4 py-2 rounded-lg border font-medium transition-all duration-300 ${
                       currentPage === page
-                        ? 'text-white shadow-md'
-                        : 'hover:bg-gray-100 dark:hover:bg-gray-800'
+                        ? 'text-white shadow-md scale-110'
+                        : 'hover:bg-gray-100 dark:hover:bg-gray-800 hover:scale-105'
                     }`}
                     style={
                       currentPage === page
@@ -238,9 +351,9 @@ export default function ArticlesPage() {
 
           {/* 다음 페이지 */}
           <button
-            onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+            onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="p-2 rounded-lg border disabled:opacity-30 disabled:cursor-not-allowed hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            className="p-2 rounded-lg border disabled:opacity-30 disabled:cursor-not-allowed hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300"
             style={{ borderColor: 'var(--menu-main)' }}
           >
             <ChevronRight size={20} />
@@ -248,12 +361,6 @@ export default function ArticlesPage() {
         </div>
       )}
 
-      {/* 페이지 정보 */}
-      {filteredPosts.length > 0 && (
-        <p className="text-center text-sm opacity-60 mt-4">
-          전체 {filteredPosts.length}개의 글 중 {startIndex + 1}-{Math.min(endIndex, filteredPosts.length)}번째 글
-        </p>
-      )}
     </div>
   );
 }

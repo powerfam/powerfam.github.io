@@ -11,8 +11,6 @@ tags:
 section: section3
 ---
 
-# AI 시대 데이터 분석가 역량 (1): 프롬프트 엔지니어링
-
 ![AI 프롬프트 엔지니어링](https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80)
 
 ## AI는 도구다, 그것도 아주 강력한

@@ -11,8 +11,6 @@ tags:
 section: section2
 ---
 
-# 레이 달리오 '원칙': 삶과 일을 위한 시스템적 사고
-
 ![원칙](https://images.unsplash.com/photo-1456324504439-367cee3b3c32?w=800&q=80)
 
 ## 원칙이란 무엇인가

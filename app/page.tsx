@@ -5,39 +5,9 @@ import TextType from '@/components/TextType';
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen flex flex-col md:flex-row items-center justify-center px-6 md:px-16 lg:px-24 overflow-hidden py-12 md:py-0">
-      {/* 세로 영상 - 모바일/데스크톱 반응형 */}
-      <div className="relative md:absolute md:right-[10%] md:top-1/2 md:-translate-y-1/2 mb-8 md:mb-0 z-0">
-        <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1, delay: 0.3, type: "spring" }}
-          className="relative w-[200px] h-[360px] md:w-[310px] md:h-[550px]"
-        >
-          {/* 3단 그림자로 입체감 */}
-          <div className="absolute inset-0 rounded-[35px] overflow-hidden shadow-2xl">
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-full object-cover opacity-80 md:opacity-100"
-            >
-              <source src="/movies/main_movie_3.mov" type="video/mp4" />
-              <source src="/movies/main_movie_3.mp4" type="video/mp4" />
-            </video>
-          </div>
-
-          {/* 그림자 레이어 1 */}
-          <div className="absolute -inset-1 bg-[#826644]/5 rounded-[38px] blur-sm -z-10" />
-
-          {/* 그림자 레이어 2 */}
-          <div className="absolute -inset-3 bg-[#D99058]/8 rounded-[42px] blur-lg -z-20" />
-        </motion.div>
-      </div>
-
-      {/* 텍스트 콘텐츠 - 모바일/데스크톱 반응형 */}
-      <div className="relative z-10 w-full max-w-xl md:max-w-xl">
+    <div className="max-w-4xl mx-auto relative min-h-[80vh] flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12">
+      {/* 텍스트 콘텐츠 - 데스크톱에서 왼쪽 */}
+      <div className="relative z-10 w-full md:w-1/2 order-2 md:order-1">
         {/* 모바일: 반투명 배경 / 데스크톱: 배경 없음 */}
         <div
           className="backdrop-blur-sm md:bg-transparent md:backdrop-blur-none p-6 md:p-0 rounded-2xl"
@@ -116,6 +86,36 @@ export default function Home() {
             </motion.div>
           </motion.div>
         </div>
+      </div>
+
+      {/* 세로 영상 - 데스크톱에서 오른쪽 */}
+      <div className="relative w-full md:w-1/2 flex justify-center order-1 md:order-2">
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 1, delay: 0.3, type: "spring" }}
+          className="relative w-[200px] h-[360px] md:w-[280px] md:h-[500px]"
+        >
+          {/* 3단 그림자로 입체감 */}
+          <div className="absolute inset-0 rounded-[35px] overflow-hidden shadow-2xl">
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover opacity-80 md:opacity-100"
+            >
+              <source src="/movies/main_movie_3.mov" type="video/mp4" />
+              <source src="/movies/main_movie_3.mp4" type="video/mp4" />
+            </video>
+          </div>
+
+          {/* 그림자 레이어 1 */}
+          <div className="absolute -inset-1 bg-[#826644]/5 rounded-[38px] blur-sm -z-10" />
+
+          {/* 그림자 레이어 2 */}
+          <div className="absolute -inset-3 bg-[#D99058]/8 rounded-[42px] blur-lg -z-20" />
+        </motion.div>
       </div>
     </div>
   );

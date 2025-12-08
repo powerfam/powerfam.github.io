@@ -11,8 +11,6 @@ tags:
 section: section3
 ---
 
-# AI 시대 데이터 분석가 역량 (3): 스토리텔링과 커뮤니케이션
-
 ![데이터 스토리텔링](https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80)
 
 ## 분석의 90%는 커뮤니케이션이다

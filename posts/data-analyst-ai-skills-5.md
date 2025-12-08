@@ -11,8 +11,6 @@ tags:
 section: section3
 ---
 
-# AI 시대 데이터 분석가 역량 (5): 데이터 윤리와 책임
-
 ![데이터 윤리](https://images.unsplash.com/photo-1633613286991-611fe299c4be?w=800&q=80)
 
 ## 데이터의 힘이 커질수록 책임도 커진다

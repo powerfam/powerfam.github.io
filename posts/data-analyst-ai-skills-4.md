@@ -11,8 +11,6 @@ tags:
 section: section3
 ---
 
-# AI 시대 데이터 분석가 역량 (4): 실험 설계와 인과 추론
-
 ![실험 설계](https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80)
 
 ## 상관관계 ≠ 인과관계

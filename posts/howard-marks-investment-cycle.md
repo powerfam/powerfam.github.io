@@ -11,8 +11,6 @@ tags:
 section: section1
 ---
 
-# 하워드 막스의 투자 사이클: 시장의 리듬을 읽는 법
-
 ![시장 사이클](https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=800&q=80)
 
 ## 시장은 진자처럼 움직인다

@@ -11,8 +11,6 @@ tags:
 section: section1
 ---
 
-# 존 보글의 S&P500 인덱스 투자 철학
-
 ![인덱스 투자](https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80)
 
 ## 시장을 이기려 하지 말고, 시장이 되어라

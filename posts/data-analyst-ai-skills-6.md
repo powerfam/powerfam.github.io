@@ -11,8 +11,6 @@ tags:
 section: section3
 ---
 
-# AI 시대 데이터 분석가 역량 (6): 지속적 학습과 적응력
-
 ![지속적 학습](https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80)
 
 ## 유일한 상수는 변화다
