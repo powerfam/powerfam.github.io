@@ -4,7 +4,7 @@ import MarkdownAssistant from '@/components/MarkdownAssistant';
 import AIAssistant from '@/components/AIAssistant';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { useState, useEffect } from 'react';
-import { Trash2Icon, PlusIcon, FileTextIcon, EditIcon, ImageIcon, LinkIcon, CalendarIcon } from 'lucide-react';
+import { Trash2Icon, PlusIcon, FileTextIcon, EditIcon, ImageIcon, LinkIcon, CalendarIcon, TableIcon } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
 import { Progress } from '@/components/ui/progress';
 import { format } from 'date-fns';
@@ -14,9 +14,15 @@ import { format } from 'date-fns';
 function EditorToolbar({ onInsert }: { onInsert: (text: string) => void }) {
   const [showLinkDialog, setShowLinkDialog] = useState(false);
   const [showImageSizeMenu, setShowImageSizeMenu] = useState(false);
+  const [showTableDialog, setShowTableDialog] = useState(false);
   const [linkText, setLinkText] = useState('');
   const [linkUrl, setLinkUrl] = useState('');
   const [imageUrl, setImageUrl] = useState('');
+
+  // 표 관련 상태
+  const [tableRows, setTableRows] = useState(3);
+  const [tableCols, setTableCols] = useState(3);
+  const [tableData, setTableData] = useState<string[][]>([]);
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -45,14 +51,70 @@ function EditorToolbar({ onInsert }: { onInsert: (text: string) => void }) {
 
   const handleLinkInsert = () => {
     if (linkUrl) {
-      const markdown = linkText 
-        ? `[${linkText}](${linkUrl})` 
+      const markdown = linkText
+        ? `[${linkText}](${linkUrl})`
         : `[링크](${linkUrl})`;
       onInsert(markdown);
       setLinkText('');
       setLinkUrl('');
       setShowLinkDialog(false);
     }
+  };
+
+  // 표 다이얼로그 열기
+  const openTableDialog = () => {
+    // 초기 빈 테이블 데이터 생성
+    const initialData = Array(tableRows).fill(null).map(() => Array(tableCols).fill(''));
+    setTableData(initialData);
+    setShowTableDialog(true);
+  };
+
+  // 행/열 수 변경 시 테이블 데이터 재생성
+  const updateTableSize = (newRows: number, newCols: number) => {
+    const newData = Array(newRows).fill(null).map((_, rowIdx) =>
+      Array(newCols).fill(null).map((_, colIdx) =>
+        tableData[rowIdx]?.[colIdx] || ''
+      )
+    );
+    setTableRows(newRows);
+    setTableCols(newCols);
+    setTableData(newData);
+  };
+
+  // 셀 데이터 업데이트
+  const updateCell = (rowIdx: number, colIdx: number, value: string) => {
+    const newData = [...tableData];
+    newData[rowIdx] = [...newData[rowIdx]];
+    newData[rowIdx][colIdx] = value;
+    setTableData(newData);
+  };
+
+  // 마크다운 표 생성 (가운데 정렬)
+  const generateMarkdownTable = () => {
+    if (tableData.length === 0 || tableData[0].length === 0) return;
+
+    const rows = tableData;
+    const cols = tableCols;
+
+    // 헤더 행 (첫 번째 행)
+    const headerRow = '| ' + rows[0].map(cell => cell || '제목').join(' | ') + ' |';
+
+    // 구분선 (가운데 정렬: :---:)
+    const separatorRow = '| ' + Array(cols).fill(':---:').join(' | ') + ' |';
+
+    // 데이터 행들
+    const dataRows = rows.slice(1).map(row =>
+      '| ' + row.map(cell => cell || '').join(' | ') + ' |'
+    );
+
+    const markdown = [headerRow, separatorRow, ...dataRows].join('\n');
+    onInsert('\n' + markdown + '\n');
+
+    // 초기화
+    setShowTableDialog(false);
+    setTableRows(3);
+    setTableCols(3);
+    setTableData([]);
   };
 
   const insertImageWithSize = (size: 'small' | 'thumbnail' | 'medium' | 'large' | 'full') => {
@@ -102,6 +164,16 @@ function EditorToolbar({ onInsert }: { onInsert: (text: string) => void }) {
       >
         <LinkIcon size={16} />
         <span className="text-sm">링크</span>
+      </button>
+
+      {/* 표 삽입 버튼 */}
+      <button
+        type="button"
+        onClick={openTableDialog}
+        className="px-3 py-1.5 rounded border hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-1.5"
+      >
+        <TableIcon size={16} />
+        <span className="text-sm">표</span>
       </button>
 
       {/* 이미지 크기 메뉴 */}
@@ -213,6 +285,104 @@ function EditorToolbar({ onInsert }: { onInsert: (text: string) => void }) {
                     setShowLinkDialog(false);
                     setLinkText('');
                     setLinkUrl('');
+                  }}
+                  className="flex-1 py-2 rounded border hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                  취소
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 표 삽입 다이얼로그 */}
+      {showTableDialog && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <h3 className="text-lg font-bold mb-4" style={{ color: 'var(--menu-main)' }}>
+                표 삽입
+              </h3>
+
+              {/* 행/열 수 설정 */}
+              <div className="flex gap-4 mb-6">
+                <div className="flex items-center gap-2">
+                  <label className="text-sm font-medium">행:</label>
+                  <input
+                    type="number"
+                    min={2}
+                    max={10}
+                    value={tableRows}
+                    onChange={(e) => updateTableSize(Math.max(2, Math.min(10, parseInt(e.target.value) || 2)), tableCols)}
+                    className="w-16 px-2 py-1 border rounded text-center bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                    style={{ borderColor: 'var(--menu-main)' }}
+                  />
+                </div>
+                <div className="flex items-center gap-2">
+                  <label className="text-sm font-medium">열:</label>
+                  <input
+                    type="number"
+                    min={2}
+                    max={6}
+                    value={tableCols}
+                    onChange={(e) => updateTableSize(tableRows, Math.max(2, Math.min(6, parseInt(e.target.value) || 2)))}
+                    className="w-16 px-2 py-1 border rounded text-center bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                    style={{ borderColor: 'var(--menu-main)' }}
+                  />
+                </div>
+              </div>
+
+              {/* 표 입력 그리드 */}
+              <div className="mb-4 overflow-x-auto">
+                <table className="w-full border-collapse">
+                  <tbody>
+                    {tableData.map((row, rowIdx) => (
+                      <tr key={rowIdx}>
+                        {row.map((cell, colIdx) => (
+                          <td key={colIdx} className="p-1">
+                            <input
+                              type="text"
+                              value={cell}
+                              onChange={(e) => updateCell(rowIdx, colIdx, e.target.value)}
+                              placeholder={rowIdx === 0 ? `헤더 ${colIdx + 1}` : ''}
+                              className={`w-full px-2 py-2 border rounded text-center text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 ${
+                                rowIdx === 0 ? 'font-bold' : ''
+                              }`}
+                              style={{
+                                borderColor: 'var(--menu-main)',
+                                backgroundColor: rowIdx === 0 ? 'rgba(130, 102, 68, 0.1)' : undefined
+                              }}
+                            />
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <p className="text-xs opacity-60 mb-4">
+                * 첫 번째 행은 헤더로 사용됩니다. 모든 셀은 가운데 정렬됩니다.
+              </p>
+
+              {/* 버튼 */}
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={generateMarkdownTable}
+                  className="flex-1 py-2 rounded text-white font-medium"
+                  style={{ backgroundColor: 'var(--menu-main)' }}
+                >
+                  표 삽입
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowTableDialog(false);
+                    setTableRows(3);
+                    setTableCols(3);
+                    setTableData([]);
                   }}
                   className="flex-1 py-2 rounded border hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
