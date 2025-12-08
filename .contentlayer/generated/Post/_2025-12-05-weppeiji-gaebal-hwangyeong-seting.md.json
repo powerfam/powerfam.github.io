@@ -4,11 +4,12 @@
   "tags": [
     "개발환경세팅",
     "대시보드",
-    "웹페이지"
+    "웹페이지\r"
   ],
+  "section": "section1",
   "body": {
-    "raw": "\n## 미국주식 관련 컨텐츠 개발 방안\n#### 기능 목표\n- 고객의 체류시간 증가\n- 매매까지 의사결정을 위한 시그널 생성\n- 시각적 즐거움\n- 유익하면서도 효율적인 정보 구축\n\n#### KPI\n- 1인당 고객 체류시간\n- 해당 컨텐츠 참여 여부에 따른 거래 지표 비교\n\n\n![미국 주식 시장](https://upload.wikimedia.org/wikipedia/commons/5/51/US_Stock_Market_-_Investing_in_the_United_States.jpg)\n*미국주식 @voti*\n\n",
-    "html": "<h2>미국주식 관련 컨텐츠 개발 방안</h2>\n<h4>기능 목표</h4>\n<ul>\n<li>고객의 체류시간 증가</li>\n<li>매매까지 의사결정을 위한 시그널 생성</li>\n<li>시각적 즐거움</li>\n<li>유익하면서도 효율적인 정보 구축</li>\n</ul>\n<h4>KPI</h4>\n<ul>\n<li>1인당 고객 체류시간</li>\n<li>해당 컨텐츠 참여 여부에 따른 거래 지표 비교</li>\n</ul>\n<p><img src=\"https://upload.wikimedia.org/wikipedia/commons/5/51/US_Stock_Market_-_Investing_in_the_United_States.jpg\" alt=\"미국 주식 시장\">\n<em>미국주식 @voti</em></p>"
+    "raw": "\r\n## 미국주식 관련 컨텐츠 개발 방안\r\n#### 기능 목표\r\n- 고객의 체류시간 증가\r\n- 매매까지 의사결정을 위한 시그널 생성\r\n- 시각적 즐거움\r\n- 유익하면서도 효율적인 정보 구축\r\n\r\n#### KPI\r\n- 1인당 고객 체류시간\r\n- 해당 컨텐츠 참여 여부에 따른 거래 지표 비교\r\n\r\n\r\n![미국 주식 시장](https://upload.wikimedia.org/wikipedia/commons/5/51/US_Stock_Market_-_Investing_in_the_United_States.jpg)\r\n*미국주식 @voti*\r\n\r\n",
+    "html": "<h2>미국주식 관련 컨텐츠 개발 방안</h2>\n<h4>기능 목표</h4>\n<ul>\n<li>고객의 체류시간 증가</li>\n<li>매매까지 의사결정을 위한 시그널 생성</li>\n<li>시각적 즐거움</li>\n<li>유익하면서도 효율적인 정보 구축</li>\n</ul>\n<h4>KPI</h4>\n<ul>\n<li>1인당 고객 체류시간</li>\n<li>해당 컨텐츠 참여 여부에 따른 거래 지표 비교</li>\n</ul>\n<p><img src=\"https://upload.wikimedia.org/wikipedia/commons/5/51/US_Stock_Market_-_Investing_in_the_United_States.jpg\" alt=\"미국 주식 시장\">\r\n<em>미국주식 @voti</em></p>"
   },
   "_id": "2025-12-05-weppeiji-gaebal-hwangyeong-seting.md",
   "_raw": {

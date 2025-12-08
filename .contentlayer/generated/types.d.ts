@@ -18,6 +18,7 @@ export type Post = {
   description?: string | undefined
   summary?: string | undefined
   tags?: string[] | undefined
+  section: string
   /** Markdown file body */
   body: Markdown
   url: string

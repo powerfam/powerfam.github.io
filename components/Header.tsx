@@ -45,7 +45,7 @@ export default function Header() {
   const baseNavItems = [
     { href: '/about', label: 'About' },
     { href: '/test', label: '테스트' },
-    { href: '/test_2', label: '글목록' },
+    { href: '/articles', label: 'Articles' },
   ];
 
   // 로그인한 경우 Admin 메뉴 추가

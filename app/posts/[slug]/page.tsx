@@ -97,7 +97,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
       {process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID && (
         <div className="mt-12 pt-8 border-t" style={{ borderColor: 'var(--menu-main)' }}>
           <h3 className="text-2xl font-bold mb-6" style={{ color: 'var(--menu-main)' }}>
-            💬 댓글
+            댓글
           </h3>
           <FirebaseComments postSlug={post._raw.flattenedPath} />
         </div>

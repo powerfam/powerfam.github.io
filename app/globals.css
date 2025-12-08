@@ -204,3 +204,43 @@ input[type="radio"] {
 .dark .giscus-wrapper iframe.giscus-frame {
   filter: none;
 }
+
+/* Ripple Effect (물결 효과) */
+.ripple {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(217, 144, 88, 0.6) 0%, rgba(217, 144, 88, 0.3) 50%, transparent 70%);
+  transform: scale(0);
+  animation: ripple-animation 0.6s ease-out;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.dark .ripple {
+  background: radial-gradient(circle, rgba(217, 144, 88, 0.7) 0%, rgba(217, 144, 88, 0.4) 50%, transparent 70%);
+}
+
+@keyframes ripple-animation {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Fade-in-up Animation for Articles */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out;
+}

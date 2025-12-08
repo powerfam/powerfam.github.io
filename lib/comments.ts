@@ -14,6 +14,8 @@ import {
   arrayUnion,
   arrayRemove,
   getDocs,
+  limit,
+  getCountFromServer,
 } from 'firebase/firestore';
 import { db } from './firebase';
 
@@ -136,16 +138,23 @@ export async function removeReaction(
   });
 }
 
-// 특정 게시글의 댓글 실시간 구독
+// 특정 게시글의 댓글 실시간 구독 (페이지네이션 지원)
 export function subscribeToComments(
   postSlug: string,
-  callback: (comments: Comment[]) => void
+  callback: (comments: Comment[]) => void,
+  limitCount?: number
 ): () => void {
-  const q = query(
-    collection(db, 'comments'),
+  const constraints: any[] = [
     where('postSlug', '==', postSlug),
-    orderBy('createdAt', 'asc')
-  );
+    orderBy('createdAt', 'asc'), // 오래된 순으로 정렬 (부모-자식 관계 유지)
+  ];
+
+  // limitCount가 지정된 경우에만 limit 추가
+  if (limitCount) {
+    constraints.push(limit(limitCount));
+  }
+
+  const q = query(collection(db, 'comments'), ...constraints);
 
   const unsubscribe = onSnapshot(q, (snapshot) => {
     const comments: Comment[] = [];
@@ -156,6 +165,16 @@ export function subscribeToComments(
   });
 
   return unsubscribe;
+}
+
+// 특정 게시글의 댓글 총 개수 가져오기 (읽기 1회만 사용)
+export async function getCommentCount(postSlug: string): Promise<number> {
+  const q = query(
+    collection(db, 'comments'),
+    where('postSlug', '==', postSlug)
+  );
+  const snapshot = await getCountFromServer(q);
+  return snapshot.data().count;
 }
 
 // 비밀번호 해싱 (간단한 구현 - 프로덕션에서는 bcrypt 등 사용)

@@ -4,7 +4,10 @@ import MarkdownAssistant from '@/components/MarkdownAssistant';
 import AIAssistant from '@/components/AIAssistant';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { useState, useEffect } from 'react';
-import { Trash2Icon, PlusIcon, FileTextIcon, EditIcon, ImageIcon, LinkIcon } from 'lucide-react';
+import { Trash2Icon, PlusIcon, FileTextIcon, EditIcon, ImageIcon, LinkIcon, CalendarIcon } from 'lucide-react';
+import { Calendar } from '@/components/ui/calendar';
+import { Progress } from '@/components/ui/progress';
+import { format } from 'date-fns';
 
 
 // 에디터 도구바 컴포넌트
@@ -261,11 +264,27 @@ export default function AdminPage() {
     tags: '',
     content: '',
     date: new Date().toISOString().split('T')[0], // 기본값: 오늘
+    section: 'section1', // 기본값: section1
   });
   const [currentEditorContent, setCurrentEditorContent] = useState({
     title: '',
     content: '',
   });
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
+  const [showCalendar, setShowCalendar] = useState(false);
+
+  // 달력 외부 클릭 감지
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (showCalendar && !target.closest('.calendar-container')) {
+        setShowCalendar(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showCalendar]);
   const [aboutContent, setAboutContent] = useState<AboutContent>({
     title: 'About',
     intro: '',
@@ -335,14 +354,17 @@ export default function AdminPage() {
     try {
       const res = await fetch(`/api/posts/get?slug=${slug}`);
       const data = await res.json();
+      const postDate = data.date || new Date().toISOString().split('T')[0];
       setEditContent({
         title: data.title || '',
         description: data.description || '',
         summary: data.summary || '',
         tags: data.tags ? data.tags.join(', ') : '',
         content: data.content || '',
-        date: data.date || new Date().toISOString().split('T')[0],
+        date: postDate,
+        section: data.section || 'section1',
       });
+      setSelectedDate(new Date(postDate));
       setEditingPost(slug);
       setActiveTab('write');
     } catch (error) {
@@ -353,9 +375,18 @@ export default function AdminPage() {
   // 글 작성
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSubmitting(true);
 
     const formData = new FormData(e.currentTarget);
+    const section = formData.get('section') as string;
+
+    // 섹션 검증
+    if (!section || section === '') {
+      alert('섹션을 선택하세요');
+      return;
+    }
+
+    setIsSubmitting(true);
+
     const data = {
       title: formData.get('title'),
       description: formData.get('description'),
@@ -363,6 +394,7 @@ export default function AdminPage() {
       tags: formData.get('tags'),
       content: formData.get('content'),
       date: formData.get('date'),
+      section: section,
     };
 
     try {
@@ -391,9 +423,18 @@ export default function AdminPage() {
   // 글 수정
   const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSubmitting(true);
 
     const formData = new FormData(e.currentTarget);
+    const section = formData.get('section') as string;
+
+    // 섹션 검증
+    if (!section || section === '') {
+      alert('섹션을 선택하세요');
+      return;
+    }
+
+    setIsSubmitting(true);
+
     const data = {
       slug: editingPost,
       title: formData.get('title'),
@@ -402,6 +443,7 @@ export default function AdminPage() {
       tags: formData.get('tags'),
       content: formData.get('content'),
       date: formData.get('date'),
+      section: section,
     };
 
     try {
@@ -455,7 +497,7 @@ export default function AdminPage() {
   // 새 글 작성 모드로 전환
   const startNewPost = () => {
     setEditingPost(null);
-    setEditContent({ title: '', description: '', summary: '', tags: '', content: '', date: new Date().toISOString().split('T')[0] });
+    setEditContent({ title: '', description: '', summary: '', tags: '', content: '', date: new Date().toISOString().split('T')[0], section: 'section1' });
     setActiveTab('write');
   };
 
@@ -503,11 +545,32 @@ export default function AdminPage() {
     }
   };
 
+  // 로딩 진행률 상태
+  const [loadingProgress, setLoadingProgress] = useState(13);
+
+  // 로딩 애니메이션
+  useEffect(() => {
+    if (status === 'loading') {
+      const timer1 = setTimeout(() => setLoadingProgress(45), 300);
+      const timer2 = setTimeout(() => setLoadingProgress(75), 600);
+      const timer3 = setTimeout(() => setLoadingProgress(90), 900);
+      return () => {
+        clearTimeout(timer1);
+        clearTimeout(timer2);
+        clearTimeout(timer3);
+      };
+    }
+  }, [status]);
+
   // 로딩 중
   if (status === 'loading') {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-xl">로딩 중...</p>
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4">
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--menu-main)' }}>
+          관리자 페이지
+        </h1>
+        <Progress value={loadingProgress} className="w-[60%] max-w-md" />
+        <p className="text-sm opacity-60">로딩 중...</p>
       </div>
     );
   }
@@ -638,7 +701,7 @@ export default function AdminPage() {
             {editingPost ? '글 수정' : '새 글 작성'}
           </h2>
           <form onSubmit={editingPost ? handleUpdate : handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <label className="block mb-2 font-medium">제목</label>
                 <input
@@ -654,14 +717,64 @@ export default function AdminPage() {
 
               <div>
                 <label className="block mb-2 font-medium">작성일</label>
-                <input
-                  name="date"
-                  type="date"
+                <div className="relative calendar-container">
+                  <button
+                    type="button"
+                    onClick={() => setShowCalendar(!showCalendar)}
+                    className="w-full px-4 py-2 rounded border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600 flex items-center justify-between"
+                    style={{ borderColor: 'var(--menu-main)' }}
+                  >
+                    <span>{selectedDate ? format(selectedDate, 'yyyy-MM-dd') : '날짜 선택'}</span>
+                    <CalendarIcon size={16} />
+                  </button>
+
+                  {showCalendar && (
+                    <div className="absolute top-full mt-2 z-50 bg-white dark:bg-gray-800 rounded-lg border-2 p-4 shadow-xl calendar-popup"
+                      style={{ borderColor: 'var(--menu-main)' }}
+                    >
+                      <style jsx>{`
+                        .calendar-popup :global([aria-selected="true"]) {
+                          background-color: var(--menu-main) !important;
+                          color: white !important;
+                        }
+                      `}</style>
+                      <Calendar
+                        mode="single"
+                        selected={selectedDate}
+                        onSelect={(date) => {
+                          setSelectedDate(date);
+                          setShowCalendar(false);
+                        }}
+                        className="rounded-lg"
+                      />
+                    </div>
+                  )}
+
+                  <input
+                    name="date"
+                    type="hidden"
+                    value={selectedDate ? format(selectedDate, 'yyyy-MM-dd') : ''}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block mb-2 font-medium">
+                  섹션 <span className="text-red-500">*</span>
+                </label>
+                <select
+                  name="section"
                   required
-                  defaultValue={editContent.date}
+                  defaultValue={editContent.section}
                   className="w-full px-4 py-2 rounded border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
                   style={{ borderColor: 'var(--menu-main)' }}
-                />
+                >
+                  <option value="">섹션 선택</option>
+                  <option value="section1">Section 1</option>
+                  <option value="section2">Section 2</option>
+                  <option value="section3">Section 3</option>
+                </select>
               </div>
             </div>
 
@@ -797,7 +910,7 @@ export default function AdminPage() {
                   onClick={() => {
                     setActiveTab('list');
                     setEditingPost(null);
-                    setEditContent({ title: '', description: '', summary: '', tags: '', content: '', date: new Date().toISOString().split('T')[0] });
+                    setEditContent({ title: '', description: '', summary: '', tags: '', content: '', date: new Date().toISOString().split('T')[0], section: 'section1' });
                   }}
                   className="px-6 py-3 rounded-lg font-medium border"
                   style={{ borderColor: 'var(--menu-main)' }}

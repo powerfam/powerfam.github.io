@@ -3,6 +3,7 @@ import { Noto_Serif_KR } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import { Providers } from "./providers";
+import RippleEffect from "@/components/RippleEffect";
 
 const notoSerifKR = Noto_Serif_KR({
   subsets: ["latin"],
@@ -24,6 +25,7 @@ export default function RootLayout({
     <html lang="ko" className={notoSerifKR.variable}>
       <body>
         <Providers>
+          <RippleEffect />
           <Header />
           <main className="max-w-4xl mx-auto px-4 py-8">
             {children}

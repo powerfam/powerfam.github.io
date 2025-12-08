@@ -12,7 +12,9 @@ import {
   removeReaction,
   subscribeToComments,
   hashPassword,
+  getCommentCount,
 } from '@/lib/comments';
+import { containsProfanity } from '@/lib/profanity-filter';
 import AuthModal from './AuthModal';
 import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
@@ -239,6 +241,8 @@ export default function FirebaseComments({ postSlug }: FirebaseCommentsProps) {
   const [replyTo, setReplyTo] = useState<string | null>(null);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [displayLimit, setDisplayLimit] = useState(3); // 초기 3개만 표시
+  const [totalCommentCount, setTotalCommentCount] = useState(0);
 
   // Firebase Auth 상태 구독
   useEffect(() => {
@@ -249,14 +253,19 @@ export default function FirebaseComments({ postSlug }: FirebaseCommentsProps) {
     return () => unsubscribe();
   }, []);
 
-  // 댓글 실시간 구독
+  // 전체 댓글 개수 가져오기 (최초 1회만)
+  useEffect(() => {
+    getCommentCount(postSlug).then(setTotalCommentCount);
+  }, [postSlug]);
+
+  // 댓글 실시간 구독 (limit 적용)
   useEffect(() => {
     const unsubscribe = subscribeToComments(postSlug, (newComments) => {
       setComments(newComments);
-    });
+    }, displayLimit);
 
     return () => unsubscribe();
-  }, [postSlug]);
+  }, [postSlug, displayLimit]);
 
   // 인증 성공 핸들러
   const handleAuthSuccess = (user: User, name?: string, password?: string) => {
@@ -283,6 +292,12 @@ export default function FirebaseComments({ postSlug }: FirebaseCommentsProps) {
 
     if (!currentUser) {
       setShowAuthModal(true);
+      return;
+    }
+
+    // 비속어 검사
+    if (containsProfanity(newComment)) {
+      alert('부적절한 언어가 포함되어 있습니다. 댓글 작성이 제한됩니다.');
       return;
     }
 
@@ -313,6 +328,10 @@ export default function FirebaseComments({ postSlug }: FirebaseCommentsProps) {
 
       setNewComment('');
       setReplyTo(null);
+
+      // 전체 댓글 개수 업데이트
+      const count = await getCommentCount(postSlug);
+      setTotalCommentCount(count);
     } catch (err) {
       console.error('Failed to add comment:', err);
       alert('댓글 작성에 실패했습니다.');
@@ -323,6 +342,12 @@ export default function FirebaseComments({ postSlug }: FirebaseCommentsProps) {
 
   // 댓글 수정
   const handleEditComment = async (commentId: string, content: string) => {
+    // 비속어 검사
+    if (containsProfanity(content)) {
+      alert('부적절한 언어가 포함되어 있습니다. 댓글 수정이 제한됩니다.');
+      return;
+    }
+
     try {
       await updateComment(commentId, content);
     } catch (err) {
@@ -392,6 +417,11 @@ export default function FirebaseComments({ postSlug }: FirebaseCommentsProps) {
   };
 
   const organizedComments = organizeComments(comments);
+
+  // 더보기 버튼 핸들러
+  const handleLoadMore = () => {
+    setDisplayLimit((prev) => prev + 5);
+  };
 
   return (
     <div>
@@ -518,29 +548,47 @@ export default function FirebaseComments({ postSlug }: FirebaseCommentsProps) {
       {/* 댓글 목록 */}
       <div>
         <div className="mb-4 font-semibold" style={{ color: 'var(--menu-main)' }}>
-          댓글 {comments.length}개
+          댓글 {totalCommentCount}개
         </div>
 
-        {organizedComments.length === 0 ? (
+        {totalCommentCount === 0 ? (
           <div className="text-center py-12 opacity-60">
             아직 댓글이 없습니다. 첫 댓글을 작성해보세요!
           </div>
         ) : (
-          <div className="space-y-2">
-            {organizedComments.map((comment) => (
-              <CommentItem
-                key={comment.id}
-                comment={comment}
-                currentUser={currentUser}
-                anonymousData={anonymousData}
-                onReply={setReplyTo}
-                onEdit={handleEditComment}
-                onDelete={handleDeleteComment}
-                onReact={handleReaction}
-                level={comment.parentId ? 1 : 0}
-              />
-            ))}
-          </div>
+          <>
+            <div className="space-y-2">
+              {organizedComments.map((comment) => (
+                <CommentItem
+                  key={comment.id}
+                  comment={comment}
+                  currentUser={currentUser}
+                  anonymousData={anonymousData}
+                  onReply={setReplyTo}
+                  onEdit={handleEditComment}
+                  onDelete={handleDeleteComment}
+                  onReact={handleReaction}
+                  level={comment.parentId ? 1 : 0}
+                />
+              ))}
+            </div>
+
+            {/* 더보기 버튼 */}
+            {displayLimit < totalCommentCount && (
+              <div className="flex justify-center mt-6">
+                <button
+                  onClick={handleLoadMore}
+                  className="px-6 py-2 rounded-md transition-colors border-2"
+                  style={{
+                    borderColor: 'var(--menu-main)',
+                    color: 'var(--menu-main)',
+                  }}
+                >
+                  댓글 더보기 ({comments.length} / {totalCommentCount})
+                </button>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
