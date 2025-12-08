@@ -1,13 +1,32 @@
 import { allPosts } from 'contentlayer/generated';
 import { notFound } from 'next/navigation';
 import { format } from 'date-fns';
-import { HeartIcon, Share2Icon } from 'lucide-react';
+import { HeartIcon, Share2Icon, ClockIcon } from 'lucide-react';
 import {
   ToggleGroup,
   ToggleGroupItem,
 } from '@/components/ui/toggle-group';
-import FirebaseComments from '@/components/FirebaseComments';
+import dynamic from 'next/dynamic';
 import CopyUrlButton from '@/components/CopyUrlButton';
+import TableOfContents from '@/components/TableOfContents';
+import FontSizeControl from '@/components/FontSizeControl';
+
+// 동적 임포트로 번들 크기 최적화
+const FirebaseComments = dynamic(() => import('@/components/FirebaseComments'), {
+  loading: () => <div className="text-center py-8 opacity-60">댓글 로딩 중...</div>,
+  ssr: false,
+});
+
+// 읽기 시간 계산 함수 (평균 250 단어/분 기준)
+function calculateReadingTime(text: string): number {
+  const wordsPerMinute = 250;
+  const words = text.trim().split(/\s+/).length;
+  const minutes = Math.ceil(words / wordsPerMinute);
+  return minutes;
+}
+
+// ISR: 60초마다 재검증
+export const revalidate = 60;
 
 export async function generateStaticParams() {
   return allPosts.map((post) => ({
@@ -21,19 +40,29 @@ export default function PostPage({ params }: { params: { slug: string } }) {
 
   if (!post) notFound();
 
+  const readingTime = calculateReadingTime(post.body.raw);
+
   return (
-    <div className="max-w-3xl mx-auto px-4 py-12">
-      {/* 헤더 */}
-      <div className="mb-8 pb-8 border-b" style={{ borderColor: 'var(--menu-main)' }}>
+    <>
+      {/* 폰트 사이즈 조절 컨트롤 */}
+      <FontSizeControl />
+
+      <div className="max-w-3xl mx-auto px-4 py-12">
+        {/* 헤더 */}
+        <div className="mb-8 pb-8 border-b" style={{ borderColor: 'var(--menu-main)' }}>
         <h1 className="text-2xl md:text-4xl font-bold mb-4" style={{ color: 'var(--menu-main)' }}>
           {post.title}
         </h1>
 
-        {/* 작성날짜 */}
-        <div className="mb-3 text-sm" style={{ color: 'var(--foreground)', opacity: 0.6 }}>
+        {/* 작성날짜 및 읽기 시간 */}
+        <div className="mb-3 flex items-center gap-4 text-sm" style={{ color: 'var(--foreground)', opacity: 0.6 }}>
           <time dateTime={post.date}>
             {format(new Date(post.date), 'yyyy년 MM월 dd일')}
           </time>
+          <div className="flex items-center gap-1">
+            <ClockIcon size={14} />
+            <span>{readingTime}분 읽기</span>
+          </div>
         </div>
 
         {/* 태그 및 URL 복사 */}
@@ -59,6 +88,9 @@ export default function PostPage({ params }: { params: { slug: string } }) {
           <CopyUrlButton />
         </div>
       </div>
+
+      {/* 목차 (TOC) */}
+      <TableOfContents />
 
       {/* 본문 */}
       <article
@@ -108,6 +140,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
           <FirebaseComments postSlug={post._raw.flattenedPath} />
         </div>
       )}
-    </div>
+      </div>
+    </>
   );
 }

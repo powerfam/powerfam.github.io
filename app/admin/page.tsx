@@ -1,13 +1,23 @@
 'use client';
 
-import MarkdownAssistant from '@/components/MarkdownAssistant';
-import AIAssistant from '@/components/AIAssistant';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { useState, useEffect } from 'react';
 import { Trash2Icon, PlusIcon, FileTextIcon, EditIcon, ImageIcon, LinkIcon, CalendarIcon, TableIcon } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
 import { Progress } from '@/components/ui/progress';
 import { format } from 'date-fns';
+import dynamic from 'next/dynamic';
+
+// 동적 임포트로 번들 크기 최적화 (AI 컴포넌트는 무거우므로)
+const MarkdownAssistant = dynamic(() => import('@/components/MarkdownAssistant'), {
+  loading: () => <div className="text-sm opacity-60">AI 어시스턴트 로딩 중...</div>,
+  ssr: false,
+});
+
+const AIAssistant = dynamic(() => import('@/components/AIAssistant'), {
+  loading: () => <div className="text-sm opacity-60">AI 어시스턴트 로딩 중...</div>,
+  ssr: false,
+});
 
 
 // 에디터 도구바 컴포넌트

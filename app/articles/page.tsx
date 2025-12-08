@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { compareDesc, format } from 'date-fns';
 import { ko } from 'date-fns/locale';
-import { CalendarIcon, FileTextIcon, ChevronLeft, ChevronRight } from 'lucide-react';
+import { CalendarIcon, FileTextIcon, ChevronLeft, ChevronRight, TagIcon } from 'lucide-react';
 
 type Section = 'section1' | 'section2' | 'section3';
 
@@ -79,24 +79,38 @@ export default function ArticlesPage() {
       </div>
 
       {/* 섹션 탭 */}
-      <div className="flex gap-4 border-b-2 pb-2" style={{ borderColor: 'var(--menu-main)' }}>
-        {sections.map((section) => (
-          <button
-            key={section.id}
-            onClick={() => setActiveSection(section.id)}
-            className={`px-6 py-2 rounded-t-lg font-medium transition-all duration-300 ${
-              activeSection === section.id
-                ? 'shadow-md transform -translate-y-1'
-                : 'opacity-60 hover:opacity-100'
-            }`}
-            style={{
-              backgroundColor: activeSection === section.id ? 'var(--menu-main)' : 'transparent',
-              color: activeSection === section.id ? 'var(--menu-main-text)' : 'var(--foreground)',
-            }}
-          >
-            {section.title}
-          </button>
-        ))}
+      <div className="flex flex-wrap gap-2 sm:gap-3 pb-2 items-center justify-between">
+        {/* 섹션 메뉴 - 다크모드 토글 스타일 적용 */}
+        <div className="flex items-center gap-2">
+          {sections.map((section) => (
+            <button
+              key={section.id}
+              onClick={() => setActiveSection(section.id)}
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 ${
+                activeSection === section.id ? 'shadow-md' : 'hover:opacity-80'
+              }`}
+              style={{
+                backgroundColor: activeSection === section.id ? 'var(--menu-sub)' : 'var(--menu-main)',
+                color: activeSection === section.id ? 'var(--menu-sub-text)' : 'var(--menu-main-text)',
+              }}
+            >
+              {section.title}
+            </button>
+          ))}
+        </div>
+
+        {/* Tags 페이지 링크 - Section 메뉴와 동일한 높이 */}
+        <Link
+          href="/articles/tags"
+          className="flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 hover:opacity-80 shadow-md"
+          style={{
+            backgroundColor: 'var(--menu-sub)',
+            color: 'var(--menu-sub-text)',
+          }}
+        >
+          <TagIcon size={14} className="sm:w-4 sm:h-4" />
+          <span>Tags</span>
+        </Link>
       </div>
 
       {/* 섹션 설명 */}
@@ -138,7 +152,8 @@ export default function ArticlesPage() {
                       src={extractFirstImage(featuredPost.body.raw)!}
                       alt={featuredPost.title}
                       fill
-                      unoptimized
+                      priority
+                      sizes="(max-width: 768px) 100vw, 50vw"
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                     {/* Featured 라벨 */}
@@ -231,7 +246,8 @@ export default function ArticlesPage() {
                           src={firstImage}
                           alt={post.title}
                           fill
-                          unoptimized
+                          loading="lazy"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                           className="object-cover transition-transform duration-300 group-hover:scale-105"
                         />
                       </div>

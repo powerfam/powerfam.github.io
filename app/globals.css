@@ -10,6 +10,9 @@
   --menu-main-text: #FAF9F5;
   --menu-sub-text: #3B3C36;
   --background-overlay: rgba(250, 249, 245, 0.9);
+
+  /* 다크모드 전환 애니메이션 */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .dark {
@@ -26,6 +29,36 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: var(--font-noto-serif-kr), serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* 모든 요소에 부드러운 색상 전환 적용 */
+* {
+  transition-property: background-color, border-color, color;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+}
+
+/* Skeleton Loading 애니메이션 */
+@keyframes skeleton-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.bg-muted {
+  background-color: rgba(130, 102, 68, 0.1);
+}
+
+.dark .bg-muted {
+  background-color: rgba(217, 144, 88, 0.1);
 }
 
 /* 모바일 prose 헤딩 사이즈 조정 */
@@ -243,4 +276,38 @@ input[type="radio"] {
 
 .animate-fade-in-up {
   animation: fade-in-up 0.6s ease-out;
+}
+
+/* View Transitions API - Dark Mode Transition */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.4s;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 2;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+::view-transition-old(root) {
+  animation: 0.4s cubic-bezier(0.4, 0, 1, 1) both fade-out;
+}
+
+::view-transition-new(root) {
+  animation: 0.4s cubic-bezier(0, 0, 0.2, 1) both fade-in;
 }
