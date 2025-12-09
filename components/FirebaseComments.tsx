@@ -10,14 +10,18 @@ import {
   deleteComment,
   toggleReaction,
   removeReaction,
-  subscribeToComments,
+  getComments,
   hashPassword,
   getCommentCount,
+  checkRateLimit,
+  updateCommentTime,
 } from '@/lib/comments';
 import { containsProfanity } from '@/lib/profanity-filter';
 import AuthModal from './AuthModal';
 import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import DOMPurify from 'isomorphic-dompurify';
+import useSWR from 'swr';
 
 interface FirebaseCommentsProps {
   postSlug: string;
@@ -32,6 +36,15 @@ interface CommentItemProps {
   onDelete: (commentId: string) => void;
   onReact: (commentId: string, reaction: 'like' | 'love' | 'laugh' | 'wow') => void;
   level?: number;
+}
+
+// XSS 방지를 위한 HTML 새니타이징 함수
+function sanitizeHTML(html: string): string {
+  return DOMPurify.sanitize(html, {
+    ALLOWED_TAGS: [], // HTML 태그 모두 제거 (텍스트만 허용)
+    ALLOWED_ATTR: [], // 속성 모두 제거
+    KEEP_CONTENT: true, // 텍스트 내용은 유지
+  });
 }
 
 // 개별 댓글 아이템 컴포넌트
@@ -88,7 +101,7 @@ function CommentItem({
           )}
           <div>
             <div className="font-semibold text-sm" style={{ color: 'var(--foreground)' }}>
-              {comment.authorName}
+              {sanitizeHTML(comment.authorName)}
               {comment.isEdited && (
                 <span className="ml-2 text-xs opacity-60">(수정됨)</span>
               )}
@@ -138,7 +151,7 @@ function CommentItem({
             className="mb-2 whitespace-pre-wrap"
             style={{ color: 'var(--foreground)' }}
           >
-            {comment.content}
+            {sanitizeHTML(comment.content)}
           </p>
         )}
 
@@ -232,7 +245,6 @@ function CommentItem({
 }
 
 export default function FirebaseComments({ postSlug }: FirebaseCommentsProps) {
-  const [comments, setComments] = useState<Comment[]>([]);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [anonymousData, setAnonymousData] = useState<{ name: string; password: string } | null>(
     null
@@ -242,7 +254,26 @@ export default function FirebaseComments({ postSlug }: FirebaseCommentsProps) {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [displayLimit, setDisplayLimit] = useState(3); // 초기 3개만 표시
-  const [totalCommentCount, setTotalCommentCount] = useState(0);
+
+  // SWR로 댓글 가져오기 (30초마다 자동 갱신)
+  const { data: comments = [], mutate: refreshComments } = useSWR(
+    [`comments-${postSlug}`, displayLimit],
+    () => getComments(postSlug, displayLimit),
+    {
+      refreshInterval: 30000, // 30초마다 갱신
+      revalidateOnFocus: true, // 탭 포커스 시 갱신
+      revalidateOnReconnect: true, // 재연결 시 갱신
+    }
+  );
+
+  // 전체 댓글 개수 가져오기
+  const { data: totalCommentCount = 0, mutate: refreshCount } = useSWR(
+    `comment-count-${postSlug}`,
+    () => getCommentCount(postSlug),
+    {
+      refreshInterval: 60000, // 1분마다 갱신
+    }
+  );
 
   // Firebase Auth 상태 구독
   useEffect(() => {
@@ -252,20 +283,6 @@ export default function FirebaseComments({ postSlug }: FirebaseCommentsProps) {
 
     return () => unsubscribe();
   }, []);
-
-  // 전체 댓글 개수 가져오기 (최초 1회만)
-  useEffect(() => {
-    getCommentCount(postSlug).then(setTotalCommentCount);
-  }, [postSlug]);
-
-  // 댓글 실시간 구독 (limit 적용)
-  useEffect(() => {
-    const unsubscribe = subscribeToComments(postSlug, (newComments) => {
-      setComments(newComments);
-    }, displayLimit);
-
-    return () => unsubscribe();
-  }, [postSlug, displayLimit]);
 
   // 인증 성공 핸들러
   const handleAuthSuccess = (user: User, name?: string, password?: string) => {
@@ -292,6 +309,13 @@ export default function FirebaseComments({ postSlug }: FirebaseCommentsProps) {
 
     if (!currentUser) {
       setShowAuthModal(true);
+      return;
+    }
+
+    // Rate limiting 검사
+    const rateLimit = await checkRateLimit(currentUser.uid);
+    if (!rateLimit.allowed) {
+      alert(`너무 빠르게 댓글을 작성하고 있습니다. ${rateLimit.remainingSeconds}초 후에 다시 시도해주세요.`);
       return;
     }
 
@@ -326,12 +350,15 @@ export default function FirebaseComments({ postSlug }: FirebaseCommentsProps) {
         replyTo || undefined
       );
 
+      // Rate limiting: 댓글 작성 시간 업데이트
+      await updateCommentTime(currentUser.uid);
+
       setNewComment('');
       setReplyTo(null);
 
-      // 전체 댓글 개수 업데이트
-      const count = await getCommentCount(postSlug);
-      setTotalCommentCount(count);
+      // SWR로 댓글 목록 및 개수 즉시 갱신
+      await refreshComments();
+      await refreshCount();
     } catch (err) {
       console.error('Failed to add comment:', err);
       alert('댓글 작성에 실패했습니다.');
@@ -350,6 +377,8 @@ export default function FirebaseComments({ postSlug }: FirebaseCommentsProps) {
 
     try {
       await updateComment(commentId, content);
+      // SWR로 댓글 목록 즉시 갱신
+      await refreshComments();
     } catch (err) {
       console.error('Failed to update comment:', err);
       alert('댓글 수정에 실패했습니다.');
@@ -362,6 +391,8 @@ export default function FirebaseComments({ postSlug }: FirebaseCommentsProps) {
 
     try {
       await deleteComment(commentId);
+      // SWR로 댓글 목록 즉시 갱신
+      await refreshComments();
     } catch (err) {
       console.error('Failed to delete comment:', err);
       alert('댓글 삭제에 실패했습니다.');
@@ -395,6 +426,9 @@ export default function FirebaseComments({ postSlug }: FirebaseCommentsProps) {
         // 리액션 추가
         await toggleReaction(commentId, currentUser.uid, reaction);
       }
+
+      // SWR로 댓글 목록 즉시 갱신
+      await refreshComments();
     } catch (err) {
       console.error('Failed to toggle reaction:', err);
     }

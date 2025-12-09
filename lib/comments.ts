@@ -16,6 +16,8 @@ import {
   getDocs,
   limit,
   getCountFromServer,
+  getDoc,
+  setDoc,
 } from 'firebase/firestore';
 import { db } from './firebase';
 
@@ -138,7 +140,33 @@ export async function removeReaction(
   });
 }
 
-// 특정 게시글의 댓글 실시간 구독 (페이지네이션 지원)
+// 특정 게시글의 댓글 가져오기 (일회성, SWR용)
+export async function getComments(
+  postSlug: string,
+  limitCount?: number
+): Promise<Comment[]> {
+  const constraints: any[] = [
+    where('postSlug', '==', postSlug),
+    orderBy('createdAt', 'asc'), // 오래된 순으로 정렬 (부모-자식 관계 유지)
+  ];
+
+  // limitCount가 지정된 경우에만 limit 추가
+  if (limitCount) {
+    constraints.push(limit(limitCount));
+  }
+
+  const q = query(collection(db, 'comments'), ...constraints);
+  const snapshot = await getDocs(q);
+
+  const comments: Comment[] = [];
+  snapshot.forEach((doc) => {
+    comments.push({ id: doc.id, ...doc.data() } as Comment);
+  });
+
+  return comments;
+}
+
+// 특정 게시글의 댓글 실시간 구독 (페이지네이션 지원) - 레거시
 export function subscribeToComments(
   postSlug: string,
   callback: (comments: Comment[]) => void,
@@ -200,4 +228,36 @@ export async function verifyPassword(
   const hashedPassword = await hashPassword(password);
 
   return comment.password === hashedPassword;
+}
+
+// Rate Limiting: 마지막 댓글 작성 시간 확인
+export async function checkRateLimit(userId: string): Promise<{ allowed: boolean; remainingSeconds?: number }> {
+  const activityRef = doc(db, 'userActivity', userId);
+  const activityDoc = await getDoc(activityRef);
+
+  if (!activityDoc.exists()) {
+    return { allowed: true };
+  }
+
+  const lastCommentTime = activityDoc.data().lastCommentTime as Timestamp;
+  const now = Timestamp.now();
+  const diffSeconds = now.seconds - lastCommentTime.seconds;
+  const RATE_LIMIT_SECONDS = 30; // 30초 제한
+
+  if (diffSeconds < RATE_LIMIT_SECONDS) {
+    return {
+      allowed: false,
+      remainingSeconds: RATE_LIMIT_SECONDS - diffSeconds
+    };
+  }
+
+  return { allowed: true };
+}
+
+// Rate Limiting: 댓글 작성 시간 업데이트
+export async function updateCommentTime(userId: string): Promise<void> {
+  const activityRef = doc(db, 'userActivity', userId);
+  await setDoc(activityRef, {
+    lastCommentTime: Timestamp.now(),
+  }, { merge: true });
 }

@@ -6,6 +6,7 @@ import { TypeIcon, PlusIcon, MinusIcon } from 'lucide-react';
 export default function FontSizeControl() {
   const [fontSize, setFontSize] = useState(16); // 기본 16px
   const [isVisible, setIsVisible] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -18,20 +19,27 @@ export default function FontSizeControl() {
     }
   }, []);
 
+  // 타임아웃 시작 함수
+  const startHideTimer = () => {
+    // 기존 타임아웃 클리어
+    if (scrollTimeoutRef.current) {
+      clearTimeout(scrollTimeoutRef.current);
+    }
+
+    // 마우스가 hover 중이면 타이머 시작 안함
+    if (isHovered) return;
+
+    // 3초 후 버튼 숨김
+    scrollTimeoutRef.current = setTimeout(() => {
+      setIsVisible(false);
+    }, 3000);
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       // 스크롤 시 버튼 표시
       setIsVisible(true);
-
-      // 기존 타임아웃 클리어
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
-      }
-
-      // 3초 후 버튼 숨김
-      scrollTimeoutRef.current = setTimeout(() => {
-        setIsVisible(false);
-      }, 3000);
+      startHideTimer();
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -42,7 +50,16 @@ export default function FontSizeControl() {
         clearTimeout(scrollTimeoutRef.current);
       }
     };
-  }, []);
+  }, [isHovered]);
+
+  // 마우스 hover 상태 변경 시 타이머 관리
+  useEffect(() => {
+    if (!isHovered && isVisible) {
+      startHideTimer();
+    } else if (isHovered && scrollTimeoutRef.current) {
+      clearTimeout(scrollTimeoutRef.current);
+    }
+  }, [isHovered, isVisible]);
 
   const applyFontSize = (size: number) => {
     const article = document.querySelector('article');
@@ -78,6 +95,9 @@ export default function FontSizeControl() {
 
   return (
     <div
+      data-nextjs-scroll-focus-boundary="true"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       className={`fixed bottom-24 right-8 z-40 flex flex-col gap-2 transition-all duration-300 ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
       }`}

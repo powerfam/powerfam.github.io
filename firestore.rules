@@ -3,6 +3,19 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
+    // App Check 검증 헬퍼 함수
+    function isAppCheckValid() {
+      // App Check 토큰이 있으면 검증, 없으면 허용 (개발 환경 고려)
+      // 프로덕션에서 강제하려면: return request.app.appCheck == true;
+      return request.app.appCheck == null || request.app.appCheck == true;
+    }
+
+    // 사용자 활동 추적 (Rate Limiting용)
+    match /userActivity/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId && isAppCheckValid();
+      allow write: if request.auth != null && request.auth.uid == userId && isAppCheckValid();
+    }
+
     // 댓글 컬렉션 규칙
     match /comments/{commentId} {
 
@@ -10,12 +23,18 @@ service cloud.firestore {
       allow read: if true;
 
       // 인증된 사용자 또는 익명 사용자 댓글 작성 가능
+      // Rate limiting: userActivity에서 마지막 댓글 시간 확인
       allow create: if request.auth != null &&
         request.resource.data.authorId == request.auth.uid &&
         request.resource.data.content is string &&
         request.resource.data.content.size() > 0 &&
         request.resource.data.content.size() <= 2000 &&
-        request.resource.data.postSlug is string;
+        request.resource.data.postSlug is string &&
+        // 추가 보안: authorName, content에 악성 패턴 방지
+        !request.resource.data.content.matches('.*<script.*') &&
+        !request.resource.data.authorName.matches('.*<script.*') &&
+        // App Check 검증
+        isAppCheckValid();
 
       // 댓글 수정: 작성자만 가능
       allow update: if request.auth != null &&
@@ -27,16 +46,22 @@ service cloud.firestore {
         ) &&
         // 수정 가능한 필드 제한
         (!request.resource.data.diff(resource.data).affectedKeys()
-          .hasAny(['authorId', 'postSlug', 'createdAt', 'password']));
+          .hasAny(['authorId', 'postSlug', 'createdAt', 'password'])) &&
+        // App Check 검증
+        isAppCheckValid();
 
       // 댓글 삭제: 작성자만 가능
       allow delete: if request.auth != null &&
-        resource.data.authorId == request.auth.uid;
+        resource.data.authorId == request.auth.uid &&
+        // App Check 검증
+        isAppCheckValid();
 
       // 리액션 업데이트: 인증된 사용자만 가능
       allow update: if request.auth != null &&
         request.resource.data.diff(resource.data).affectedKeys()
-          .hasOnly(['reactions', 'reactedUsers', 'updatedAt']);
+          .hasOnly(['reactions', 'reactedUsers', 'updatedAt']) &&
+        // App Check 검증
+        isAppCheckValid();
     }
 
     // 다른 컬렉션은 기본적으로 접근 불가

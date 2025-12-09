@@ -105,7 +105,6 @@ export default function Home() {
               playsInline
               className="w-full h-full object-cover opacity-80 md:opacity-100"
             >
-              <source src="/movies/main_movie_3.mov" type="video/mp4" />
               <source src="/movies/main_movie_3.mp4" type="video/mp4" />
             </video>
           </div>

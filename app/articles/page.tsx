@@ -7,6 +7,8 @@ import Image from 'next/image';
 import { compareDesc, format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { CalendarIcon, FileTextIcon, ChevronLeft, ChevronRight, TagIcon } from 'lucide-react';
+import TextType from '@/components/TextType';
+import { ArticlesPageSkeleton } from '@/components/ArticleSkeleton';
 
 type Section = 'section1' | 'section2' | 'section3';
 
@@ -35,6 +37,7 @@ export default function ArticlesPage() {
   const [activeSection, setActiveSection] = useState<Section>('section1');
   const [currentPage, setCurrentPage] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
 
   // 섹션별로 글 필터링
   const filteredPosts = allPosts
@@ -51,9 +54,21 @@ export default function ArticlesPage() {
   const featuredPost = paginatedPosts[0];
   const gridPosts = paginatedPosts.slice(1);
 
-  // 섹션 변경 시 페이지를 1로 리셋
+  // 초기 로딩 효과
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsInitialLoading(false);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // 섹션 변경 시 페이지를 1로 리셋 및 트랜지션
   useEffect(() => {
     setCurrentPage(1);
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setIsTransitioning(false);
+    }, 300);
   }, [activeSection]);
 
   // 페이지 변경 시 트랜지션 효과
@@ -120,12 +135,13 @@ export default function ArticlesPage() {
         </p>
       </div>
 
-      {/* 글 목록 컨테이너 - 페이지 전환 애니메이션 */}
-      <div
-        className={`transition-all duration-300 ${
-          isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
-        }`}
-      >
+      {/* 스켈레톤 로딩 또는 글 목록 */}
+      {isInitialLoading || isTransitioning ? (
+        <ArticlesPageSkeleton />
+      ) : (
+        <div
+          className={`transition-all duration-300 opacity-100 translate-y-0`}
+        >
         {/* Featured Post - 최신 글 (전체 너비) */}
         {featuredPost && (
           <Link
@@ -156,16 +172,18 @@ export default function ArticlesPage() {
                       sizes="(max-width: 768px) 100vw, 50vw"
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
-                    {/* Featured 라벨 */}
-                    <div
-                      className="absolute top-4 left-4 px-3 py-1 rounded-full text-sm font-bold"
-                      style={{
-                        backgroundColor: 'var(--menu-main)',
-                        color: 'var(--menu-main-text)'
-                      }}
-                    >
-                      Latest
-                    </div>
+                    {/* Featured 라벨 - 1페이지에서만 표시 */}
+                    {currentPage === 1 && (
+                      <div
+                        className="absolute top-4 left-4 px-3 py-1 rounded-full text-sm font-bold"
+                        style={{
+                          backgroundColor: 'var(--menu-main)',
+                          color: 'var(--menu-main-text)'
+                        }}
+                      >
+                        Latest
+                      </div>
+                    )}
                   </div>
                 )}
 
@@ -187,26 +205,48 @@ export default function ArticlesPage() {
                     {featuredPost.title}
                   </h2>
 
-                  {/* 요약문 */}
-                  <p className="opacity-70 mb-6 text-base line-clamp-3">
-                    {featuredPost.summary || featuredPost.description || '요약문이 없습니다.'}
-                  </p>
+                  {/* 요약문 - 타이핑 효과 */}
+                  <div className="opacity-70 mb-6 text-base min-h-[4.5rem]">
+                    <TextType
+                      text={featuredPost.summary || featuredPost.description || '요약문이 없습니다.'}
+                      typingSpeed={30}
+                      loop={false}
+                      showCursor={false}
+                      className="line-clamp-3"
+                    />
+                  </div>
 
-                  {/* 태그 */}
+                  {/* 태그 - 마키 애니메이션 */}
                   {featuredPost.tags && featuredPost.tags.length > 0 && (
-                    <div className="flex gap-2 flex-wrap">
-                      {featuredPost.tags.slice(0, 4).map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-3 py-1.5 text-sm rounded-full font-medium"
-                          style={{
-                            backgroundColor: 'var(--menu-sub)',
-                            color: 'var(--menu-sub-text)'
-                          }}
-                        >
-                          #{tag}
-                        </span>
-                      ))}
+                    <div className="overflow-hidden relative">
+                      <div className="flex gap-2 animate-marquee hover:pause-marquee">
+                        {/* 첫 번째 세트 */}
+                        {featuredPost.tags.slice(0, 4).map((tag, index) => (
+                          <span
+                            key={`first-${tag}-${index}`}
+                            className="px-3 py-1.5 text-sm rounded-full font-medium whitespace-nowrap flex-shrink-0"
+                            style={{
+                              backgroundColor: 'var(--menu-sub)',
+                              color: 'var(--menu-sub-text)'
+                            }}
+                          >
+                            #{tag}
+                          </span>
+                        ))}
+                        {/* 두 번째 세트 (무한 스크롤을 위한 복제) */}
+                        {featuredPost.tags.slice(0, 4).map((tag, index) => (
+                          <span
+                            key={`second-${tag}-${index}`}
+                            className="px-3 py-1.5 text-sm rounded-full font-medium whitespace-nowrap flex-shrink-0"
+                            style={{
+                              backgroundColor: 'var(--menu-sub)',
+                              color: 'var(--menu-sub-text)'
+                            }}
+                          >
+                            #{tag}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                   )}
                 </div>
@@ -272,32 +312,9 @@ export default function ArticlesPage() {
                       </h2>
 
                       {/* 요약문 */}
-                      <p className="opacity-70 mb-4 line-clamp-3 text-sm flex-grow">
+                      <p className="opacity-70 line-clamp-3 text-sm flex-grow">
                         {post.summary || post.description || '요약문이 없습니다.'}
                       </p>
-
-                      {/* 태그 */}
-                      {post.tags && post.tags.length > 0 && (
-                        <div className="flex gap-2 flex-wrap pt-3 border-t" style={{ borderColor: 'rgba(130, 102, 68, 0.2)' }}>
-                          {post.tags.slice(0, 3).map((tag) => (
-                            <span
-                              key={tag}
-                              className="px-2.5 py-1 text-xs rounded-full font-medium"
-                              style={{
-                                backgroundColor: 'var(--menu-sub)',
-                                color: 'var(--menu-sub-text)'
-                              }}
-                            >
-                              #{tag}
-                            </span>
-                          ))}
-                          {post.tags.length > 3 && (
-                            <span className="px-2.5 py-1 text-xs opacity-50">
-                              +{post.tags.length - 3}
-                            </span>
-                          )}
-                        </div>
-                      )}
                     </div>
                   </article>
                 </Link>
@@ -305,18 +322,19 @@ export default function ArticlesPage() {
             })}
           </div>
         )}
-      </div>
 
-      {/* 글이 없을 때 */}
-      {paginatedPosts.length === 0 && (
-        <div className="text-center py-20">
-          <FileTextIcon size={48} className="mx-auto mb-4 opacity-30" />
-          <p className="text-lg opacity-60">이 섹션에는 아직 글이 없습니다.</p>
-        </div>
+        {/* 글이 없을 때 */}
+        {paginatedPosts.length === 0 && (
+          <div className="text-center py-20">
+            <FileTextIcon size={48} className="mx-auto mb-4 opacity-30" />
+            <p className="text-lg opacity-60">이 섹션에는 아직 글이 없습니다.</p>
+          </div>
+        )}
+      </div>
       )}
 
       {/* 페이지네이션 */}
-      {totalPages > 1 && (
+      {!isInitialLoading && !isTransitioning && totalPages > 1 && (
         <div className="flex justify-center items-center gap-2 mt-12">
           {/* 이전 페이지 */}
           <button

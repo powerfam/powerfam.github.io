@@ -61,7 +61,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
           </time>
           <div className="flex items-center gap-1">
             <ClockIcon size={14} />
-            <span>{readingTime}분 읽기</span>
+            <span>읽는 시간 : {readingTime}분</span>
           </div>
         </div>
 
