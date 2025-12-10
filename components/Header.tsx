@@ -87,22 +87,22 @@ export default function Header() {
         
         {/* 데스크톱 메뉴 */}
         <div className="hidden md:flex items-center gap-4">
-          <div 
-            className="flex items-center gap-1 p-1 rounded-full"
+          <div
+            className="flex items-center gap-0.5 p-0.5 rounded-full h-[32px]"
             style={{ backgroundColor: 'var(--menu-main)' }}
           >
             {navItems.map((item) => {
               const isActive = pathname === item.href;
-              
+
               return (
                 <Link
                   key={item.href}
                   href={item.href}
                   className={`
-                    px-4 py-2 rounded-full text-sm font-medium transition-all
+                    px-3 py-1 rounded-full text-sm font-medium transition-all h-[28px] flex items-center
                     ${isActive ? 'shadow-md' : 'hover:opacity-80'}
                   `}
-                  style={{ 
+                  style={{
                     backgroundColor: isActive ? 'var(--menu-sub)' : 'transparent',
                     color: isActive ? 'var(--menu-sub-text)' : 'var(--menu-main-text)'
                   }}

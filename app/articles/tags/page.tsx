@@ -1,13 +1,15 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense, lazy } from 'react';
 import { allPosts } from 'contentlayer/generated';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
-import { TagIcon, XIcon, ZoomIn, ZoomOut } from 'lucide-react';
-import { Slider } from '@/components/ui/slider';
+import { TagIcon, XIcon, Box, Circle } from 'lucide-react';
+
+// 3D 컴포넌트 동적 임포트 (번들 최적화)
+const BubbleCloud3D = lazy(() => import('@/components/BubbleCloud3D'));
 
 interface TagCount {
   tag: string;
@@ -17,31 +19,29 @@ interface TagCount {
 
 // 태그 이름으로부터 일관된 색상 생성 (톤앤매너 유지)
 function getTagColor(tag: string, isDark: boolean = false) {
-  // 간단한 해시 함수
   let hash = 0;
   for (let i = 0; i < tag.length; i++) {
     hash = tag.charCodeAt(i) + ((hash << 5) - hash);
   }
 
-  // 브랜드 컬러 기반 색상 팔레트
   const lightColors = [
-    { bg: '#826644', text: '#FAF9F5' }, // 메인 브라운
-    { bg: '#D99058', text: '#3B3C36' }, // 메인 오렌지
-    { bg: '#A67C52', text: '#FAF9F5' }, // 중간 브라운
-    { bg: '#C17D4A', text: '#FAF9F5' }, // 진한 오렌지
-    { bg: '#8B7355', text: '#FAF9F5' }, // 밝은 브라운
-    { bg: '#B8956A', text: '#3B3C36' }, // 베이지 브라운
-    { bg: '#CD8B5C', text: '#3B3C36' }, // 밝은 오렌지
+    { bg: '#826644', text: '#FAF9F5' },
+    { bg: '#D99058', text: '#3B3C36' },
+    { bg: '#A67C52', text: '#FAF9F5' },
+    { bg: '#C17D4A', text: '#FAF9F5' },
+    { bg: '#8B7355', text: '#FAF9F5' },
+    { bg: '#B8956A', text: '#3B3C36' },
+    { bg: '#CD8B5C', text: '#3B3C36' },
   ];
 
   const darkColors = [
-    { bg: '#D99058', text: '#FAF9F5' }, // 메인 오렌지
-    { bg: '#826644', text: '#FAF9F5' }, // 메인 브라운
-    { bg: '#E5A470', text: '#3B3C36' }, // 밝은 오렌지
-    { bg: '#A67C52', text: '#FAF9F5' }, // 중간 브라운
-    { bg: '#F0B888', text: '#3B3C36' }, // 연한 오렌지
-    { bg: '#B8956A', text: '#FAF9F5' }, // 베이지 브라운
-    { bg: '#CD8B5C', text: '#FAF9F5' }, // 밝은 오렌지
+    { bg: '#D99058', text: '#FAF9F5' },
+    { bg: '#826644', text: '#FAF9F5' },
+    { bg: '#E5A470', text: '#3B3C36' },
+    { bg: '#A67C52', text: '#FAF9F5' },
+    { bg: '#F0B888', text: '#3B3C36' },
+    { bg: '#B8956A', text: '#FAF9F5' },
+    { bg: '#CD8B5C', text: '#FAF9F5' },
   ];
 
   const colors = isDark ? darkColors : lightColors;
@@ -54,7 +54,7 @@ export default function TagsPage() {
   const [tagCounts, setTagCounts] = useState<TagCount[]>([]);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [zoom, setZoom] = useState(1);
+  const [viewMode, setViewMode] = useState<'3d' | '2d'>('3d');
 
   // 다크모드 감지
   useEffect(() => {
@@ -64,7 +64,6 @@ export default function TagsPage() {
 
     checkDarkMode();
 
-    // MutationObserver로 다크모드 변경 감지
     const observer = new MutationObserver(checkDarkMode);
     observer.observe(document.documentElement, {
       attributes: true,
@@ -87,7 +86,6 @@ export default function TagsPage() {
   }, []);
 
   useEffect(() => {
-    // 모든 포스트에서 태그 수집 및 카운팅
     const tagMap = new Map<string, number>();
 
     allPosts.forEach(post => {
@@ -98,9 +96,7 @@ export default function TagsPage() {
       }
     });
 
-    // 태그를 배열로 변환하고 크기 계산
     const tags = Array.from(tagMap.entries()).map(([tag, count]) => {
-      // 모바일: 40px ~ 100px, 데스크톱: 60px ~ 160px
       const minSize = isMobile ? 40 : 60;
       const maxSize = isMobile ? 100 : 160;
       const maxCount = Math.max(...Array.from(tagMap.values()));
@@ -109,21 +105,17 @@ export default function TagsPage() {
       return { tag, count, size };
     });
 
-    // 크기 순으로 정렬 (큰 것부터)
     tags.sort((a, b) => b.size - a.size);
-
     setTagCounts(tags);
   }, [isMobile]);
 
-  // 선택된 태그의 글 필터링
   const filteredPosts = selectedTag
     ? allPosts.filter(post => post.tags?.includes(selectedTag))
     : [];
 
-  // 버블 위치 생성 (간격 넓게 배치, 모바일 대응)
+  // 2D 버블 위치 생성
   const generateBubblePosition = (index: number, isMobile: boolean = false) => {
-    const angle = (index * 137.5) % 360; // 황금각으로 분산
-    // 모바일에서는 간격을 좁히고, 데스크톱에서는 넓게
+    const angle = (index * 137.5) % 360;
     const radius = Math.sqrt(index + 1) * (isMobile ? 35 : 60);
     const x = Math.cos(angle * Math.PI / 180) * radius;
     const y = Math.sin(angle * Math.PI / 180) * radius;
@@ -135,9 +127,43 @@ export default function TagsPage() {
     <div className="max-w-4xl mx-auto">
       {/* 헤더 */}
       <div className="mb-8">
-        <h1 className="text-4xl md:text-5xl font-bold mb-3" style={{ color: 'var(--menu-main)' }}>
-          Tag Cloud
-        </h1>
+        <div className="flex items-center justify-between mb-3">
+          <h1 className="text-4xl md:text-5xl font-bold" style={{ color: 'var(--menu-main)' }}>
+            Tag Cloud
+          </h1>
+
+          {/* 뷰 모드 토글 */}
+          {!selectedTag && (
+            <div className="flex items-center gap-2 p-1 rounded-full" style={{ backgroundColor: 'var(--menu-main)' }}>
+              <button
+                onClick={() => setViewMode('3d')}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
+                  viewMode === '3d' ? 'shadow-md' : 'opacity-70 hover:opacity-100'
+                }`}
+                style={{
+                  backgroundColor: viewMode === '3d' ? 'var(--menu-sub)' : 'transparent',
+                  color: 'var(--menu-main-text)',
+                }}
+              >
+                <Box size={16} />
+                <span className="hidden sm:inline">3D</span>
+              </button>
+              <button
+                onClick={() => setViewMode('2d')}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
+                  viewMode === '2d' ? 'shadow-md' : 'opacity-70 hover:opacity-100'
+                }`}
+                style={{
+                  backgroundColor: viewMode === '2d' ? 'var(--menu-sub)' : 'transparent',
+                  color: 'var(--menu-main-text)',
+                }}
+              >
+                <Circle size={16} />
+                <span className="hidden sm:inline">2D</span>
+              </button>
+            </div>
+          )}
+        </div>
         <p className="text-lg opacity-70">
           {selectedTag
             ? `"${selectedTag}" 태그가 포함된 글 ${filteredPosts.length}개`
@@ -145,27 +171,44 @@ export default function TagsPage() {
         </p>
       </div>
 
-      {/* Tag Bubble Cloud */}
-      {!selectedTag && (
-        <div className="relative min-h-[500px] md:min-h-[800px] flex items-center justify-center mb-12 overflow-hidden">
-          {/* Zoom 컨트롤 - 우측 하단 고정 */}
-          <div className="absolute bottom-4 right-4 z-20 flex items-center gap-3 px-4 py-3 rounded-full shadow-lg backdrop-blur-sm" style={{ backgroundColor: 'rgba(130, 102, 68, 0.9)' }}>
-            <ZoomOut size={18} style={{ color: 'var(--menu-main-text)' }} />
-            <Slider
-              value={[zoom * 50]}
-              onValueChange={(value) => setZoom(value[0] / 50)}
-              min={25}
-              max={100}
-              step={5}
-              className="w-24 md:w-32"
-            />
-            <ZoomIn size={18} style={{ color: 'var(--menu-main-text)' }} />
-          </div>
-
-          <div
-            className="relative w-full h-[500px] md:h-[800px] transition-transform duration-300"
-            style={{ transform: `scale(${zoom})` }}
+      {/* 3D 버블 클라우드 */}
+      {!selectedTag && viewMode === '3d' && (
+        <div className="relative mb-12">
+          <Suspense
+            fallback={
+              <div className="w-full h-[500px] md:h-[700px] flex items-center justify-center rounded-2xl" style={{ backgroundColor: isDarkMode ? 'rgba(59, 60, 54, 0.3)' : 'rgba(250, 249, 245, 0.5)' }}>
+                <div className="text-center">
+                  <motion.div
+                    className="w-20 h-20 mx-auto rounded-full"
+                    style={{ backgroundColor: 'var(--menu-main)' }}
+                    animate={{
+                      scale: [1, 1.2, 1],
+                      opacity: [0.5, 1, 0.5],
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: 'easeInOut',
+                    }}
+                  />
+                  <p className="mt-4 opacity-70">3D 버블 로딩 중...</p>
+                </div>
+              </div>
+            }
           >
+            <BubbleCloud3D
+              tagCounts={tagCounts}
+              onTagClick={setSelectedTag}
+              isDarkMode={isDarkMode}
+            />
+          </Suspense>
+        </div>
+      )}
+
+      {/* 2D 버블 클라우드 (기존) */}
+      {!selectedTag && viewMode === '2d' && (
+        <div className="relative min-h-[500px] md:min-h-[800px] flex items-center justify-center mb-12 overflow-hidden">
+          <div className="relative w-full h-[500px] md:h-[800px]">
             {tagCounts.map((item, index) => {
               const pos = generateBubblePosition(index, isMobile);
               const tagColor = getTagColor(item.tag, isDarkMode);
@@ -301,14 +344,12 @@ export default function TagsPage() {
                       borderColor: 'var(--menu-main)',
                     }}
                   >
-                    {/* 날짜 */}
                     <div className="text-sm opacity-60 mb-3">
                       <time dateTime={post.date}>
                         {format(new Date(post.date), 'yyyy년 M월 d일', { locale: ko })}
                       </time>
                     </div>
 
-                    {/* 제목 */}
                     <h2
                       className="text-xl font-bold mb-3 group-hover:opacity-70 transition-opacity line-clamp-2"
                       style={{ color: 'var(--menu-main)' }}
@@ -316,12 +357,10 @@ export default function TagsPage() {
                       {post.title}
                     </h2>
 
-                    {/* 요약문 */}
                     <p className="opacity-70 mb-4 line-clamp-3 text-sm">
                       {post.summary || post.description || '요약문이 없습니다.'}
                     </p>
 
-                    {/* 태그 */}
                     {post.tags && post.tags.length > 0 && (
                       <div className="flex gap-2 flex-wrap pt-3 border-t" style={{ borderColor: 'rgba(130, 102, 68, 0.2)' }}>
                         {post.tags.map((tag) => (
@@ -333,7 +372,7 @@ export default function TagsPage() {
                             style={{
                               backgroundColor: tag === selectedTag ? 'var(--menu-main)' : 'var(--menu-sub)',
                               color: tag === selectedTag ? 'var(--menu-main-text)' : 'var(--menu-sub-text)',
-                              ringColor: tag === selectedTag ? 'var(--menu-main)' : undefined,
+                              ['--tw-ring-color' as string]: tag === selectedTag ? 'var(--menu-main)' : undefined,
                             }}
                           >
                             #{tag}
