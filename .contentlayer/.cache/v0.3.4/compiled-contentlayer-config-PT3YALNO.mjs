@@ -25,13 +25,10 @@ var contentlayer_config_default = makeSource({
   markdown: {
     remarkPlugins: [remarkGfm]
   },
-  disableImportAliasWarning: true,
-  onSuccess: async (importData) => {
-    console.log(`\u2705 Contentlayer: ${importData.allDocuments.length}\uAC1C\uC758 \uBB38\uC11C \uC0DD\uC131 \uC644\uB8CC`);
-  }
+  disableImportAliasWarning: true
 });
 export {
   Post,
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-Y67ZGV4P.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-PT3YALNO.mjs.map

@@ -27,7 +27,4 @@ export default makeSource({
     remarkPlugins: [remarkGfm],
   },
   disableImportAliasWarning: true,
-  onSuccess: async (importData) => {
-    console.log(`✅ Contentlayer: ${importData.allDocuments.length}개의 문서 생성 완료`);
-  },
 });
