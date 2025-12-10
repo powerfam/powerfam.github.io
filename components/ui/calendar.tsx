@@ -19,9 +19,9 @@ function Calendar({
       className={className}
       style={{
         // CSS 변수로 스타일 지정
-        ['--rdp-accent-color' as any]: 'var(--menu-main)',
-        ['--rdp-accent-background-color' as any]: 'var(--menu-main)',
-      }}
+        ['--rdp-accent-color' as keyof React.CSSProperties]: 'var(--menu-main)',
+        ['--rdp-accent-background-color' as keyof React.CSSProperties]: 'var(--menu-main)',
+      } as React.CSSProperties}
       styles={{
         months: { display: 'flex', flexDirection: 'column' },
         month: { display: 'flex', flexDirection: 'column', gap: '1rem' },

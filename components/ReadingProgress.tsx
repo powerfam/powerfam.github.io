@@ -11,7 +11,7 @@ export default function ReadingProgress() {
       const article = document.querySelector('article');
       if (!article) return;
 
-      const articleRect = article.getBoundingClientRect();
+      article.getBoundingClientRect(); // Trigger layout calculation
       const articleTop = article.offsetTop;
       const articleHeight = article.offsetHeight;
       const windowHeight = window.innerHeight;

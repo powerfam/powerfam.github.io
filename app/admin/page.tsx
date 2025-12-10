@@ -2,7 +2,8 @@
 
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { useState, useEffect } from 'react';
-import { Trash2Icon, PlusIcon, FileTextIcon, EditIcon, ImageIcon, LinkIcon, CalendarIcon, TableIcon } from 'lucide-react';
+import { Trash2Icon, EditIcon, ImageIcon, LinkIcon, CalendarIcon, TableIcon } from 'lucide-react';
+// PlusIcon and FileTextIcon were removed - not needed
 import { Calendar } from '@/components/ui/calendar';
 import { Progress } from '@/components/ui/progress';
 import { format } from 'date-fns';
@@ -54,7 +55,7 @@ function EditorToolbar({ onInsert }: { onInsert: (text: string) => void }) {
       } else {
         alert('이미지 업로드 실패');
       }
-    } catch (error) {
+    } catch {
       alert('이미지 업로드 중 오류 발생');
     }
   };
@@ -127,7 +128,8 @@ function EditorToolbar({ onInsert }: { onInsert: (text: string) => void }) {
     setTableData([]);
   };
 
-  const insertImageWithSize = (size: 'small' | 'thumbnail' | 'medium' | 'large' | 'full') => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const insertImageWithSize = (_size: 'small' | 'thumbnail' | 'medium' | 'large' | 'full') => {
     if (!imageUrl) {
       alert('이미지 URL을 입력해주세요');
       return;
@@ -504,8 +506,8 @@ export default function AdminPage() {
       const res = await fetch('/api/posts/list');
       const data = await res.json();
       setPosts(data.posts || []);
-    } catch (error) {
-      console.error('글 목록 로드 실패:', error);
+    } catch (err) {
+      console.error('글 목록 로드 실패:', err);
     }
   };
 
@@ -514,8 +516,8 @@ export default function AdminPage() {
       const res = await fetch('/api/pages/get?page=about');
       const data = await res.json();
       setAboutContent(data);
-    } catch (error) {
-      console.error('About 내용 로드 실패:', error);
+    } catch (err) {
+      console.error('About 내용 로드 실패:', err);
     }
   };
 
@@ -524,8 +526,8 @@ export default function AdminPage() {
       const res = await fetch('/api/pages/get?page=test');
       const data = await res.json();
       setTestContent(data);
-    } catch (error) {
-      console.error('테스트 내용 로드 실패:', error);
+    } catch (err) {
+      console.error('테스트 내용 로드 실패:', err);
     }
   };
 
@@ -547,7 +549,7 @@ export default function AdminPage() {
       setSelectedDate(new Date(postDate));
       setEditingPost(slug);
       setActiveTab('write');
-    } catch (error) {
+    } catch {
       alert('글을 불러오는데 실패했습니다');
     }
   };
@@ -592,8 +594,8 @@ export default function AdminPage() {
         const errorData = await res.json();
         alert(`글 작성 실패: ${errorData.error || '알 수 없는 오류'}`);
       }
-    } catch (error) {
-      console.error('글 작성 에러:', error);
+    } catch (err) {
+      console.error('글 작성 에러:', err);
       alert('에러 발생');
     } finally {
       setIsSubmitting(false);
@@ -641,8 +643,8 @@ export default function AdminPage() {
         const errorData = await res.json();
         alert(`글 수정 실패: ${errorData.error || '알 수 없는 오류'}`);
       }
-    } catch (error) {
-      console.error('글 수정 에러:', error);
+    } catch (err) {
+      console.error('글 수정 에러:', err);
       alert('에러 발생');
     } finally {
       setIsSubmitting(false);
@@ -667,7 +669,7 @@ export default function AdminPage() {
       } else {
         alert('삭제 실패');
       }
-    } catch (error) {
+    } catch {
       alert('에러 발생');
     } finally {
       setDeleteLoading(null);
@@ -696,7 +698,7 @@ export default function AdminPage() {
       } else {
         alert('업데이트 실패');
       }
-    } catch (error) {
+    } catch {
       alert('에러 발생');
     } finally {
       setIsSubmitting(false);
@@ -718,7 +720,7 @@ export default function AdminPage() {
       } else {
         alert('업데이트 실패');
       }
-    } catch (error) {
+    } catch {
       alert('에러 발생');
     } finally {
       setIsSubmitting(false);
@@ -1054,7 +1056,7 @@ export default function AdminPage() {
                           } else {
                             alert('이미지 업로드 실패');
                           }
-                        } catch (error) {
+                        } catch {
                           alert('이미지 업로드 중 오류 발생');
                         } finally {
                           textarea.disabled = false;

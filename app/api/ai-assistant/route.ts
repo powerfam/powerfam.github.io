@@ -39,13 +39,13 @@ ${currentTitle || currentContent ? `
       });
 
       // 채팅 히스토리 변환
-      const historyMessages = chatHistory.map((msg: any) => ({
+      const historyMessages = chatHistory.map((msg: { role: string; content: string }) => ({
         role: msg.role,
         content: msg.content,
       }));
 
       // 현재 메시지 구성 (텍스트 + 이미지)
-      const currentMessageContent: any[] = [];
+      const currentMessageContent: Array<{ type: string; text?: string; source?: { type: string; media_type: string; data: string } }> = [];
 
       if (image) {
         // base64 이미지 데이터에서 헤더와 데이터 분리
@@ -86,7 +86,7 @@ ${currentTitle || currentContent ? `
         model: 'claude-sonnet-4-20250514',
         max_tokens: 1000,
         system: systemPrompt,
-        messages: messages as any,
+        messages: messages as Anthropic.MessageParam[],
       });
 
       response = completion.content[0].type === 'text' ? completion.content[0].text : '';
@@ -96,7 +96,7 @@ ${currentTitle || currentContent ? `
       });
 
       // 현재 메시지 구성 (텍스트 + 이미지)
-      const currentMessageContent: any[] = [];
+      const currentMessageContent: Array<{ type: string; text?: string; image_url?: { url: string } }> = [];
 
       if (image) {
         currentMessageContent.push({
@@ -122,7 +122,7 @@ ${currentTitle || currentContent ? `
             role: 'system',
             content: systemPrompt,
           },
-          ...chatHistory.map((msg: any) => ({
+          ...chatHistory.map((msg: { role: 'user' | 'assistant'; content: string }) => ({
             role: msg.role,
             content: msg.content,
           })),
@@ -141,10 +141,11 @@ ${currentTitle || currentContent ? `
     }
 
     return NextResponse.json({ response });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('AI Assistant error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to process request';
     return NextResponse.json(
-      { error: error.message || 'Failed to process request' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

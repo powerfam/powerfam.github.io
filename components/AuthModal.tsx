@@ -6,11 +6,9 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   GithubAuthProvider,
-  signOut,
   User,
 } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
-import { hashPassword } from '@/lib/comments';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -49,8 +47,9 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }: AuthModalP
       const result = await signInAnonymously(auth);
       onAuthSuccess(result.user, anonymousName, anonymousPassword);
       onClose();
-    } catch (err: any) {
-      setError('익명 로그인에 실패했습니다: ' + err.message);
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+      setError('익명 로그인에 실패했습니다: ' + errorMessage);
     } finally {
       setLoading(false);
     }
@@ -66,8 +65,9 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }: AuthModalP
       const result = await signInWithPopup(auth, provider);
       onAuthSuccess(result.user);
       onClose();
-    } catch (err: any) {
-      setError('Google 로그인에 실패했습니다: ' + err.message);
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+      setError('Google 로그인에 실패했습니다: ' + errorMessage);
     } finally {
       setLoading(false);
     }
@@ -83,8 +83,9 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }: AuthModalP
       const result = await signInWithPopup(auth, provider);
       onAuthSuccess(result.user);
       onClose();
-    } catch (err: any) {
-      setError('GitHub 로그인에 실패했습니다: ' + err.message);
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+      setError('GitHub 로그인에 실패했습니다: ' + errorMessage);
     } finally {
       setLoading(false);
     }

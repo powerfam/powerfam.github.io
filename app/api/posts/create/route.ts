@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/lib/auth';
 import { Octokit } from '@octokit/rest';
 import { convert } from 'hangul-romanization';
 
@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { title, description, summary, tags, content, date } = await req.json();
+    const { title, description, tags, content, date } = await req.json();
 
     // 날짜 처리: YYYY-MM-DD 형식으로 (따옴표 없음)
     const postDate = date || new Date().toISOString().split('T')[0];
@@ -71,10 +71,11 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json({ success: true, data: response.data });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error creating post:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to create post';
     return NextResponse.json(
-      { error: error.message || 'Failed to create post' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

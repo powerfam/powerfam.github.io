@@ -31,20 +31,7 @@ export default function Header() {
   const toggleDarkMode = () => {
     const newTheme = !isDark;
 
-    // View Transitions API 지원 여부 확인
-    if (typeof document !== 'undefined' && 'startViewTransition' in document) {
-      (document as any).startViewTransition(() => {
-        setIsDark(newTheme);
-        if (newTheme) {
-          document.documentElement.classList.add('dark');
-          localStorage.setItem('theme', 'dark');
-        } else {
-          document.documentElement.classList.remove('dark');
-          localStorage.setItem('theme', 'light');
-        }
-      });
-    } else {
-      // 폴백: 일반 전환
+    const applyTheme = () => {
       setIsDark(newTheme);
       if (newTheme) {
         document.documentElement.classList.add('dark');
@@ -53,6 +40,15 @@ export default function Header() {
         document.documentElement.classList.remove('dark');
         localStorage.setItem('theme', 'light');
       }
+    };
+
+    // View Transitions API 지원 여부 확인
+    const doc = document as Document & { startViewTransition?: (callback: () => void) => void };
+    if (doc.startViewTransition) {
+      doc.startViewTransition(applyTheme);
+    } else {
+      // 폴백: 일반 전환
+      applyTheme();
     }
   };
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
-import { ListIcon, XIcon, EyeIcon, EyeOffIcon } from 'lucide-react';
+import { ListIcon, EyeIcon, EyeOffIcon } from 'lucide-react';
 
 interface Heading {
   id: string;
