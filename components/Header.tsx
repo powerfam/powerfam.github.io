@@ -61,6 +61,7 @@ export default function Header() {
     { href: '/about', label: 'About' },
     { href: '/test', label: '테스트' },
     { href: '/articles', label: 'Articles' },
+    { href: '/sotd', label: 'SOTD' },
   ];
 
   // 로그인한 경우 Admin 메뉴 추가

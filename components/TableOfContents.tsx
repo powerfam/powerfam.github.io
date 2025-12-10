@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { ListIcon, XIcon, EyeIcon, EyeOffIcon } from 'lucide-react';
 
 interface Heading {
@@ -25,17 +25,24 @@ export default function TableOfContents() {
     }
   }, []);
 
-  useEffect(() => {
-    // 실제 DOM에서 article 내의 h2, h3, h4 찾기
+  // 헤딩 추출 함수
+  const extractHeadings = useCallback(() => {
     const article = document.querySelector('article');
-    if (!article) return;
+    if (!article) return null;
 
     const headingElements = article.querySelectorAll('h2, h3, h4');
+    if (headingElements.length === 0) return null;
 
     const extractedHeadings: Heading[] = Array.from(headingElements).map((heading, index) => {
       const text = heading.textContent || '';
       const level = parseInt(heading.tagName.charAt(1));
-      const id = `heading-${index}`;
+      // 텍스트 기반 slug 생성 (더 안정적)
+      const slug = text
+        .toLowerCase()
+        .replace(/[^a-z0-9가-힣\s]/g, '')
+        .replace(/\s+/g, '-')
+        .slice(0, 50);
+      const id = `heading-${slug}-${index}`;
 
       // 실제 DOM에 ID 추가
       heading.id = id;
@@ -43,16 +50,60 @@ export default function TableOfContents() {
       return { id, text, level };
     });
 
-    setHeadings(extractedHeadings);
+    return extractedHeadings;
+  }, []);
 
-    // 스크롤 감지 및 active heading 업데이트
+  useEffect(() => {
+    // article이 렌더링될 때까지 대기 후 헤딩 추출
+    const initHeadings = () => {
+      const extracted = extractHeadings();
+      if (extracted && extracted.length > 0) {
+        setHeadings(extracted);
+        return true;
+      }
+      return false;
+    };
+
+    // 즉시 시도
+    if (initHeadings()) {
+      // 성공
+    } else {
+      // 실패 시 MutationObserver로 article 변화 감지
+      const observer = new MutationObserver(() => {
+        if (initHeadings()) {
+          observer.disconnect();
+        }
+      });
+
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+      });
+
+      // 폴백: 500ms 후 재시도
+      const timeout = setTimeout(() => {
+        initHeadings();
+        observer.disconnect();
+      }, 500);
+
+      return () => {
+        observer.disconnect();
+        clearTimeout(timeout);
+      };
+    }
+  }, [extractHeadings]);
+
+  // 스크롤 감지 및 active heading 업데이트
+  useEffect(() => {
+    if (headings.length === 0) return;
+
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 100;
 
-      for (let i = extractedHeadings.length - 1; i >= 0; i--) {
-        const element = document.getElementById(extractedHeadings[i].id);
+      for (let i = headings.length - 1; i >= 0; i--) {
+        const element = document.getElementById(headings[i].id);
         if (element && element.offsetTop <= scrollPosition) {
-          setActiveId(extractedHeadings[i].id);
+          setActiveId(headings[i].id);
           break;
         }
       }
@@ -62,7 +113,7 @@ export default function TableOfContents() {
     handleScroll();
 
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [headings]);
 
   const toggleToc = () => {
     const newValue = !isTocEnabled;

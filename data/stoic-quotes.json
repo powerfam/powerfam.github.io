@@ -1,0 +1,364 @@
+{
+  "philosophers": {
+    "Marcus Aurelius": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/MSR-ra-61-b-1-DM.jpg/440px-MSR-ra-61-b-1-DM.jpg",
+    "Seneca": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Seneca-berlinantikensammlung-1.jpg/440px-Seneca-berlinantikensammlung-1.jpg",
+    "Epictetus": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Epictetus.jpg/440px-Epictetus.jpg",
+    "Zeno of Citium": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Zeno_of_Citium_pushkin.jpg/440px-Zeno_of_Citium_pushkin.jpg",
+    "Cleanthes": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Cleanthes_in_Thomas_Stanley_History_of_Philosophy.jpg/440px-Cleanthes_in_Thomas_Stanley_History_of_Philosophy.jpg",
+    "Musonius Rufus": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Musonius_Rufus.jpg/440px-Musonius_Rufus.jpg",
+    "Cato the Younger": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Cato_Volubilis_bronze_bust.jpg/440px-Cato_Volubilis_bronze_bust.jpg",
+    "Chrysippus": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Chrysippos_BM_1846.jpg/440px-Chrysippos_BM_1846.jpg"
+  },
+  "quotes": [
+    {
+      "id": 1,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "You have power over your mind - not outside events. Realize this, and you will find strength.",
+      "textKr": "당신은 외부 사건이 아닌 자신의 마음에 대한 힘을 가지고 있다. 이것을 깨달으면 힘을 얻을 것이다."
+    },
+    {
+      "id": 2,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "The happiness of your life depends upon the quality of your thoughts.",
+      "textKr": "삶의 행복은 생각의 질에 달려 있다."
+    },
+    {
+      "id": 3,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "Waste no more time arguing about what a good man should be. Be one.",
+      "textKr": "좋은 사람이 어떠해야 하는지 논쟁하는 데 더 이상 시간을 낭비하지 마라. 그냥 좋은 사람이 되어라."
+    },
+    {
+      "id": 4,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "The best revenge is not to be like your enemy.",
+      "textKr": "최고의 복수는 적과 같아지지 않는 것이다."
+    },
+    {
+      "id": 5,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "Very little is needed to make a happy life; it is all within yourself, in your way of thinking.",
+      "textKr": "행복한 삶을 만드는 데는 거의 아무것도 필요 없다. 그것은 모두 당신 자신 안에, 당신의 사고방식 안에 있다."
+    },
+    {
+      "id": 6,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "When you arise in the morning, think of what a precious privilege it is to be alive.",
+      "textKr": "아침에 일어날 때, 살아있다는 것이 얼마나 소중한 특권인지 생각하라."
+    },
+    {
+      "id": 7,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "Accept the things to which fate binds you, and love the people with whom fate brings you together.",
+      "textKr": "운명이 당신을 묶어두는 것들을 받아들이고, 운명이 함께하게 한 사람들을 사랑하라."
+    },
+    {
+      "id": 8,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "It is not death that a man should fear, but he should fear never beginning to live.",
+      "textKr": "사람이 두려워해야 할 것은 죽음이 아니라, 진정으로 살기 시작하지 않는 것이다."
+    },
+    {
+      "id": 9,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "Dwell on the beauty of life. Watch the stars, and see yourself running with them.",
+      "textKr": "삶의 아름다움에 머물러라. 별들을 바라보며, 그들과 함께 달리는 자신을 보라."
+    },
+    {
+      "id": 10,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "Never let the future disturb you. You will meet it with the same weapons of reason.",
+      "textKr": "미래가 당신을 방해하도록 두지 마라. 당신은 같은 이성의 무기로 그것을 맞이할 것이다."
+    },
+    {
+      "id": 11,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "We suffer more often in imagination than in reality.",
+      "textKr": "우리는 현실보다 상상 속에서 더 자주 고통받는다."
+    },
+    {
+      "id": 12,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "Luck is what happens when preparation meets opportunity.",
+      "textKr": "행운은 준비가 기회를 만났을 때 일어나는 것이다."
+    },
+    {
+      "id": 13,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "It is not that we have a short time to live, but that we waste a lot of it.",
+      "textKr": "우리에게 주어진 시간이 짧은 것이 아니라, 우리가 많은 시간을 낭비하는 것이다."
+    },
+    {
+      "id": 14,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "Difficulties strengthen the mind, as labor does the body.",
+      "textKr": "어려움은 노동이 육체를 단련시키듯 정신을 강하게 한다."
+    },
+    {
+      "id": 15,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "True happiness is to enjoy the present, without anxious dependence upon the future.",
+      "textKr": "진정한 행복은 미래에 대한 불안한 의존 없이 현재를 즐기는 것이다."
+    },
+    {
+      "id": 16,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "Begin at once to live, and count each separate day as a separate life.",
+      "textKr": "지금 당장 살기 시작하고, 각각의 날을 별개의 삶으로 여겨라."
+    },
+    {
+      "id": 17,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "He who is brave is free.",
+      "textKr": "용감한 자가 자유롭다."
+    },
+    {
+      "id": 18,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "No man is free who is not master of himself.",
+      "textKr": "자기 자신의 주인이 아닌 사람은 자유롭지 않다."
+    },
+    {
+      "id": 19,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "As is a tale, so is life: not how long it is, but how good it is, is what matters.",
+      "textKr": "이야기가 그러하듯 인생도 그러하다. 얼마나 긴가가 아니라 얼마나 좋은가가 중요하다."
+    },
+    {
+      "id": 20,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "If you really want to escape the things that harass you, what you need is not to be in a different place but to be a different person.",
+      "textKr": "당신을 괴롭히는 것들로부터 정말로 벗어나고 싶다면, 다른 장소에 있는 것이 아니라 다른 사람이 되어야 한다."
+    },
+    {
+      "id": 21,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "It's not what happens to you, but how you react to it that matters.",
+      "textKr": "중요한 것은 당신에게 일어나는 일이 아니라, 그것에 어떻게 반응하느냐이다."
+    },
+    {
+      "id": 22,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "Man is not worried by real problems so much as by his imagined anxieties about real problems.",
+      "textKr": "인간은 실제 문제보다 실제 문제에 대한 상상 속 불안에 더 괴로워한다."
+    },
+    {
+      "id": 23,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "First say to yourself what you would be; and then do what you have to do.",
+      "textKr": "먼저 자신에게 어떤 사람이 되고 싶은지 말하라. 그리고 해야 할 일을 하라."
+    },
+    {
+      "id": 24,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "No man is free who is not master of himself.",
+      "textKr": "자기 자신의 주인이 아닌 사람은 자유롭지 않다."
+    },
+    {
+      "id": 25,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "Wealth consists not in having great possessions, but in having few wants.",
+      "textKr": "부는 많은 소유물을 가진 것이 아니라 욕구가 적은 것에 있다."
+    },
+    {
+      "id": 26,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "Don't explain your philosophy. Embody it.",
+      "textKr": "철학을 설명하지 마라. 그것을 몸소 실천하라."
+    },
+    {
+      "id": 27,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "We have two ears and one mouth so that we can listen twice as much as we speak.",
+      "textKr": "우리에게 귀 두 개와 입 하나가 있는 것은 말하는 것의 두 배로 들을 수 있도록 하기 위함이다."
+    },
+    {
+      "id": 28,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "If you want to improve, be content to be thought foolish and stupid.",
+      "textKr": "성장하고 싶다면, 어리석고 멍청하다는 평가를 받아들여라."
+    },
+    {
+      "id": 29,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "Make the best use of what is in your power, and take the rest as it happens.",
+      "textKr": "당신의 힘 안에 있는 것을 최대한 활용하고, 나머지는 일어나는 대로 받아들여라."
+    },
+    {
+      "id": 30,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "He is a wise man who does not grieve for the things which he has not, but rejoices for those which he has.",
+      "textKr": "현명한 사람은 가지지 못한 것을 슬퍼하지 않고, 가진 것에 기뻐한다."
+    },
+    {
+      "id": 31,
+      "author": "Zeno of Citium",
+      "authorKr": "키티온의 제논",
+      "text": "Man conquers the world by conquering himself.",
+      "textKr": "인간은 자기 자신을 정복함으로써 세상을 정복한다."
+    },
+    {
+      "id": 32,
+      "author": "Zeno of Citium",
+      "authorKr": "키티온의 제논",
+      "text": "We have two ears and one mouth, so we should listen more than we say.",
+      "textKr": "우리에게는 귀가 두 개, 입이 하나이니, 말하는 것보다 더 많이 들어야 한다."
+    },
+    {
+      "id": 33,
+      "author": "Zeno of Citium",
+      "authorKr": "키티온의 제논",
+      "text": "The goal of life is living in agreement with nature.",
+      "textKr": "삶의 목표는 자연과 조화를 이루며 사는 것이다."
+    },
+    {
+      "id": 34,
+      "author": "Zeno of Citium",
+      "authorKr": "키티온의 제논",
+      "text": "Wellbeing is realized by small steps, but is truly no small thing.",
+      "textKr": "행복은 작은 걸음으로 이루어지지만, 결코 작은 것이 아니다."
+    },
+    {
+      "id": 35,
+      "author": "Zeno of Citium",
+      "authorKr": "키티온의 제논",
+      "text": "Better to trip with the feet than with the tongue.",
+      "textKr": "혀로 실수하는 것보다 발로 넘어지는 것이 낫다."
+    },
+    {
+      "id": 36,
+      "author": "Cleanthes",
+      "authorKr": "클레안테스",
+      "text": "Lead me, Zeus, and you too, Destiny, wherever your decrees have assigned me.",
+      "textKr": "제우스여, 그리고 운명이여, 당신의 명령이 나를 어디로 보내든 이끌어 주소서."
+    },
+    {
+      "id": 37,
+      "author": "Cleanthes",
+      "authorKr": "클레안테스",
+      "text": "He who is not satisfied with a little, is satisfied with nothing.",
+      "textKr": "적은 것에 만족하지 못하는 자는 아무것에도 만족하지 못한다."
+    },
+    {
+      "id": 38,
+      "author": "Musonius Rufus",
+      "authorKr": "무소니우스 루푸스",
+      "text": "If you accomplish something good with hard work, the labor passes quickly, but the good endures.",
+      "textKr": "노력으로 좋은 것을 성취하면, 수고는 빨리 지나가지만 그 좋은 것은 오래 남는다."
+    },
+    {
+      "id": 39,
+      "author": "Musonius Rufus",
+      "authorKr": "무소니우스 루푸스",
+      "text": "We begin to lose our hesitation to do immoral things when we lose our hesitation to speak of them.",
+      "textKr": "부도덕한 것을 말하기를 주저하지 않을 때, 우리는 그것을 행하기를 주저하지 않게 된다."
+    },
+    {
+      "id": 40,
+      "author": "Musonius Rufus",
+      "authorKr": "무소니우스 루푸스",
+      "text": "In order to protect ourselves, we must live like doctors and be continually treating ourselves with reason.",
+      "textKr": "자신을 보호하기 위해, 우리는 의사처럼 살며 끊임없이 이성으로 자신을 치료해야 한다."
+    },
+    {
+      "id": 41,
+      "author": "Cato the Younger",
+      "authorKr": "소 카토",
+      "text": "I would rather be right than be President.",
+      "textKr": "대통령이 되느니 옳은 것을 택하겠다."
+    },
+    {
+      "id": 42,
+      "author": "Cato the Younger",
+      "authorKr": "소 카토",
+      "text": "Consider it the greatest of all virtues to restrain the tongue.",
+      "textKr": "혀를 억제하는 것을 모든 덕목 중 가장 큰 것으로 여겨라."
+    },
+    {
+      "id": 43,
+      "author": "Chrysippus",
+      "authorKr": "크리시포스",
+      "text": "The universe itself is God and the universal outpouring of its soul.",
+      "textKr": "우주 자체가 신이며, 그 영혼의 보편적 발현이다."
+    },
+    {
+      "id": 44,
+      "author": "Chrysippus",
+      "authorKr": "크리시포스",
+      "text": "Living according to experience of what happens by nature.",
+      "textKr": "자연에 따라 일어나는 일의 경험에 따라 사는 것."
+    },
+    {
+      "id": 45,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "Sometimes even to live is an act of courage.",
+      "textKr": "때로는 사는 것 자체가 용기 있는 행동이다."
+    },
+    {
+      "id": 46,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "The soul becomes dyed with the color of its thoughts.",
+      "textKr": "영혼은 생각의 색으로 물든다."
+    },
+    {
+      "id": 47,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "Circumstances don't make the man, they only reveal him to himself.",
+      "textKr": "환경이 사람을 만드는 것이 아니라, 그 사람을 자신에게 드러낼 뿐이다."
+    },
+    {
+      "id": 48,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "A gem cannot be polished without friction, nor a man perfected without trials.",
+      "textKr": "보석은 마찰 없이 광택이 나지 않고, 사람도 시련 없이 완성되지 않는다."
+    },
+    {
+      "id": 49,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "Everything we hear is an opinion, not a fact. Everything we see is a perspective, not the truth.",
+      "textKr": "우리가 듣는 모든 것은 사실이 아닌 의견이다. 우리가 보는 모든 것은 진실이 아닌 관점이다."
+    },
+    {
+      "id": 50,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "No great thing is created suddenly.",
+      "textKr": "위대한 것은 갑자기 만들어지지 않는다."
+    }
+  ]
+}

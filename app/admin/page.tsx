@@ -756,17 +756,14 @@ export default function AdminPage() {
   }
 
   // 로그인 핸들러
-  const handleLogin = async () => {
-    try {
-      setIsLoggingIn(true);
-      await signIn('github', {
-        callbackUrl: window.location.origin + '/admin',
-      });
-    } catch (error) {
-      console.error('로그인 에러:', error);
-      alert('로그인 중 오류가 발생했습니다. 다시 시도해주세요.');
-      setIsLoggingIn(false);
-    }
+  const handleLogin = () => {
+    setIsLoggingIn(true);
+    // signIn은 페이지를 리다이렉트하므로 await 사용하지 않음
+    // 모바일에서 리다이렉트가 제대로 동작하도록 함
+    signIn('github', {
+      callbackUrl: '/admin',
+      redirect: true,
+    });
   };
 
   // 로그인 안 됨

@@ -1,7 +1,32 @@
 # Voti Website - Next.js 프로젝트 가이드
 
-**최종 업데이트:** 2025-12-09 (보안 강화 완료)
+**최종 업데이트:** 2025-12-10 (SOTD 기능 추가)
 **프로젝트:** voti-blog-nextjs
+
+---
+
+## 🚨 재부팅 후 확인 필요 (2025-12-10)
+
+### WSL 서버 문제
+WSL + Windows 파일 시스템 I/O 문제로 서버 시작이 매우 느림.
+
+**재부팅 후 서버 시작 절차:**
+```bash
+# 1. 기존 프로세스 정리
+pkill -9 -f node
+rm -rf .next
+
+# 2. 서버 시작
+npm run dev
+
+# 3. 첫 컴파일 완료까지 약 3-5분 대기
+# "Ready in XXXs" 메시지 확인 후 테스트
+```
+
+**테스트할 페이지:**
+- http://localhost:3000 (홈페이지)
+- http://localhost:3000/sotd (SOTD 페이지 - 새로 추가됨)
+- http://localhost:3000/articles
 
 ---
 

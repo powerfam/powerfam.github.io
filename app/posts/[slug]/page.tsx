@@ -10,6 +10,7 @@ import dynamic from 'next/dynamic';
 import CopyUrlButton from '@/components/CopyUrlButton';
 import TableOfContents from '@/components/TableOfContents';
 import FontSizeControl from '@/components/FontSizeControl';
+import ReadingProgress from '@/components/ReadingProgress';
 
 // 동적 임포트로 번들 크기 최적화
 const FirebaseComments = dynamic(() => import('@/components/FirebaseComments'), {
@@ -44,6 +45,9 @@ export default function PostPage({ params }: { params: { slug: string } }) {
 
   return (
     <>
+      {/* 읽기 진행률 프로그레스 바 */}
+      <ReadingProgress />
+
       {/* 폰트 사이즈 조절 컨트롤 */}
       <FontSizeControl />
 

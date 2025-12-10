@@ -29,10 +29,10 @@ export default function FontSizeControl() {
     // 마우스가 hover 중이면 타이머 시작 안함
     if (isHovered) return;
 
-    // 3초 후 버튼 숨김
+    // 1.5초 후 버튼 숨김
     scrollTimeoutRef.current = setTimeout(() => {
       setIsVisible(false);
-    }, 3000);
+    }, 1500);
   };
 
   useEffect(() => {
@@ -42,10 +42,17 @@ export default function FontSizeControl() {
       startHideTimer();
     };
 
+    // 모바일 터치 스크롤 종료 시 숨김 처리
+    const handleTouchEnd = () => {
+      startHideTimer();
+    };
+
     window.addEventListener('scroll', handleScroll);
+    window.addEventListener('touchend', handleTouchEnd);
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('touchend', handleTouchEnd);
       if (scrollTimeoutRef.current) {
         clearTimeout(scrollTimeoutRef.current);
       }
