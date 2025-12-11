@@ -206,8 +206,7 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }: AuthModalP
                 disabled={loading !== null}
                 className="w-full h-11 px-4 rounded-lg border transition-all flex items-center justify-center gap-3 hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{
-                  borderColor: 'var(--foreground)',
-                  borderOpacity: 0.2,
+                  borderColor: 'color-mix(in srgb, var(--foreground) 20%, transparent)',
                   backgroundColor: 'var(--background)',
                 }}
               >
@@ -228,8 +227,7 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }: AuthModalP
                 disabled={loading !== null}
                 className="w-full h-11 px-4 rounded-lg border transition-all flex items-center justify-center gap-3 hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{
-                  borderColor: 'var(--foreground)',
-                  borderOpacity: 0.2,
+                  borderColor: 'color-mix(in srgb, var(--foreground) 20%, transparent)',
                   backgroundColor: 'var(--background)',
                 }}
               >
