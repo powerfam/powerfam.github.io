@@ -57,7 +57,7 @@ export default function Header() {
     { href: '/about', label: 'About' },
     { href: '/test', label: '테스트' },
     { href: '/articles', label: 'Articles' },
-    { href: '/sotd', label: 'SOTD' },
+    { href: '/sotd', label: 'Stoic of Today' },
   ];
 
   // 로그인한 경우 Admin 메뉴 추가
@@ -78,7 +78,7 @@ export default function Header() {
           className="text-xl md:text-2xl font-bold"
           style={{ color: 'var(--menu-main)' }}
         >
-          Voti Web
+          Votism
         </Link>
         
         {/* 데스크톱 메뉴 */}

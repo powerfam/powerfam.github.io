@@ -950,9 +950,9 @@ export default function AdminPage() {
                   style={{ borderColor: 'var(--menu-main)' }}
                 >
                   <option value="">섹션 선택</option>
-                  <option value="section1">Section 1</option>
-                  <option value="section2">Section 2</option>
-                  <option value="section3">Section 3</option>
+                  <option value="section1">Life</option>
+                  <option value="section2">Book</option>
+                  <option value="section3">Wealth</option>
                 </select>
               </div>
             </div>

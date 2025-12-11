@@ -19,9 +19,9 @@ interface SectionInfo {
 }
 
 const sections: SectionInfo[] = [
-  { id: 'section1', title: 'Section 1', description: 'section1 소개글입니다' },
-  { id: 'section2', title: 'Section 2', description: 'section2 소개글입니다' },
-  { id: 'section3', title: 'Section 3', description: 'section3 소개글입니다' },
+  { id: 'section1', title: 'Life', description: '딸에게 전해주고 싶은 일상 속 배움' },
+  { id: 'section2', title: 'Book', description: '책에서 얻은 소중한 지혜' },
+  { id: 'section3', title: 'Wealth', description: '부에 대한 아빠의 솔직한 생각' },
 ];
 
 // 마크다운 본문에서 첫 번째 이미지 URL 추출

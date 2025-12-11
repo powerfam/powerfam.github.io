@@ -42,7 +42,7 @@ export default function Home() {
               style={{ color: 'var(--menu-main)' }}
             >
               <TextType
-                text="Voti Web"
+                text="Hello"
                 typingSpeed={100}
                 loop={false}
                 showCursor={false}
@@ -59,7 +59,7 @@ export default function Home() {
               className="text-xl md:text-2xl lg:text-3xl font-medium"
             >
               <TextType
-                text="환영합니다"
+                text="Welcome to Voti's Journal"
                 typingSpeed={100}
                 initialDelay={1000}
                 loop={false}
@@ -77,7 +77,7 @@ export default function Home() {
               className="text-base md:text-lg lg:text-xl opacity-70"
             >
               <TextType
-                text={["이곳은 메인화면에 들어갈 메시지입니다.", "타이핑 효과로 표현됩니다.", "환영합니다!"]}
+                text={["To my daughter, someday", "Overcoming, not perfecting", "Wisdom over answers"]}
                 typingSpeed={75}
                 pauseDuration={1500}
                 showCursor={true}
