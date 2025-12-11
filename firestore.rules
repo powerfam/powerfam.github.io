@@ -3,70 +3,33 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // App Check 검증 헬퍼 함수
-    function isAppCheckValid() {
-      // App Check 토큰이 있으면 검증, 없으면 허용 (개발 환경 고려)
-      // 프로덕션에서 강제하려면: return request.app.appCheck == true;
-      return request.app.appCheck == null || request.app.appCheck == true;
-    }
-
-    // 사용자 활동 추적 (Rate Limiting용)
+    // userActivity - Rate Limiting용
     match /userActivity/{userId} {
-      allow read: if request.auth != null && request.auth.uid == userId && isAppCheckValid();
-      allow write: if request.auth != null && request.auth.uid == userId && isAppCheckValid();
+      allow read, write: if request.auth != null &&
+        request.auth.uid == userId;
     }
 
     // 댓글 컬렉션 규칙
     match /comments/{commentId} {
 
-      // 모든 사용자가 댓글 읽기 가능
+      // 읽기: 누구나
       allow read: if true;
 
-      // 인증된 사용자 또는 익명 사용자 댓글 작성 가능
-      // Rate limiting: userActivity에서 마지막 댓글 시간 확인
+      // 쓰기: 인증된 사용자 (익명 포함)
       allow create: if request.auth != null &&
         request.resource.data.authorId == request.auth.uid &&
         request.resource.data.content is string &&
         request.resource.data.content.size() > 0 &&
         request.resource.data.content.size() <= 2000 &&
-        request.resource.data.postSlug is string &&
-        // 추가 보안: authorName, content에 악성 패턴 방지
-        !request.resource.data.content.matches('.*<script.*') &&
-        !request.resource.data.authorName.matches('.*<script.*') &&
-        // App Check 검증
-        isAppCheckValid();
+        request.resource.data.postSlug is string;
 
-      // 댓글 수정: 작성자만 가능
+      // 수정: 작성자만
       allow update: if request.auth != null &&
-        (
-          // 로그인한 사용자의 경우
-          (resource.data.authorId == request.auth.uid) ||
-          // 익명 댓글의 경우 비밀번호 검증은 클라이언트에서 처리
-          (resource.data.password != null)
-        ) &&
-        // 수정 가능한 필드 제한
-        (!request.resource.data.diff(resource.data).affectedKeys()
-          .hasAny(['authorId', 'postSlug', 'createdAt', 'password'])) &&
-        // App Check 검증
-        isAppCheckValid();
+        resource.data.authorId == request.auth.uid;
 
-      // 댓글 삭제: 작성자만 가능
+      // 삭제: 작성자만
       allow delete: if request.auth != null &&
-        resource.data.authorId == request.auth.uid &&
-        // App Check 검증
-        isAppCheckValid();
-
-      // 리액션 업데이트: 인증된 사용자만 가능
-      allow update: if request.auth != null &&
-        request.resource.data.diff(resource.data).affectedKeys()
-          .hasOnly(['reactions', 'reactedUsers', 'updatedAt']) &&
-        // App Check 검증
-        isAppCheckValid();
-    }
-
-    // 다른 컬렉션은 기본적으로 접근 불가
-    match /{document=**} {
-      allow read, write: if false;
+        resource.data.authorId == request.auth.uid;
     }
   }
 }

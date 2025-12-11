@@ -188,13 +188,13 @@ export default function Header() {
 
       {/* 모바일 드롭다운 메뉴 */}
       {/* 모바일 드롭다운 메뉴 */}
-      <div 
+      <div
         className={`md:hidden border-t border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-300 ease-in-out ${
-          isMenuOpen ? 'max-h-60 opacity-100' : 'max-h-0 opacity-0'
+          isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
         }`}
         style={{ backgroundColor: 'var(--background)' }}
       >
-        <div className="max-w-4xl mx-auto px-4 py-2 space-y-1">
+        <div className="max-w-4xl mx-auto px-4 py-2 pb-4 space-y-1">
           {navItems.map((item, index) => {
             const isActive = pathname === item.href;
             

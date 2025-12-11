@@ -26,8 +26,8 @@ function calculateReadingTime(text: string): number {
   return minutes;
 }
 
-// ISR: 60초마다 재검증
-export const revalidate = 60;
+// ISR: 1시간마다 재검증 (Vercel 무료 플랜 ISR Writes 한도 절약)
+export const revalidate = 3600;
 
 export async function generateStaticParams() {
   return allPosts.map((post) => ({

@@ -31,13 +31,13 @@ reCAPTCHA 유형: reCAPTCHA v3 선택 ⭐
 
 ### 1-3. 사이트 키 복사
 생성 후 나오는 **사이트 키**(Site Key)를 복사하세요.
-(비밀 키는 사용하지 않음)
+(비밀 키는 나중에 App check 세팅에 필요)
 
 ### 1-4. .env.local에 추가
 ```bash
 # .env.local 파일 열기
-# 아래 줄 주석 해제하고 키 입력
-NEXT_PUBLIC_RECAPTCHA_SITE_KEY=여기에_사이트_키_붙여넣기
+# 아래 줄 주석 해제하고 키 입력 
+NEXT_PUBLIC_RECAPTCHA_SITE_KEY=6LepyScsAAAAACu6tG-QZhzdM54gSP9ki34jk_HM
 ```
 
 **예시:**
@@ -61,7 +61,7 @@ https://console.firebase.google.com/
 2. "Get started" 또는 "시작하기" 클릭
 3. 웹 앱 선택 (이미 등록된 앱)
 4. Provider 선택: reCAPTCHA v3
-5. 1단계에서 복사한 사이트 키 입력
+5. 1단계에서 복사한 비밀 키 입력
 6. "Save" 또는 "저장" 클릭
 ```
 
