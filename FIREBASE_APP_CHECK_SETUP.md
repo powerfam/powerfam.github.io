@@ -37,12 +37,12 @@ reCAPTCHA 유형: reCAPTCHA v3 선택 ⭐
 ```bash
 # .env.local 파일 열기
 # 아래 줄 주석 해제하고 키 입력 
-NEXT_PUBLIC_RECAPTCHA_SITE_KEY=6LepyScsAAAAACu6tG-QZhzdM54gSP9ki34jk_HM
+NEXT_PUBLIC_RECAPTCHA_SITE_KEY="6Le"
 ```
 
 **예시:**
 ```env
-NEXT_PUBLIC_RECAPTCHA_SITE_KEY=6Lc1234567890abcdefghijklmnopqrstuvwxyz
+NEXT_PUBLIC_RECAPTCHA_SITE_KEY="6Le"
 ```
 
 ---
