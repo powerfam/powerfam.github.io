@@ -7,7 +7,7 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'raw.githubusercontent.com',
-        pathname: '/powerfam/voti-blog-nextjs/**',
+        pathname: '/powerfam/**',
       },
       {
         protocol: 'https',
