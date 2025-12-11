@@ -9,7 +9,10 @@ import {
   User,
 } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
+<<<<<<< HEAD
 import { X, User as UserIcon, Loader2, ArrowLeft, MessageCircle } from 'lucide-react';
+=======
+>>>>>>> 83e609875d89ce0f6841a12411381833aa91c116
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -85,9 +88,16 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }: AuthModalP
     try {
       const result = await signInAnonymously(auth);
       onAuthSuccess(result.user, anonymousName, anonymousPassword);
+<<<<<<< HEAD
       resetAndClose();
     } catch (err: any) {
       setError('익명 로그인에 실패했습니다.');
+=======
+      onClose();
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+      setError('익명 로그인에 실패했습니다: ' + errorMessage);
+>>>>>>> 83e609875d89ce0f6841a12411381833aa91c116
     } finally {
       setLoading(null);
     }
@@ -102,6 +112,7 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }: AuthModalP
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
       onAuthSuccess(result.user);
+<<<<<<< HEAD
       resetAndClose();
     } catch (err: any) {
       if (err.code === 'auth/unauthorized-domain') {
@@ -111,6 +122,12 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }: AuthModalP
       } else {
         setError('Google 로그인에 실패했습니다.');
       }
+=======
+      onClose();
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+      setError('Google 로그인에 실패했습니다: ' + errorMessage);
+>>>>>>> 83e609875d89ce0f6841a12411381833aa91c116
     } finally {
       setLoading(null);
     }
@@ -125,6 +142,7 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }: AuthModalP
       const provider = new GithubAuthProvider();
       const result = await signInWithPopup(auth, provider);
       onAuthSuccess(result.user);
+<<<<<<< HEAD
       resetAndClose();
     } catch (err: any) {
       if (err.code === 'auth/unauthorized-domain') {
@@ -134,6 +152,12 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }: AuthModalP
       } else {
         setError('GitHub 로그인에 실패했습니다.');
       }
+=======
+      onClose();
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+      setError('GitHub 로그인에 실패했습니다: ' + errorMessage);
+>>>>>>> 83e609875d89ce0f6841a12411381833aa91c116
     } finally {
       setLoading(null);
     }

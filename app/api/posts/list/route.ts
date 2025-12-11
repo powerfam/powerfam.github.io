@@ -45,11 +45,11 @@ export async function GET() {
     }
 
     // 마크다운 파일만 필터링
-    const mdFiles = data.filter((file: any) => file.name.endsWith('.md'));
+    const mdFiles = data.filter((file: { name: string }) => file.name.endsWith('.md'));
 
     // 각 파일의 내용을 가져와서 frontmatter 파싱
     const posts = await Promise.all(
-      mdFiles.map(async (file: any) => {
+      mdFiles.map(async (file: { name: string }) => {
         try {
           const { data: fileData } = await octokit.repos.getContent({
             owner: GITHUB_OWNER,
@@ -87,7 +87,7 @@ export async function GET() {
     });
 
     return NextResponse.json({ posts });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to fetch posts' }, { status: 500 });
   }
 }

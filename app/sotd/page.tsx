@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { RefreshCwIcon, CopyIcon, DownloadIcon, CheckIcon, SendIcon, SquareIcon, RectangleVerticalIcon, XIcon } from 'lucide-react';
+import { RefreshCwIcon, CopyIcon, DownloadIcon, CheckIcon, SendIcon, SquareIcon, RectangleVerticalIcon } from 'lucide-react';
 import stoicQuotes from '@/data/stoic-quotes.json';
 
 interface Quote {
@@ -303,7 +303,7 @@ export default function StoicOfTodayPage() {
           title: 'Stoic of Today',
           text: isKorean ? quote.textKr : quote.text,
         });
-      } catch (err) {
+      } catch {
         // 사용자가 공유 취소하면 에러 발생 (무시)
       }
     } else {
@@ -422,9 +422,9 @@ export default function StoicOfTodayPage() {
                 textWrap: 'balance'
               }}
             >
-              <span style={{ color: 'var(--menu-main)' }}>"</span>
+              <span style={{ color: 'var(--menu-main)' }}>&quot;</span>
               {isKorean ? quote.textKr : quote.text}
-              <span style={{ color: 'var(--menu-main)' }}>"</span>
+              <span style={{ color: 'var(--menu-main)' }}>&quot;</span>
             </blockquote>
 
             {/* 저자 */}

@@ -30,7 +30,6 @@ interface FirebaseCommentsProps {
 interface CommentItemProps {
   comment: Comment;
   currentUser: User | null;
-  anonymousData: { name: string; password: string } | null;
   onReply: (commentId: string) => void;
   onEdit: (commentId: string, content: string) => void;
   onDelete: (commentId: string) => void;
@@ -51,7 +50,6 @@ function sanitizeHTML(html: string): string {
 function CommentItem({
   comment,
   currentUser,
-  anonymousData,
   onReply,
   onEdit,
   onDelete,
@@ -597,7 +595,6 @@ export default function FirebaseComments({ postSlug }: FirebaseCommentsProps) {
                   key={comment.id}
                   comment={comment}
                   currentUser={currentUser}
-                  anonymousData={anonymousData}
                   onReply={setReplyTo}
                   onEdit={handleEditComment}
                   onDelete={handleDeleteComment}

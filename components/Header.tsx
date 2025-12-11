@@ -31,20 +31,7 @@ export default function Header() {
   const toggleDarkMode = () => {
     const newTheme = !isDark;
 
-    // View Transitions API 지원 여부 확인
-    if (typeof document !== 'undefined' && 'startViewTransition' in document) {
-      (document as any).startViewTransition(() => {
-        setIsDark(newTheme);
-        if (newTheme) {
-          document.documentElement.classList.add('dark');
-          localStorage.setItem('theme', 'dark');
-        } else {
-          document.documentElement.classList.remove('dark');
-          localStorage.setItem('theme', 'light');
-        }
-      });
-    } else {
-      // 폴백: 일반 전환
+    const applyTheme = () => {
       setIsDark(newTheme);
       if (newTheme) {
         document.documentElement.classList.add('dark');
@@ -53,6 +40,15 @@ export default function Header() {
         document.documentElement.classList.remove('dark');
         localStorage.setItem('theme', 'light');
       }
+    };
+
+    // View Transitions API 지원 여부 확인
+    const doc = document as Document & { startViewTransition?: (callback: () => void) => void };
+    if (doc.startViewTransition) {
+      doc.startViewTransition(applyTheme);
+    } else {
+      // 폴백: 일반 전환
+      applyTheme();
     }
   };
 
@@ -87,22 +83,22 @@ export default function Header() {
         
         {/* 데스크톱 메뉴 */}
         <div className="hidden md:flex items-center gap-4">
-          <div 
-            className="flex items-center gap-1 p-1 rounded-full"
+          <div
+            className="flex items-center gap-0.5 p-0.5 rounded-full h-[32px]"
             style={{ backgroundColor: 'var(--menu-main)' }}
           >
             {navItems.map((item) => {
               const isActive = pathname === item.href;
-              
+
               return (
                 <Link
                   key={item.href}
                   href={item.href}
                   className={`
-                    px-4 py-2 rounded-full text-sm font-medium transition-all
+                    px-3 py-1 rounded-full text-sm font-medium transition-all h-[28px] flex items-center
                     ${isActive ? 'shadow-md' : 'hover:opacity-80'}
                   `}
-                  style={{ 
+                  style={{
                     backgroundColor: isActive ? 'var(--menu-sub)' : 'transparent',
                     color: isActive ? 'var(--menu-sub-text)' : 'var(--menu-main-text)'
                   }}

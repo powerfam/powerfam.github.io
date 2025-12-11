@@ -26,9 +26,5 @@ export default makeSource({
   markdown: {
     remarkPlugins: [remarkGfm],
   },
-  // 빌드 최적화: 경고 억제 및 캐싱 활성화
   disableImportAliasWarning: true,
-  onSuccess: async (importData) => {
-    console.log(`✅ Contentlayer: ${importData.allDocuments.length}개의 문서 생성 완료`);
-  },
 });

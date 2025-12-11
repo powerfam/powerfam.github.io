@@ -3,7 +3,6 @@ import {
   collection,
   addDoc,
   updateDoc,
-  deleteDoc,
   doc,
   query,
   where,
@@ -11,13 +10,12 @@ import {
   onSnapshot,
   Timestamp,
   increment,
-  arrayUnion,
-  arrayRemove,
   getDocs,
   limit,
   getCountFromServer,
   getDoc,
   setDoc,
+  QueryConstraint,
 } from 'firebase/firestore';
 import { db } from './firebase';
 
@@ -59,7 +57,7 @@ export async function addComment(
   parentId?: string
 ): Promise<string> {
   // Firestore는 undefined 값을 허용하지 않으므로 undefined 필드 제외
-  const commentData: Record<string, any> = {
+  const commentData: Record<string, unknown> = {
     postSlug,
     content,
     authorId,
@@ -145,7 +143,7 @@ export async function getComments(
   postSlug: string,
   limitCount?: number
 ): Promise<Comment[]> {
-  const constraints: any[] = [
+  const constraints: QueryConstraint[] = [
     where('postSlug', '==', postSlug),
     orderBy('createdAt', 'asc'), // 오래된 순으로 정렬 (부모-자식 관계 유지)
   ];
@@ -172,7 +170,7 @@ export function subscribeToComments(
   callback: (comments: Comment[]) => void,
   limitCount?: number
 ): () => void {
-  const constraints: any[] = [
+  const constraints: QueryConstraint[] = [
     where('postSlug', '==', postSlug),
     orderBy('createdAt', 'asc'), // 오래된 순으로 정렬 (부모-자식 관계 유지)
   ];
@@ -219,7 +217,6 @@ export async function verifyPassword(
   commentId: string,
   password: string
 ): Promise<boolean> {
-  const commentRef = doc(db, 'comments', commentId);
   const commentSnapshot = await getDocs(query(collection(db, 'comments'), where('__name__', '==', commentId)));
 
   if (commentSnapshot.empty) return false;

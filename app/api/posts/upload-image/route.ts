@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
     console.log('📍 Owner:', GITHUB_OWNER, 'Repo:', GITHUB_REPO);
 
     // GitHub에 이미지 업로드
-    const result = await octokit.repos.createOrUpdateFileContents({
+    await octokit.repos.createOrUpdateFileContents({
       owner: GITHUB_OWNER,
       repo: GITHUB_REPO,
       path: filePath,
@@ -71,11 +71,12 @@ export async function POST(request: NextRequest) {
       url: imageUrl,
       markdown: markdown
     });
-  } catch (error: any) {
-    console.error('❌ Upload error:', error.message);
-    return NextResponse.json({ 
-      error: 'Upload failed', 
-      details: error.message 
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    console.error('❌ Upload error:', errorMessage);
+    return NextResponse.json({
+      error: 'Upload failed',
+      details: errorMessage
     }, { status: 500 });
   }
 }

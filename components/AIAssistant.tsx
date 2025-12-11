@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { MessageCircle, X, Send, Sparkles, RotateCcw, Image as ImageIcon } from 'lucide-react';
+import { MessageCircle, X, Send, Sparkles, RotateCcw } from 'lucide-react';
 
 interface AIAssistantProps {
   currentContent?: string;
@@ -88,7 +88,7 @@ export default function AIAssistant({ currentContent = '', currentTitle = '' }: 
           { role: 'assistant', content: `오류: ${data.error}`, model: selectedModel },
         ]);
       }
-    } catch (error) {
+    } catch {
       setChatHistory(prev => [
         ...prev,
         { role: 'assistant', content: '요청 중 오류가 발생했습니다.', model: selectedModel },
@@ -148,7 +148,7 @@ export default function AIAssistant({ currentContent = '', currentTitle = '' }: 
               <div className="text-center text-gray-400 py-8">
                 <Sparkles size={32} className="mx-auto mb-2 opacity-50" />
                 <p className="text-sm">글쓰기에 대해 물어보세요!</p>
-                <p className="text-xs mt-1 opacity-70">예: "이 문장 어떻게 개선할까요?"</p>
+                <p className="text-xs mt-1 opacity-70">예: &quot;이 문장 어떻게 개선할까요?&quot;</p>
               </div>
             ) : (
               chatHistory.map((msg, idx) => (
@@ -220,7 +220,7 @@ export default function AIAssistant({ currentContent = '', currentTitle = '' }: 
                 placeholder="질문을 입력하세요..."
                 disabled={isLoading}
                 className="flex-1 px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 text-sm focus:outline-none focus:ring-2"
-                style={{ '--tw-ring-color': 'var(--menu-main)' } as any}
+                style={{ '--tw-ring-color': 'var(--menu-main)' } as React.CSSProperties}
               />
               <button
                 type="submit"
@@ -243,7 +243,7 @@ export default function AIAssistant({ currentContent = '', currentTitle = '' }: 
               value={selectedModel}
               onChange={(e) => setSelectedModel(e.target.value as 'claude' | 'openai')}
               className="py-1 px-2 rounded text-xs font-medium bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-1"
-              style={{ '--tw-ring-color': 'var(--menu-main)' } as any}
+              style={{ '--tw-ring-color': 'var(--menu-main)' } as React.CSSProperties}
             >
               <option value="claude">Claude Sonnet-4.5</option>
               <option value="openai">GPT-5.1</option>
