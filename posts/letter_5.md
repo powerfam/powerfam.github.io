@@ -1,14 +1,12 @@
 ---
-title: "후회 없는 실패의 비밀"
+title: 후회 없는 실패의 비밀
 date: 2025-08-03
-description: "실패했지만 후회하지 않는 이유, 선별된 고통의 힘"
-summary: "목표가 명확하면 고통도 의미가 생긴다"
+description: 실패했지만 후회하지 않는 이유, 선별된 고통의 힘
 tags:
   - 편지
   - 실패
   - 성장
   - 노력
-section: section1
 ---
 
 사랑하는 딸에게.
@@ -59,7 +57,9 @@ section: section1
 
 인생과 유사하게, 이번 시험도 완벽한 정보는 없는 상황이었어.
 
-![아빠가 공부했던 수험서들](/images/5_책장.jpeg)
+
+![이미지 설명](https://raw.githubusercontent.com/powerfam/voti-backup/main/public/images/1765551653429-image.png)
+*아빠가 실제로 살았던 고시원 방 @gosi1net.net*
 
 여기서 아빠는 다음과 같은 네 가지 행동을 했단다.
 
