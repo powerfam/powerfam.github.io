@@ -1,14 +1,12 @@
 ---
-title: "은행의 이자놀이 - 선과 악, 이분법의 함정"
+title: 은행의 이자놀이 - 선과 악, 이분법의 함정
 date: 2025-09-01
-description: "이분법적 사고의 위험성과 시스템을 이해하는 지혜"
-summary: "분노 대신 시스템을 이해하고 활용하기"
+description: 이분법적 사고의 위험성과 시스템을 이해하는 지혜
 tags:
   - 편지
   - 투자
   - 금융
   - 사고방식
-section: section3
 ---
 
 사랑하는 딸에게.
@@ -26,6 +24,11 @@ section: section3
 제목만 봐도 "은행은 쓰레기 같은 놈들이야"라는 생각이 들 수 있어.
 
 오늘은 이러한 이분법적 사고에 대해서 다뤄볼까 해.
+
+
+![이미지 설명](https://raw.githubusercontent.com/powerfam/voti-backup/main/public/images/1765550484970-image.png)
+*여의도 @voti*
+
 
 ## 이분법의 무서움
 
