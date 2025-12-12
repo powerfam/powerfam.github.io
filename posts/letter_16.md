@@ -1,14 +1,12 @@
 ---
-title: "엄마에게 배우는 존중"
+title: 엄마에게 배우는 존중
 date: 2025-11-05
-description: "경청, 공감, 그리고 험담하지 않는 지혜"
-summary: "진짜 존중은 상대방이 나와 다름을 인정하는 것"
+description: 경청, 공감, 그리고 험담하지 않는 지혜
 tags:
   - 편지
   - 엄마
   - 존중
   - 인간관계
-section: section1
 ---
 
 사랑하는 딸에게.
@@ -108,6 +106,11 @@ section: section1
 전자는 단순히 상대방의 취향을 인정하는 것이고,
 
 후자는 상대방이 좋아하는 세계를 내가 직접 경험해보고 싶다는 거지.
+
+
+![이미지 설명](https://raw.githubusercontent.com/powerfam/voti-backup/main/public/images/1765550281566-image.png)
+*직관가서 구매한 SK나이츠 김선형 선수 유니폼 @voti*
+
 
 엄마는 실제로 아빠랑 함께 경기장에 갔어.
 
