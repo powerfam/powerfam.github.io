@@ -1,14 +1,12 @@
 ---
-title: "준비가 기회를 만날 때"
+title: 준비가 기회를 만날 때
 date: 2025-11-25
-description: "면접관이 되어 깨달은 것들"
-summary: "자기만의 스토리가 있는 사람이 기회를 살린다"
+description: 면접관이 되어 깨달은 것들
 tags:
   - 편지
   - 직장생활
   - 면접
   - 준비
-section: section1
 ---
 
 사랑하는 딸에게.
@@ -34,6 +32,11 @@ section: section1
 아빠는 HR 전문가는 아니지만, 다수의 지원자들을 만나보니
 
 "이 사람은 통과되겠다"하는 느낌은 있더라고.
+
+
+![이미지 설명](https://raw.githubusercontent.com/powerfam/voti-backup/main/public/images/1765550188071-image.png)
+*여기에 사진 캡션 작성 @voti*
+
 
 ## 자기만의 이야기가 있는 사람들
 
