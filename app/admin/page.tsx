@@ -415,20 +415,13 @@ interface Post {
   date: string;
 }
 
-type TabType = 'write' | 'list' | 'about' | 'test';
+type TabType = 'write' | 'list' | 'about';
 
 interface AboutContent {
   title: string;
   intro: string;
   topics: string[];
   outro: string;
-}
-
-interface TestContent {
-  title: string;
-  description: string;
-  mainColorDesc: string;
-  subColorDesc: string;
 }
 
 export default function AdminPage() {
@@ -473,12 +466,6 @@ export default function AdminPage() {
     topics: ['', '', ''],
     outro: ''
   });
-  const [testContent, setTestContent] = useState<TestContent>({
-    title: '테스트 페이지',
-    description: '',
-    mainColorDesc: '',
-    subColorDesc: ''
-  });
 
   // 기존 글 목록 가져오기
   useEffect(() => {
@@ -491,13 +478,6 @@ export default function AdminPage() {
   useEffect(() => {
     if (session && activeTab === 'about') {
       fetchAboutContent();
-    }
-  }, [session, activeTab]);
-
-  // 테스트 페이지 내용 불러오기
-  useEffect(() => {
-    if (session && activeTab === 'test') {
-      fetchTestContent();
     }
   }, [session, activeTab]);
 
@@ -518,16 +498,6 @@ export default function AdminPage() {
       setAboutContent(data);
     } catch (err) {
       console.error('About 내용 로드 실패:', err);
-    }
-  };
-
-  const fetchTestContent = async () => {
-    try {
-      const res = await fetch('/api/pages/get?page=test');
-      const data = await res.json();
-      setTestContent(data);
-    } catch (err) {
-      console.error('테스트 내용 로드 실패:', err);
     }
   };
 
@@ -705,28 +675,6 @@ export default function AdminPage() {
     }
   };
 
-  // 테스트 페이지 업데이트
-  const handleUpdateTest = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    try {
-      const res = await fetch('/api/pages/update', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ page: 'test', content: testContent }),
-      });
-      if (res.ok) {
-        alert('테스트 페이지가 업데이트되었습니다!');
-      } else {
-        alert('업데이트 실패');
-      }
-    } catch {
-      alert('에러 발생');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   // 로딩 진행률 상태
   const [loadingProgress, setLoadingProgress] = useState(13);
 
@@ -857,18 +805,6 @@ export default function AdminPage() {
             }}
           >
             About
-          </button>
-          <button
-            onClick={() => setActiveTab('test')}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-              activeTab === 'test' ? 'shadow-md' : 'hover:opacity-80'
-            }`}
-            style={{
-              backgroundColor: activeTab === 'test' ? 'var(--menu-sub)' : 'transparent',
-              color: activeTab === 'test' ? 'var(--menu-sub-text)' : 'var(--menu-main-text)',
-            }}
-          >
-            테스트
           </button>
         </div>
       </div>
@@ -1213,69 +1149,6 @@ export default function AdminPage() {
               style={{ backgroundColor: 'var(--menu-main)' }}
             >
               {isSubmitting ? '저장 중...' : 'About 페이지 저장'}
-            </button>
-          </form>
-        </div>
-      )}
-
-      {/* 테스트 탭 */}
-      {activeTab === 'test' && (
-        <div className="p-6 rounded-lg border" style={{ borderColor: 'var(--menu-main)' }}>
-          <h2 className="text-2xl font-bold mb-6" style={{ color: 'var(--menu-main)' }}>
-            테스트 페이지 편집
-          </h2>
-          <form onSubmit={handleUpdateTest} className="space-y-4">
-            <div>
-              <label className="block mb-2 font-medium">제목</label>
-              <input
-                type="text"
-                value={testContent.title}
-                onChange={(e) => setTestContent({ ...testContent, title: e.target.value })}
-                className="w-full px-4 py-2 rounded border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
-                style={{ borderColor: 'var(--menu-main)' }}
-              />
-            </div>
-
-            <div>
-              <label className="block mb-2 font-medium">색상 테스트 설명</label>
-              <textarea
-                value={testContent.description}
-                onChange={(e) => setTestContent({ ...testContent, description: e.target.value })}
-                rows={2}
-                className="w-full px-4 py-2 rounded border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
-                style={{ borderColor: 'var(--menu-main)' }}
-              />
-            </div>
-
-            <div>
-              <label className="block mb-2 font-medium">메인 색상 설명</label>
-              <input
-                type="text"
-                value={testContent.mainColorDesc}
-                onChange={(e) => setTestContent({ ...testContent, mainColorDesc: e.target.value })}
-                className="w-full px-4 py-2 rounded border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
-                style={{ borderColor: 'var(--menu-main)' }}
-              />
-            </div>
-
-            <div>
-              <label className="block mb-2 font-medium">서브 색상 설명</label>
-              <input
-                type="text"
-                value={testContent.subColorDesc}
-                onChange={(e) => setTestContent({ ...testContent, subColorDesc: e.target.value })}
-                className="w-full px-4 py-2 rounded border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
-                style={{ borderColor: 'var(--menu-main)' }}
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full py-3 rounded-lg font-medium text-white disabled:opacity-50"
-              style={{ backgroundColor: 'var(--menu-main)' }}
-            >
-              {isSubmitting ? '저장 중...' : '테스트 페이지 저장'}
             </button>
           </form>
         </div>

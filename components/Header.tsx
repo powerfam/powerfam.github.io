@@ -55,7 +55,6 @@ export default function Header() {
   // 기본 메뉴
   const baseNavItems = [
     { href: '/about', label: 'About' },
-    { href: '/test', label: '테스트' },
     { href: '/articles', label: 'Articles' },
     { href: '/sotd', label: 'Stoic of Today' },
   ];

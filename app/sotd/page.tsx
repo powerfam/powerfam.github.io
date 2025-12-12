@@ -325,50 +325,6 @@ export default function StoicOfTodayPage() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
-      {/* 헤더 */}
-      <div className="text-center mb-12">
-        <h1
-          className="text-3xl md:text-4xl font-bold mb-2"
-          style={{ color: 'var(--menu-main)' }}
-        >
-          Stoic of Today
-        </h1>
-        <p className="text-sm opacity-60">오늘의 스토아 철학 명언</p>
-      </div>
-
-      {/* 언어 토글 */}
-      <div className="flex justify-center mb-8">
-        <div
-          className="flex items-center gap-1 p-1 rounded-full"
-          style={{ backgroundColor: 'var(--menu-main)' }}
-        >
-          <button
-            onClick={() => setIsKorean(true)}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-              isKorean ? 'shadow-md' : 'hover:opacity-80'
-            }`}
-            style={{
-              backgroundColor: isKorean ? 'var(--menu-sub)' : 'transparent',
-              color: isKorean ? 'var(--menu-sub-text)' : 'var(--menu-main-text)'
-            }}
-          >
-            KR
-          </button>
-          <button
-            onClick={() => setIsKorean(false)}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-              !isKorean ? 'shadow-md' : 'hover:opacity-80'
-            }`}
-            style={{
-              backgroundColor: !isKorean ? 'var(--menu-sub)' : 'transparent',
-              color: !isKorean ? 'var(--menu-sub-text)' : 'var(--menu-main-text)'
-            }}
-          >
-            ENG
-          </button>
-        </div>
-      </div>
-
       {/* 명언 카드 */}
       <AnimatePresence mode="wait">
         <motion.div
@@ -396,7 +352,7 @@ export default function StoicOfTodayPage() {
 
           {/* 카드 헤더 */}
           <div
-            className="px-6 py-4 border-b relative z-10"
+            className="px-4 sm:px-6 py-3 border-b relative z-10 flex items-center justify-between"
             style={{
               borderColor: 'var(--menu-main)',
               backgroundColor: 'var(--menu-main)'
@@ -408,6 +364,27 @@ export default function StoicOfTodayPage() {
             >
               Stoic of Today
             </p>
+
+            {/* 언어 토글 - 다크모드 토글과 동일한 사이즈 */}
+            <button
+              onClick={() => setIsKorean(!isKorean)}
+              className="relative w-[50px] h-[28px] md:w-[60px] md:h-[32px] rounded-full transition-colors duration-300"
+              style={{
+                backgroundColor: 'var(--menu-sub)'
+              }}
+              aria-label="언어 전환"
+            >
+              <div
+                className={`absolute top-0.5 md:top-1 w-[22px] h-[22px] md:w-[24px] md:h-[24px] rounded-full shadow-md transition-all duration-300 flex items-center justify-center
+                  ${isKorean ? 'left-0.5 md:left-1' : 'left-[26px] md:left-[32px]'}
+                `}
+                style={{ backgroundColor: 'var(--menu-main-text)' }}
+              >
+                <span className="text-[10px] md:text-xs font-bold" style={{ color: 'var(--menu-main)' }}>
+                  {isKorean ? 'KR' : 'EN'}
+                </span>
+              </div>
+            </button>
           </div>
 
           {/* 카드 본문 */}
