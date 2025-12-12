@@ -20,7 +20,7 @@ tags:
 ## 변하지 않은 반지, 2배가 된 가격
 
 ![이미지 설명](https://raw.githubusercontent.com/powerfam/voti-backup/main/public/images/1765550104144-rings.jpeg)
-*여기에 사진 캡션 작성 @voti*
+*엄마 아빠의 결혼 반지 @voti*
 
 사랑에 대한 표현 방법은 여러가지지.
 
