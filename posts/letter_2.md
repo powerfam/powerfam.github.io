@@ -1,14 +1,12 @@
 ---
-title: "완벽해지려다 지친 너에게 - 니체 위버멘쉬의 역설"
+title: 완벽해지려다 지친 너에게 - 니체 위버멘쉬의 역설
 date: 2025-07-19
-description: "끊임없는 자기극복의 함정과 진정한 성장의 의미"
-summary: "자기극복과 자기파괴의 경계, 불완전한 나를 사랑하기"
+description: 끊임없는 자기극복의 함정과 진정한 성장의 의미
 tags:
   - 편지
   - 니체
   - 자기계발
   - 삶의지혜
-section: section1
 ---
 
 사랑하는 딸에게.
@@ -16,6 +14,11 @@ section: section1
 아빠는 점심에 산책 겸 서점에 자주 들러. 그런데 요즘 베스트셀러 가판대에 "니체"라는 철학가 관련 책이 참 많이 보이더라고.
 
 그래서 니체에 대해 잠깐 이야기해볼까 해.
+
+
+![이미지 설명](https://raw.githubusercontent.com/powerfam/voti-backup/main/public/images/1765552524345-image.png)
+*니체 @wikimedia*
+
 
 니체는 <b>"인간은 극복되어야 할 존재다."</b>라고 말했어.
 
