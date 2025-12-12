@@ -1,14 +1,12 @@
 ---
-title: "F1 더 무비 - 소니 헤이즈에게서 스토아 철학을 보다"
+title: F1 더 무비 - 소니 헤이즈에게서 스토아 철학을 보다
 date: 2025-08-18
-description: "결과에 집착하지 않고 과정에 집중하는 법"
-summary: "결과에 집착하지 않고 과정에 집중하는 법"
+description: 결과에 집착하지 않고 과정에 집중하는 법
 tags:
   - 편지
   - 스토아
   - 영화
   - 몰입
-section: section1
 ---
 
 사랑하는 딸에게,
@@ -25,7 +23,9 @@ section: section1
 
 브래드 피트가 나오는 레이싱 영화 말이야.
 
-(영화 내용 스포일러가 담겨있을 수 있습니다. 주의 부탁드립니다.)
+
+![이미지 설명](https://raw.githubusercontent.com/powerfam/voti-backup/main/public/images/1765550786752-image.png)
+
 
 ## 사람들이 흥분한 이유
 
