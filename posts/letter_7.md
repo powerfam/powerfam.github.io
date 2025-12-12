@@ -1,14 +1,12 @@
 ---
-title: "후배들의 고민 - 통제할 수 있는 것에 집중하기"
+title: 후배들의 고민 - 통제할 수 있는 것에 집중하기
 date: 2025-08-13
-description: "주체성 있는 업무를 원하는 후배들에게 전하는 조언"
-summary: "환경 탓보다 통제할 수 있는 것부터 시작하기"
+description: 주체성 있는 업무를 원하는 후배들에게 전하는 조언
 tags:
   - 편지
   - 직장생활
   - 성장
   - 주체성
-section: section1
 ---
 
 사랑하는 딸에게.
@@ -184,6 +182,9 @@ section: section1
 남 탓, 환경 탓 하기 전에 내가 지금 당장 바꿀 수 있는 것이 뭔지 찾아봐.
 
 <b>셋째, 조급해 하지마.</b>
+
+![이미지 설명](https://raw.githubusercontent.com/powerfam/voti-backup/main/public/images/1765551553140-image.png)
+*야근하고 집에 가는 길 @voti*
 
 모든 성장에는 시간이 필요해. 지금 하고 있는 일의 의미를 찾고, 차근차근 준비하다 보면 기회는 온다.
 
