@@ -35,7 +35,7 @@ tags:
 
 
 ![이미지 설명](https://raw.githubusercontent.com/powerfam/voti-backup/main/public/images/1765550188071-image.png)
-*여기에 사진 캡션 작성 @voti*
+*@voti*
 
 
 ## 자기만의 이야기가 있는 사람들
