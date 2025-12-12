@@ -882,6 +882,23 @@ export default function AdminPage() {
                   name="section"
                   required
                   defaultValue={editContent.section}
+                  onChange={(e) => {
+                    if (e.target.value === 'section1' && !editingPost) {
+                      const textarea = document.querySelector('textarea[name="content"]') as HTMLTextAreaElement;
+                      if (textarea && !textarea.value.trim()) {
+                        const section1DefaultContent = `> 인용문을 입력하세요.<br>
+> — 인물
+
+---
+
+30대 직장인 아빠가 미래 20세 딸에게 전하는 조언을 담은 편지를 쓰려고 합니다.
+
+인생과 직장, 사회생활에서 겪은 솔직한 경험담을 다룰 예정입니다.`;
+                        textarea.value = section1DefaultContent;
+                        setCurrentEditorContent(prev => ({ ...prev, content: section1DefaultContent }));
+                      }
+                    }
+                  }}
                   className="w-full px-4 py-2 rounded border bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
                   style={{ borderColor: 'var(--menu-main)' }}
                 >
