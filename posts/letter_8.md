@@ -1,14 +1,12 @@
 ---
-title: "우리 반응에 집중하기"
+title: 우리 반응에 집중하기
 date: 2025-08-16
-description: "기준점을 바꾸면 세상이 바뀐다"
-summary: "내가 설정한 기준점이 모든 감정을 좌우한다"
+description: 기준점을 바꾸면 세상이 바뀐다
 tags:
   - 편지
   - 스토아
   - 마인드셋
   - 자기이해
-section: section1
 ---
 
 사랑하는 딸에게,
@@ -125,6 +123,10 @@ section: section1
 완벽하게 하려고 하면 시작도 못 해. 하지만 "이번에는 뭘 배울까?"라는 기준점으로 접근하면 실패도 성장의 증거가 되거든.
 
 ## 너에게 전하고 싶은 것
+
+![이미지 설명](https://raw.githubusercontent.com/powerfam/voti-backup/main/public/images/1765551232885-image.png)
+*여기에 사진 캡션 작성 @voti*
+
 
 딸아, 세상은 계속해서 너에게 온갖 기준점을 제시할 거야.
 
