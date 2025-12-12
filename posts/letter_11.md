@@ -1,14 +1,12 @@
 ---
-title: "남의 기대가 아닌 나의 꿈 찾기"
+title: 남의 기대가 아닌 나의 꿈 찾기
 date: 2025-08-30
-description: "수동적 꿈 추종의 함정에서 벗어나기"
-summary: "남들이 정한 기준이 아닌, 진짜 꿈을 찾는 법"
+description: 수동적 꿈 추종의 함정에서 벗어나기
 tags:
   - 편지
   - 꿈
   - 자기이해
   - 성장
-section: section1
 ---
 
 사랑하는 딸에게,
@@ -205,6 +203,11 @@ section: section1
 사랑한다, 우리 딸.
 
 아빠가.
+
+
+![이미지 설명](https://raw.githubusercontent.com/powerfam/voti-backup/main/public/images/1765550672800-image.png)
+*@voti*
+
 
 > 현명한 사람은 자신이 무엇을 원하는지 알고, 어리석은 사람은 자신이 무엇을 원하는지 모른다.<br>
 > — 세네카
