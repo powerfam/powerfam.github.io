@@ -1,14 +1,12 @@
 ---
-title: "엄마에게 배우는 진짜 책임감"
+title: 엄마에게 배우는 진짜 책임감
 date: 2025-10-12
-description: "규율 속에서 단단해진 사람, 선택한 고통을 감당하는 힘"
-summary: "내가 선택한 것이기에 기꺼이 감당하는 책임감"
+description: 규율 속에서 단단해진 사람, 선택한 고통을 감당하는 힘
 tags:
   - 편지
   - 엄마
   - 책임감
   - 성장
-section: section1
 ---
 
 사랑하는 딸에게.
@@ -91,7 +89,10 @@ section: section1
 
 아빠가.
 
-![엄마가 여자친구일때 준 2015년 생일선물](/images/9_ticket.jpeg)
+
+![이미지 설명](https://raw.githubusercontent.com/powerfam/voti-backup/main/public/images/1765550387022-image.png)
+*엄마가 여자친구일때 준 2015년 생일선물 @voti*
+
 
 > 우리는 우리가 반복적으로 하는 행동의 결과다. 따라서 탁월함은 행위가 아니라 습관이다.<br>
 > — 아리스토텔레스
