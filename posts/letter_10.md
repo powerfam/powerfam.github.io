@@ -1,14 +1,12 @@
 ---
-title: "AI 시대와 통제감의 상실"
+title: AI 시대와 통제감의 상실
 date: 2025-08-24
-description: "AI와 함께 일하며 발견한 진짜 통제감의 의미"
-summary: "AI 시대, 우리가 통제할 수 있는 것의 재정의"
+description: AI와 함께 일하며 발견한 진짜 통제감의 의미
 tags:
   - 편지
   - AI
   - 성장
   - 통제
-section: section1
 ---
 
 사랑하는 딸에게.
@@ -133,6 +131,10 @@ AI는 공감과 격려를 하는 멘트를 하면서,
 
 통제감은 벽돌을 한 장 한 장 너가 쌓는데 있는게 아니라고 생각해.
 
+![이미지 설명](https://raw.githubusercontent.com/powerfam/voti-backup/main/public/images/1765551069600-image.png)
+*여기에 사진 캡션 작성 @voti*
+
+
 진정한 통제감은
 
 완성될 건물을 생각하며,
@@ -151,7 +153,6 @@ AI는 공감과 격려를 하는 멘트를 하면서,
 
 (PS 오늘 너의 두 번째 생일 기념으로 가족사진 찍는데, 너가 엄청 돌아다니느라 고생했네 😅)
 
-![가족사진](/images/10_family.png)
 
 ---
 
