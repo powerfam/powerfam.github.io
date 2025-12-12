@@ -1,14 +1,12 @@
 ---
-title: "머리로 아는 것과 몸으로 아는 것의 차이"
+title: 머리로 아는 것과 몸으로 아는 것의 차이
 date: 2025-07-23
-description: "신입사원 시절 농산물 시장 담당을 맡으며 배운 것들"
-summary: "문제와 직접 부딪히며 체득한 구조적 사고법"
+description: 신입사원 시절 농산물 시장 담당을 맡으며 배운 것들
 tags:
   - 편지
   - 직장생활
   - 성장
   - 문제해결
-section: section1
 ---
 
 사랑하는 딸에게.
@@ -80,6 +78,9 @@ section: section1
 <b>"모르는 걸 두려워하지 않게"</b> 된 거야. 오히려 "어떻게 접근할까?"가 재미있어졌어.
 
 ## 문제에 적극적으로 맞서기
+
+![이미지 설명](https://raw.githubusercontent.com/powerfam/voti-backup/main/public/images/1765552794748-image.png)
+*@voti*
 
 일을 하면 시간에 쫓기다 보니 이런 구조적 접근을 건너뛰기 쉬워. 아빠도 처음엔 그랬고, 지금도 바쁠 때면 가끔 그러거든.
 
