@@ -359,6 +359,706 @@
       "authorKr": "에픽테토스",
       "text": "No great thing is created suddenly.",
       "textKr": "위대한 것은 갑자기 만들어지지 않는다."
+    },
+    {
+      "id": 51,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "How much time he gains who does not look to see what his neighbor says or does or thinks.",
+      "textKr": "이웃이 무엇을 말하고 행하고 생각하는지 보지 않는 사람은 얼마나 많은 시간을 얻는가."
+    },
+    {
+      "id": 52,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "Loss is nothing else but change, and change is Nature's delight.",
+      "textKr": "상실은 변화에 불과하며, 변화는 자연의 기쁨이다."
+    },
+    {
+      "id": 53,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "The object of life is not to be on the side of the majority, but to escape finding oneself in the ranks of the insane.",
+      "textKr": "삶의 목적은 다수의 편에 서는 것이 아니라, 미친 자들의 대열에서 벗어나는 것이다."
+    },
+    {
+      "id": 54,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "Look back over the past, with its changing empires that rose and fell, and you can foresee the future too.",
+      "textKr": "흥망했던 제국들과 함께 과거를 돌아보면, 미래도 예견할 수 있다."
+    },
+    {
+      "id": 55,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "Reject your sense of injury and the injury itself disappears.",
+      "textKr": "상처받았다는 느낌을 버리면, 상처 자체가 사라진다."
+    },
+    {
+      "id": 56,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "The first rule is to keep an untroubled spirit. The second is to look things in the face and know them for what they are.",
+      "textKr": "첫 번째 규칙은 평온한 정신을 유지하는 것이다. 두 번째는 사물을 직시하고 있는 그대로 아는 것이다."
+    },
+    {
+      "id": 57,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "To live happily is an inward power of the soul.",
+      "textKr": "행복하게 사는 것은 영혼의 내적인 힘이다."
+    },
+    {
+      "id": 58,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "Be tolerant with others and strict with yourself.",
+      "textKr": "다른 사람에게는 관대하고 자신에게는 엄격하라."
+    },
+    {
+      "id": 59,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "If it is not right, do not do it; if it is not true, do not say it.",
+      "textKr": "옳지 않으면 하지 말고, 사실이 아니면 말하지 마라."
+    },
+    {
+      "id": 60,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "Think of yourself as dead. You have lived your life. Now take what's left and live it properly.",
+      "textKr": "자신이 죽었다고 생각하라. 이미 삶을 살았다. 이제 남은 것을 가지고 제대로 살아라."
+    },
+    {
+      "id": 61,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "While we are postponing, life speeds by.",
+      "textKr": "우리가 미루는 동안 삶은 빠르게 지나간다."
+    },
+    {
+      "id": 62,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "It is not the man who has too little, but the man who craves more, that is poor.",
+      "textKr": "가난한 것은 적게 가진 사람이 아니라, 더 많이 갈망하는 사람이다."
+    },
+    {
+      "id": 63,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "Hang on to your youthful enthusiasms - you'll be able to use them better when you're older.",
+      "textKr": "젊은 날의 열정을 간직하라. 나이가 들면 더 잘 활용할 수 있을 것이다."
+    },
+    {
+      "id": 64,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "Life is very short and anxious for those who forget the past, neglect the present, and fear the future.",
+      "textKr": "과거를 잊고, 현재를 소홀히 하며, 미래를 두려워하는 자에게 삶은 매우 짧고 불안하다."
+    },
+    {
+      "id": 65,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "The greatest blessings of mankind are within us and within our reach.",
+      "textKr": "인류의 가장 큰 축복은 우리 안에 있고 우리 손이 닿는 곳에 있다."
+    },
+    {
+      "id": 66,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "Most powerful is he who has himself in his own power.",
+      "textKr": "가장 강한 사람은 자기 자신을 통제하는 사람이다."
+    },
+    {
+      "id": 67,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "Religion is regarded by the common people as true, by the wise as false, and by rulers as useful.",
+      "textKr": "종교는 일반인에게는 진실로, 현자에게는 거짓으로, 통치자에게는 유용한 것으로 여겨진다."
+    },
+    {
+      "id": 68,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "The mind that is anxious about future events is miserable.",
+      "textKr": "미래의 일에 불안해하는 마음은 불행하다."
+    },
+    {
+      "id": 69,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "You act like mortals in all that you fear, and like immortals in all that you desire.",
+      "textKr": "두려워할 때는 필멸자처럼, 욕망할 때는 불멸자처럼 행동한다."
+    },
+    {
+      "id": 70,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "Wherever there is a human being, there is an opportunity for kindness.",
+      "textKr": "인간이 있는 곳에는 친절을 베풀 기회가 있다."
+    },
+    {
+      "id": 71,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "Freedom is the only worthy goal in life. It is won by disregarding things that lie beyond our control.",
+      "textKr": "자유는 삶에서 유일하게 가치 있는 목표다. 그것은 우리 통제 밖의 것을 무시함으로써 얻어진다."
+    },
+    {
+      "id": 72,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "Other people's views and troubles can be contagious. Don't sabotage yourself by unwittingly adopting negative attitudes.",
+      "textKr": "다른 사람의 견해와 문제는 전염될 수 있다. 무의식적으로 부정적 태도를 받아들여 자신을 망치지 마라."
+    },
+    {
+      "id": 73,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "Keep silence for the most part, and speak only when you must, and then briefly.",
+      "textKr": "대부분의 경우 침묵을 지키고, 반드시 말해야 할 때만, 그것도 간결하게 말하라."
+    },
+    {
+      "id": 74,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "Any person capable of angering you becomes your master.",
+      "textKr": "당신을 화나게 할 수 있는 사람은 누구든 당신의 주인이 된다."
+    },
+    {
+      "id": 75,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "The key is to keep company only with people who uplift you, whose presence calls forth your best.",
+      "textKr": "핵심은 당신을 고양시키고, 그 존재가 당신의 최선을 끌어내는 사람들하고만 어울리는 것이다."
+    },
+    {
+      "id": 76,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "Nature hath given men one tongue but two ears, that we may hear from others twice as much as we speak.",
+      "textKr": "자연은 인간에게 혀 하나와 귀 두 개를 주었으니, 말하는 것의 두 배를 들을 수 있도록."
+    },
+    {
+      "id": 77,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "Seek not the good in external things; seek it in yourselves.",
+      "textKr": "외부의 것에서 선을 찾지 말고, 자신 안에서 찾아라."
+    },
+    {
+      "id": 78,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "Only the educated are free.",
+      "textKr": "교육받은 자만이 자유롭다."
+    },
+    {
+      "id": 79,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "People are not disturbed by things, but by the views they take of them.",
+      "textKr": "사람들은 사물 자체가 아니라, 사물에 대한 관점에 의해 방해받는다."
+    },
+    {
+      "id": 80,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "Caretake this moment. Immerse yourself in its particulars.",
+      "textKr": "이 순간을 돌보라. 그 세부사항에 몰입하라."
+    },
+    {
+      "id": 81,
+      "author": "Zeno of Citium",
+      "authorKr": "키티온의 제논",
+      "text": "No evil is honorable: but death is honorable; therefore death is not evil.",
+      "textKr": "악한 것은 명예롭지 않다. 그러나 죽음은 명예롭다. 그러므로 죽음은 악이 아니다."
+    },
+    {
+      "id": 82,
+      "author": "Zeno of Citium",
+      "authorKr": "키티온의 제논",
+      "text": "The reason why we have two ears and only one mouth is that we may listen the more and talk the less.",
+      "textKr": "우리에게 귀가 둘이고 입이 하나인 이유는 더 많이 듣고 더 적게 말하기 위함이다."
+    },
+    {
+      "id": 83,
+      "author": "Zeno of Citium",
+      "authorKr": "키티온의 제논",
+      "text": "Fate is the endless chain of causation, whereby things are.",
+      "textKr": "운명은 사물이 존재하게 하는 끝없는 인과의 사슬이다."
+    },
+    {
+      "id": 84,
+      "author": "Cleanthes",
+      "authorKr": "클레안테스",
+      "text": "Conduct me, Zeus, and thou, O Destiny, wherever your decrees have fixed my lot.",
+      "textKr": "제우스여, 그리고 운명이여, 당신의 뜻이 나의 운명을 정한 곳으로 나를 인도하소서."
+    },
+    {
+      "id": 85,
+      "author": "Cleanthes",
+      "authorKr": "클레안테스",
+      "text": "Ignorance of one's misfortunes is clear gain.",
+      "textKr": "자신의 불행을 모르는 것은 분명한 이득이다."
+    },
+    {
+      "id": 86,
+      "author": "Musonius Rufus",
+      "authorKr": "무소니우스 루푸스",
+      "text": "To relax the mind is to lose it.",
+      "textKr": "마음을 느슨하게 하는 것은 마음을 잃는 것이다."
+    },
+    {
+      "id": 87,
+      "author": "Musonius Rufus",
+      "authorKr": "무소니우스 루푸스",
+      "text": "Choose to die well while you can; wait too long, and it might become impossible to do so.",
+      "textKr": "할 수 있을 때 잘 죽기를 선택하라. 너무 오래 기다리면 그렇게 할 수 없게 될 수도 있다."
+    },
+    {
+      "id": 88,
+      "author": "Musonius Rufus",
+      "authorKr": "무소니우스 루푸스",
+      "text": "Exile is not a thing that can deprive us of water, earth, air, or the sun.",
+      "textKr": "유배는 우리에게서 물, 땅, 공기, 태양을 빼앗을 수 있는 것이 아니다."
+    },
+    {
+      "id": 89,
+      "author": "Musonius Rufus",
+      "authorKr": "무소니우스 루푸스",
+      "text": "We will train both soul and body when we accustom ourselves to cold, heat, thirst, hunger, scarcity of food.",
+      "textKr": "추위, 더위, 갈증, 배고픔, 음식 부족에 익숙해지면 영혼과 육체 모두를 단련하게 된다."
+    },
+    {
+      "id": 90,
+      "author": "Cato the Younger",
+      "authorKr": "소 카토",
+      "text": "I would not be beholden to a tyrant, for his acts of tyranny as well as those of kindness.",
+      "textKr": "나는 폭군에게 빚지고 싶지 않다. 그의 폭정에도 친절에도."
+    },
+    {
+      "id": 91,
+      "author": "Cato the Younger",
+      "authorKr": "소 카토",
+      "text": "He who fears death either fears to lose all sensation or fears new sensations. In reality, you will either feel nothing at all, or you will feel something new.",
+      "textKr": "죽음을 두려워하는 자는 모든 감각을 잃는 것을 두려워하거나 새로운 감각을 두려워한다. 실제로 당신은 아무것도 느끼지 못하거나 새로운 것을 느끼게 될 것이다."
+    },
+    {
+      "id": 92,
+      "author": "Chrysippus",
+      "authorKr": "크리시포스",
+      "text": "Fate guides the willing, but drags the unwilling.",
+      "textKr": "운명은 기꺼이 따르는 자를 인도하고, 거부하는 자를 끌고 간다."
+    },
+    {
+      "id": 93,
+      "author": "Chrysippus",
+      "authorKr": "크리시포스",
+      "text": "The wise man needs nothing and yet he can make good use of anything.",
+      "textKr": "현명한 사람은 아무것도 필요로 하지 않지만, 무엇이든 잘 활용할 수 있다."
+    },
+    {
+      "id": 94,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "When you wake up in the morning, tell yourself: The people I deal with today will be meddling, ungrateful, arrogant, dishonest, jealous, and surly.",
+      "textKr": "아침에 일어나면 스스로에게 말하라: 오늘 만날 사람들은 간섭하고, 배은망덕하고, 오만하고, 정직하지 않고, 질투하고, 무뚝뚝할 것이다."
+    },
+    {
+      "id": 95,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "Our life is what our thoughts make it.",
+      "textKr": "우리의 삶은 우리의 생각이 만드는 것이다."
+    },
+    {
+      "id": 96,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "Every new beginning comes from some other beginning's end.",
+      "textKr": "모든 새로운 시작은 다른 시작의 끝에서 온다."
+    },
+    {
+      "id": 97,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "Associate with people who are likely to improve you.",
+      "textKr": "당신을 향상시킬 가능성이 있는 사람들과 어울려라."
+    },
+    {
+      "id": 98,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "The essence of philosophy is that a man should so live that his happiness shall depend as little as possible on external things.",
+      "textKr": "철학의 본질은 인간이 외부적인 것에 가능한 한 적게 의존하여 행복해야 한다는 것이다."
+    },
+    {
+      "id": 99,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "Do not act as if you had ten thousand years to throw away. Death stands at your elbow. Be good for something while you live and it is in your power.",
+      "textKr": "만 년을 버릴 수 있는 것처럼 행동하지 마라. 죽음이 당신 옆에 서 있다. 살아 있는 동안, 당신의 힘이 닿는 동안 무언가에 유용하라."
+    },
+    {
+      "id": 100,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "There is no genius without a touch of madness.",
+      "textKr": "약간의 광기 없이는 천재도 없다."
+    },
+    {
+      "id": 101,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "Do every act of your life as though it were the very last act of your life.",
+      "textKr": "삶의 모든 행동을 마치 그것이 삶의 마지막 행동인 것처럼 하라."
+    },
+    {
+      "id": 102,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "Adapt yourself to the things among which your lot has been cast and love sincerely the fellow creatures with whom destiny has ordained that you shall live.",
+      "textKr": "당신의 운명이 던져진 것들에 적응하고, 운명이 함께 살도록 정한 동료 피조물들을 진심으로 사랑하라."
+    },
+    {
+      "id": 103,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "A man's worth is no greater than the worth of his ambitions.",
+      "textKr": "사람의 가치는 그의 야망의 가치보다 크지 않다."
+    },
+    {
+      "id": 104,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "Begin - to begin is half the work, let half still remain; again begin this, and thou wilt have finished.",
+      "textKr": "시작하라 - 시작하는 것이 일의 절반이다. 절반이 남아있게 하라. 다시 시작하면 끝낼 것이다."
+    },
+    {
+      "id": 105,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "Here is a rule to remember in future, when anything tempts you to feel bitter: not 'This is misfortune,' but 'To bear this worthily is good fortune.'",
+      "textKr": "미래에 무언가가 당신을 쓰라리게 느끼게 할 때 기억할 규칙이 있다: '이것은 불행이다'가 아니라 '이것을 품위 있게 견디는 것이 행운이다'라고."
+    },
+    {
+      "id": 106,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "Execute every act of thy life as though it were thy last.",
+      "textKr": "삶의 모든 행위를 마지막인 것처럼 수행하라."
+    },
+    {
+      "id": 107,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "Receive without pride, let go without attachment.",
+      "textKr": "교만 없이 받아들이고, 집착 없이 놓아라."
+    },
+    {
+      "id": 108,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "Time is a sort of river of passing events, and strong is its current; no sooner is a thing brought to sight than it is swept by and another takes its place.",
+      "textKr": "시간은 지나가는 사건들의 일종의 강이며, 그 흐름은 강하다. 무언가가 눈에 띄자마자 쓸려가고 다른 것이 그 자리를 차지한다."
+    },
+    {
+      "id": 109,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "Nothing happens to anybody which he is not fitted by nature to bear.",
+      "textKr": "누구에게도 본성상 감당할 수 없는 일은 일어나지 않는다."
+    },
+    {
+      "id": 110,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "What we do now echoes in eternity.",
+      "textKr": "우리가 지금 하는 일은 영원 속에서 메아리친다."
+    },
+    {
+      "id": 111,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "He suffers more than necessary, who suffers before it is necessary.",
+      "textKr": "필요하기 전에 고통받는 자는 필요 이상으로 고통받는다."
+    },
+    {
+      "id": 112,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "We are always complaining that our days are few, and acting as though there would be no end of them.",
+      "textKr": "우리는 항상 날이 적다고 불평하면서, 마치 끝이 없을 것처럼 행동한다."
+    },
+    {
+      "id": 113,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "Wealth is the slave of a wise man and the master of a fool.",
+      "textKr": "부는 현명한 사람의 노예이고 어리석은 사람의 주인이다."
+    },
+    {
+      "id": 114,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "Until we have begun to go without them, we fail to realize how unnecessary many things are.",
+      "textKr": "그것들 없이 살기 시작하기 전까지, 우리는 얼마나 많은 것들이 불필요한지 깨닫지 못한다."
+    },
+    {
+      "id": 115,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "Expecting is the greatest impediment to living. In anticipation of tomorrow, it loses today.",
+      "textKr": "기대하는 것은 사는 데 가장 큰 방해물이다. 내일을 기대하며 오늘을 잃는다."
+    },
+    {
+      "id": 116,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "What need is there to weep over parts of life? The whole of it calls for tears.",
+      "textKr": "삶의 일부에 대해 울 필요가 무엇이겠는가? 삶 전체가 눈물을 요구한다."
+    },
+    {
+      "id": 117,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "If a man knows not to which port he sails, no wind is favorable.",
+      "textKr": "어느 항구로 가는지 모르는 사람에게는 어떤 바람도 유리하지 않다."
+    },
+    {
+      "id": 118,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "Fate leads the willing and drags along the reluctant.",
+      "textKr": "운명은 기꺼이 따르는 자를 이끌고 꺼리는 자를 끌고 간다."
+    },
+    {
+      "id": 119,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "You want to live but do you know how to live? You are scared of dying and tell me, is the kind of life you lead really any different from being dead?",
+      "textKr": "당신은 살고 싶어하지만 어떻게 살아야 하는지 아는가? 죽음을 두려워하면서, 당신이 사는 삶이 정말 죽은 것과 다른가?"
+    },
+    {
+      "id": 120,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "Anger, if not restrained, is frequently more hurtful to us than the injury that provokes it.",
+      "textKr": "분노는 억제하지 않으면, 그것을 유발한 상처보다 우리에게 더 해로울 때가 많다."
+    },
+    {
+      "id": 121,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "He who laughs at himself never runs out of things to laugh at.",
+      "textKr": "자신을 비웃는 사람은 웃을 거리가 떨어지지 않는다."
+    },
+    {
+      "id": 122,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "It is impossible for a man to learn what he thinks he already knows.",
+      "textKr": "사람이 이미 안다고 생각하는 것을 배우는 것은 불가능하다."
+    },
+    {
+      "id": 123,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "If you wish to be a writer, write.",
+      "textKr": "작가가 되고 싶다면, 써라."
+    },
+    {
+      "id": 124,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "Neither should a ship rely on one small anchor, nor should life rest on a single hope.",
+      "textKr": "배가 하나의 작은 닻에 의지해서는 안 되듯이, 삶도 하나의 희망에 의지해서는 안 된다."
+    },
+    {
+      "id": 125,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "Know, first, who you are, and then adorn yourself accordingly.",
+      "textKr": "먼저 자신이 누구인지 알고, 그에 맞게 자신을 꾸며라."
+    },
+    {
+      "id": 126,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "Attach yourself to what is spiritually superior, regardless of what other people think or do.",
+      "textKr": "다른 사람들이 어떻게 생각하거나 행동하든, 정신적으로 우월한 것에 자신을 붙여라."
+    },
+    {
+      "id": 127,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "We cannot choose our external circumstances, but we can always choose how we respond to them.",
+      "textKr": "외부 환경을 선택할 수는 없지만, 그것에 어떻게 반응할지는 항상 선택할 수 있다."
+    },
+    {
+      "id": 128,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "Practice yourself, for heaven's sake, in little things; and thence proceed to greater.",
+      "textKr": "제발 작은 일에서 자신을 연습하라. 그리고 거기서 더 큰 일로 나아가라."
+    },
+    {
+      "id": 129,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "You are a little soul carrying around a corpse.",
+      "textKr": "당신은 시체를 들고 다니는 작은 영혼이다."
+    },
+    {
+      "id": 130,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "Small-minded people blame others. Average people blame themselves. The wise see all blame as foolishness.",
+      "textKr": "소인배는 다른 사람을 탓한다. 평범한 사람은 자신을 탓한다. 현명한 사람은 모든 비난을 어리석음으로 본다."
+    },
+    {
+      "id": 131,
+      "author": "Zeno of Citium",
+      "authorKr": "키티온의 제논",
+      "text": "Steel your sensibilities, so that life shall hurt you as little as possible.",
+      "textKr": "감수성을 강철처럼 단련하여, 삶이 당신에게 가능한 한 적게 상처 주도록 하라."
+    },
+    {
+      "id": 132,
+      "author": "Zeno of Citium",
+      "authorKr": "키티온의 제논",
+      "text": "A bad feeling is a commotion of the mind repugnant to reason, and against nature.",
+      "textKr": "나쁜 감정은 이성에 반하고 자연에 반하는 마음의 동요이다."
+    },
+    {
+      "id": 133,
+      "author": "Zeno of Citium",
+      "authorKr": "키티온의 제논",
+      "text": "All things are parts of one single system, which is called nature.",
+      "textKr": "모든 것은 자연이라 불리는 하나의 단일 체계의 부분이다."
+    },
+    {
+      "id": 134,
+      "author": "Cleanthes",
+      "authorKr": "클레안테스",
+      "text": "The willing are led by fate, the reluctant are dragged.",
+      "textKr": "기꺼이 따르는 자는 운명에 이끌리고, 꺼리는 자는 끌려간다."
+    },
+    {
+      "id": 135,
+      "author": "Cleanthes",
+      "authorKr": "클레안테스",
+      "text": "The Fates guide those who go willingly; those who do not, they drag.",
+      "textKr": "운명의 여신들은 기꺼이 가는 자를 안내하고, 그렇지 않은 자를 끌고 간다."
+    },
+    {
+      "id": 136,
+      "author": "Musonius Rufus",
+      "authorKr": "무소니우스 루푸스",
+      "text": "Since every man dies, it is better to die with distinction than to live long.",
+      "textKr": "모든 사람은 죽으므로, 오래 사는 것보다 품위 있게 죽는 것이 낫다."
+    },
+    {
+      "id": 137,
+      "author": "Musonius Rufus",
+      "authorKr": "무소니우스 루푸스",
+      "text": "How much better is it to be known for doing well by many than for living extravagantly.",
+      "textKr": "사치스럽게 사는 것으로 알려지는 것보다 많은 이에게 선행으로 알려지는 것이 얼마나 더 나은가."
+    },
+    {
+      "id": 138,
+      "author": "Musonius Rufus",
+      "authorKr": "무소니우스 루푸스",
+      "text": "The human being is born with an inclination toward virtue.",
+      "textKr": "인간은 덕에 대한 성향을 가지고 태어난다."
+    },
+    {
+      "id": 139,
+      "author": "Musonius Rufus",
+      "authorKr": "무소니우스 루푸스",
+      "text": "One begins to lose one's hesitation to do shameful things when one loses one's hesitation to speak of them.",
+      "textKr": "부끄러운 일을 말하기를 주저하지 않게 될 때, 그것을 행하기를 주저하지 않게 된다."
+    },
+    {
+      "id": 140,
+      "author": "Cato the Younger",
+      "authorKr": "소 카토",
+      "text": "I begin to speak only when I'm certain what I'll say isn't better left unsaid.",
+      "textKr": "나는 내가 할 말이 하지 않는 것보다 나을 때만 말하기 시작한다."
+    },
+    {
+      "id": 141,
+      "author": "Cato the Younger",
+      "authorKr": "소 카토",
+      "text": "Flee sloth; for the indolence of the soul is the decay of the body.",
+      "textKr": "나태를 피하라. 영혼의 게으름은 육체의 부패이다."
+    },
+    {
+      "id": 142,
+      "author": "Chrysippus",
+      "authorKr": "크리시포스",
+      "text": "Vice cannot be removed completely, nor is it right that it should be removed.",
+      "textKr": "악덕은 완전히 제거될 수 없으며, 제거되어야 하는 것도 옳지 않다."
+    },
+    {
+      "id": 143,
+      "author": "Chrysippus",
+      "authorKr": "크리시포스",
+      "text": "There could be no justice, unless there were also injustice; no courage, unless there were cowardice; no truth, unless there were falsehood.",
+      "textKr": "불의가 없다면 정의도 없을 것이고, 비겁함이 없다면 용기도 없을 것이며, 거짓이 없다면 진실도 없을 것이다."
+    },
+    {
+      "id": 144,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "The happiness of those who want to be popular depends on others; the happiness of those who seek pleasure fluctuates with moods outside their control.",
+      "textKr": "인기를 원하는 자의 행복은 타인에게 달려 있고, 쾌락을 추구하는 자의 행복은 통제 밖의 기분에 따라 변한다."
+    },
+    {
+      "id": 145,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "Each day provides its own gifts.",
+      "textKr": "매일은 그 나름의 선물을 제공한다."
+    },
+    {
+      "id": 146,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "Throw me to the wolves and I will return leading the pack.",
+      "textKr": "나를 늑대들에게 던져라, 나는 무리를 이끌고 돌아올 것이다."
+    },
+    {
+      "id": 147,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "The sun also shines on the wicked.",
+      "textKr": "태양은 악인에게도 빛난다."
+    },
+    {
+      "id": 148,
+      "author": "Epictetus",
+      "authorKr": "에픽테토스",
+      "text": "God has entrusted me with myself.",
+      "textKr": "신은 나 자신을 나에게 맡겼다."
+    },
+    {
+      "id": 149,
+      "author": "Marcus Aurelius",
+      "authorKr": "마르쿠스 아우렐리우스",
+      "text": "Never value anything as profitable that compels you to break your promise, lose your self-respect, hate any man, suspect, curse, act the hypocrite.",
+      "textKr": "약속을 어기고, 자존심을 잃고, 누군가를 미워하고, 의심하고, 저주하고, 위선자처럼 행동하게 만드는 것을 이익이라 여기지 마라."
+    },
+    {
+      "id": 150,
+      "author": "Seneca",
+      "authorKr": "세네카",
+      "text": "Life is long if you know how to use it.",
+      "textKr": "삶은 어떻게 사용하는지 안다면 길다."
     }
   ]
 }
