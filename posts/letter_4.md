@@ -1,8 +1,8 @@
 ---
-title: "아빠가 두 번이나 같은 실수를 한 이유"
+title: 아빠가 두 번이나 같은 실수를 한 이유
 date: 2025-07-28
-description: "취업 준비 시절 겪었던 인지 편향과 자기 이해의 중요성"
-summary: "인지 편향의 콤보 어택, 나를 모르면 실패한다"
+description: 취업 준비 시절 겪었던 인지 편향과 자기 이해의 중요성
+summary: 인지 편향의 위험, 나를 모르면 실패한다
 tags:
   - 편지
   - 취업
@@ -24,6 +24,11 @@ section: section1
 문제는 그 관심사를 발견한 후에 '나'라는 사람을 제대로 들여다보지 않았다는 거지.
 
 지금 생각해보니 아빠는 완전히 여러 편향의 '완벽한 조합'에 당한 거였어.
+
+
+![이미지 설명](https://raw.githubusercontent.com/powerfam/voti-backup/main/public/images/1765604683548-DSCF0588.JPG)
+*@voti*
+
 
 ## "내가 본 것이 전부"라는 치명적 착각
 
