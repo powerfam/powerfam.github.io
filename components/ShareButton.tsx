@@ -149,31 +149,7 @@ export default function ShareButton({ title, summary, tags, date, slug, coverIma
     ctx.fillStyle = isDark ? '#3B3C36' : '#FAF9F5';
     ctx.fillRect(padding, padding, canvas.width - padding * 2, canvas.height - padding * 2);
 
-    // 커버 이미지 (있으면 반투명 배경으로)
-    if (coverImage) {
-      try {
-        const img = new Image();
-        img.crossOrigin = 'anonymous';
-        await new Promise<void>((resolve) => {
-          img.onload = () => {
-            ctx.globalAlpha = isDark ? 0.15 : 0.12;
-            const scale = Math.max(
-              (canvas.width - padding * 2) / img.width,
-              (canvas.height - padding * 2) / img.height
-            );
-            const x = padding + ((canvas.width - padding * 2) - img.width * scale) / 2;
-            const y = padding + ((canvas.height - padding * 2) - img.height * scale) / 2;
-            ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
-            ctx.globalAlpha = 1;
-            resolve();
-          };
-          img.onerror = () => resolve();
-          img.src = coverImage;
-        });
-      } catch {
-        // 이미지 로드 실패 시 무시
-      }
-    }
+    // 커버 이미지 제거 - 깔끔한 카드 디자인 유지
 
     // 헤더 바
     ctx.fillStyle = isDark ? '#D99058' : '#826644';
@@ -241,18 +217,9 @@ export default function ShareButton({ title, summary, tags, date, slug, coverIma
       });
     }
 
-    // 태그 + 워터마크 (하단에 한 줄로)
+    // 워터마크 (하단 우측)
     const bottomY = canvas.height - padding - 16;
     ctx.font = '14px "Noto Serif KR", serif';
-
-    if (tags && tags.length > 0) {
-      ctx.fillStyle = isDark ? '#D99058' : '#826644';
-      ctx.textAlign = 'left';
-      const tagText = tags.slice(0, 3).map(t => `#${t}`).join(' ');
-      ctx.fillText(tagText, padding + 16, bottomY);
-    }
-
-    // 워터마크 (우측)
     ctx.textAlign = 'right';
     ctx.fillStyle = isDark ? 'rgba(217, 144, 88, 0.5)' : 'rgba(130, 102, 68, 0.5)';
     ctx.fillText('voti.kr', canvas.width - padding - 16, bottomY);
