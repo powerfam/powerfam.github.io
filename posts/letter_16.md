@@ -109,7 +109,8 @@ section: section1
 후자는 상대방이 좋아하는 세계를 내가 직접 경험해보고 싶다는 거지.
 
 
-![이미지 설명](https://raw.githubusercontent.com/powerfam/voti-backup/main/public/images/1765550281566-image.png)
+
+![이미지 설명](https://raw.githubusercontent.com/powerfam/voti-backup/main/public/images/1765604269737-image.png)
 *직관가서 구매한 SK나이츠 김선형 선수 유니폼 @voti*
 
 
