@@ -77,7 +77,7 @@ export default function Header() {
           className="text-xl md:text-2xl font-bold"
           style={{ color: 'var(--menu-main)' }}
         >
-          Voti's Journal
+          Voti&apos;s Journal
         </Link>
         
         {/* 데스크톱 메뉴 */}

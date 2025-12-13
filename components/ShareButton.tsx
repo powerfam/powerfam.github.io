@@ -21,7 +21,7 @@ interface ShareButtonProps {
   coverImage?: string;
 }
 
-export default function ShareButton({ title, summary, tags, date, slug, coverImage }: ShareButtonProps) {
+export default function ShareButton({ title, summary, date, slug }: ShareButtonProps) {
   const [copied, setCopied] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
