@@ -272,7 +272,7 @@ export default function ShareButton({ title, summary, date, slug }: ShareButtonP
     <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
       <DrawerTrigger asChild>
         <button
-          className="w-10 h-10 rounded-full transition-all hover:scale-110 border-2 flex items-center justify-center"
+          className="flex items-center gap-2 px-4 py-2 rounded-full border-2 transition-all hover:scale-105"
           style={{
             borderColor: 'var(--menu-main)',
             color: 'var(--menu-main)',
