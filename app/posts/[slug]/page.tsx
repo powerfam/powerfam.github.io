@@ -27,6 +27,12 @@ function calculateReadingTime(text: string): number {
   return minutes;
 }
 
+// 본문에서 첫 번째 이미지 URL 추출
+function extractFirstImage(html: string): string | undefined {
+  const imgMatch = html.match(/<img[^>]+src=["']([^"']+)["']/i);
+  return imgMatch ? imgMatch[1] : undefined;
+}
+
 // ISR: 1시간마다 재검증 (Vercel 무료 플랜 ISR Writes 한도 절약)
 export const revalidate = 3600;
 
@@ -43,6 +49,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
   if (!post) notFound();
 
   const readingTime = calculateReadingTime(post.body.raw);
+  const coverImage = extractFirstImage(post.body.html);
 
   return (
     <>
@@ -129,6 +136,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
             tags={post.tags}
             date={format(new Date(post.date), 'yyyy.MM.dd')}
             slug={post._raw.flattenedPath}
+            coverImage={coverImage}
           />
         </div>
       </div>

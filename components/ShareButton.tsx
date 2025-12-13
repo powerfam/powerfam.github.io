@@ -18,9 +18,10 @@ interface ShareButtonProps {
   tags?: string[];
   date: string;
   slug: string;
+  coverImage?: string;
 }
 
-export default function ShareButton({ title, summary, tags, date, slug }: ShareButtonProps) {
+export default function ShareButton({ title, summary, tags, date, slug, coverImage }: ShareButtonProps) {
   const [copied, setCopied] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -126,14 +127,14 @@ export default function ShareButton({ title, summary, tags, date, slug }: ShareB
     const ctx = canvas.getContext('2d');
     if (!ctx) return '';
 
-    // 1:1 정사각형 (1080x1080)
-    canvas.width = 1080;
-    canvas.height = 1080;
+    // 가로형 직사각형 (16:9 비율)
+    canvas.width = 800;
+    canvas.height = 450;
 
     const isDark = document.documentElement.classList.contains('dark');
-    const padding = 50;
-    const borderRadius = 32;
-    const headerHeight = 70;
+    const padding = 24;
+    const borderRadius = 24;
+    const headerHeight = 50;
 
     // 전체 배경
     ctx.fillStyle = isDark ? '#2a2a26' : '#f0efe8';
@@ -148,62 +149,91 @@ export default function ShareButton({ title, summary, tags, date, slug }: ShareB
     ctx.fillStyle = isDark ? '#3B3C36' : '#FAF9F5';
     ctx.fillRect(padding, padding, canvas.width - padding * 2, canvas.height - padding * 2);
 
+    // 커버 이미지 (있으면 반투명 배경으로)
+    if (coverImage) {
+      try {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        await new Promise<void>((resolve) => {
+          img.onload = () => {
+            ctx.globalAlpha = isDark ? 0.15 : 0.12;
+            const scale = Math.max(
+              (canvas.width - padding * 2) / img.width,
+              (canvas.height - padding * 2) / img.height
+            );
+            const x = padding + ((canvas.width - padding * 2) - img.width * scale) / 2;
+            const y = padding + ((canvas.height - padding * 2) - img.height * scale) / 2;
+            ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+            ctx.globalAlpha = 1;
+            resolve();
+          };
+          img.onerror = () => resolve();
+          img.src = coverImage;
+        });
+      } catch {
+        // 이미지 로드 실패 시 무시
+      }
+    }
+
     // 헤더 바
     ctx.fillStyle = isDark ? '#D99058' : '#826644';
     ctx.fillRect(padding, padding, canvas.width - padding * 2, headerHeight);
 
     // 헤더 텍스트
     ctx.fillStyle = '#FAF9F5';
-    ctx.font = 'bold 28px "Noto Serif KR", Georgia, serif';
+    ctx.font = 'bold 20px "Noto Serif KR", Georgia, serif';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
-    ctx.fillText('Voti Blog', padding + 30, padding + headerHeight / 2);
+    ctx.fillText('Voti Blog', padding + 16, padding + headerHeight / 2);
 
     // 날짜 (헤더 우측)
     ctx.textAlign = 'right';
-    ctx.font = '22px "Noto Serif KR", Georgia, serif';
-    ctx.fillText(date, canvas.width - padding - 30, padding + headerHeight / 2);
+    ctx.font = '16px "Noto Serif KR", Georgia, serif';
+    ctx.fillText(date, canvas.width - padding - 16, padding + headerHeight / 2);
 
     ctx.restore();
 
     // 테두리
     ctx.strokeStyle = isDark ? '#D99058' : '#826644';
-    ctx.lineWidth = 4;
+    ctx.lineWidth = 3;
     roundRect(ctx, padding, padding, canvas.width - padding * 2, canvas.height - padding * 2, borderRadius);
     ctx.stroke();
 
-    // 콘텐츠 영역
-    const contentTop = padding + headerHeight + 80;
-    const contentBottom = canvas.height - padding - 120;
-    const maxWidth = canvas.width - padding * 2 - 120;
+    // 콘텐츠 영역 (직사각형에 맞게 컴팩트하게)
+    const contentTop = padding + headerHeight + 20;
+    const maxWidth = canvas.width - padding * 2 - 40;
 
     // 제목
     ctx.fillStyle = isDark ? '#e5e5e5' : '#3B3C36';
-    ctx.font = 'bold 52px "Noto Serif KR", serif';
+    ctx.font = 'bold 32px "Noto Serif KR", serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
 
     const titleLines = wrapText(ctx, title, maxWidth);
-    const titleLineHeight = 70;
+    const titleLineHeight = 42;
     let currentY = contentTop;
 
-    titleLines.forEach((line) => {
+    // 제목은 최대 2줄까지만
+    titleLines.slice(0, 2).forEach((line, index) => {
+      if (index === 1 && titleLines.length > 2) {
+        line = line.slice(0, -3) + '...';
+      }
       ctx.fillText(line, canvas.width / 2, currentY);
       currentY += titleLineHeight;
     });
 
     // 요약문 (있으면)
     if (summary) {
-      currentY += 40;
-      ctx.font = '32px "Noto Serif KR", serif';
+      currentY += 16;
+      ctx.font = '18px "Noto Serif KR", serif';
       ctx.fillStyle = isDark ? 'rgba(229, 229, 229, 0.7)' : 'rgba(59, 60, 54, 0.7)';
 
       const summaryLines = wrapText(ctx, summary, maxWidth);
-      const summaryLineHeight = 48;
+      const summaryLineHeight = 26;
 
-      summaryLines.slice(0, 3).forEach((line, index) => {
-        // 마지막 줄이고 더 있으면 ... 추가
-        if (index === 2 && summaryLines.length > 3) {
+      // 요약문은 최대 2줄까지만
+      summaryLines.slice(0, 2).forEach((line, index) => {
+        if (index === 1 && summaryLines.length > 2) {
           line = line.slice(0, -3) + '...';
         }
         ctx.fillText(line, canvas.width / 2, currentY);
@@ -211,19 +241,21 @@ export default function ShareButton({ title, summary, tags, date, slug }: ShareB
       });
     }
 
-    // 태그 (있으면)
+    // 태그 + 워터마크 (하단에 한 줄로)
+    const bottomY = canvas.height - padding - 16;
+    ctx.font = '14px "Noto Serif KR", serif';
+
     if (tags && tags.length > 0) {
-      const tagY = contentBottom - 20;
-      ctx.font = '24px "Noto Serif KR", serif';
       ctx.fillStyle = isDark ? '#D99058' : '#826644';
-      const tagText = tags.slice(0, 4).map(t => `#${t}`).join('  ');
-      ctx.fillText(tagText, canvas.width / 2, tagY);
+      ctx.textAlign = 'left';
+      const tagText = tags.slice(0, 3).map(t => `#${t}`).join(' ');
+      ctx.fillText(tagText, padding + 16, bottomY);
     }
 
-    // 워터마크
-    ctx.font = '22px Arial, sans-serif';
-    ctx.fillStyle = isDark ? 'rgba(217, 144, 88, 0.6)' : 'rgba(130, 102, 68, 0.6)';
-    ctx.fillText('Voti Blog | voti.kr', canvas.width / 2, canvas.height - padding - 25);
+    // 워터마크 (우측)
+    ctx.textAlign = 'right';
+    ctx.fillStyle = isDark ? 'rgba(217, 144, 88, 0.5)' : 'rgba(130, 102, 68, 0.5)';
+    ctx.fillText('voti.kr', canvas.width - padding - 16, bottomY);
 
     return canvas.toDataURL('image/png');
   };
