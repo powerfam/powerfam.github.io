@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
-import { TypeIcon, PlusIcon, MinusIcon } from 'lucide-react';
+import { TypeIcon, PlusIcon, MinusIcon, HomeIcon } from 'lucide-react';
 
 export default function FontSizeControl() {
   const [fontSize, setFontSize] = useState(16); // 기본 16px
@@ -164,6 +164,25 @@ export default function FontSizeControl() {
           title="폰트 크기 감소"
         >
           <MinusIcon size={16} />
+        </button>
+
+        {/* 구분선 */}
+        <div
+          className="h-px my-1"
+          style={{ backgroundColor: 'var(--menu-main)', opacity: 0.3 }}
+        />
+
+        {/* 맨 위로 버튼 */}
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="flex items-center justify-center p-2 rounded-md transition-all duration-200 hover:scale-110"
+          style={{
+            backgroundColor: 'var(--menu-main)',
+            color: 'var(--menu-main-text)',
+          }}
+          title="맨 위로"
+        >
+          <HomeIcon size={16} />
         </button>
       </div>
     </div>

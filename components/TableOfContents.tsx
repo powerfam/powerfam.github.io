@@ -121,17 +121,34 @@ export default function TableOfContents() {
     localStorage.setItem('showToc', newValue.toString());
   };
 
-  const scrollToHeading = (id: string) => {
+  const scrollToHeading = (id: string, fromMobileToc: boolean = false) => {
     const element = document.getElementById(id);
     if (element) {
-      const offset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
+      const isMobile = window.innerWidth < 1024;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+      if (fromMobileToc && isMobile) {
+        // 모바일 목차에서 클릭 시: 목차가 닫힌 후 스크롤
+        // 목차 높이(약 300px 정도)가 사라지므로 딜레이 후 스크롤
+        setTimeout(() => {
+          const elementPosition = element.getBoundingClientRect().top;
+          const offset = 80;
+          const offsetPosition = elementPosition + window.scrollY - offset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }, 50);
+      } else {
+        const offset = isMobile ? 80 : 80;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.scrollY - offset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
     }
   };
 
@@ -193,8 +210,8 @@ export default function TableOfContents() {
                 >
                   <button
                     onClick={() => {
-                      scrollToHeading(heading.id);
                       setIsOpen(false);
+                      scrollToHeading(heading.id, true);
                     }}
                     className={`text-left text-sm transition-all duration-200 hover:opacity-100 ${
                       activeId === heading.id ? 'font-bold opacity-100' : 'opacity-60'

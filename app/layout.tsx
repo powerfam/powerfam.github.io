@@ -14,7 +14,7 @@ const notoSerifKR = Noto_Serif_KR({
 });
 
 export const metadata: Metadata = {
-  title: "Voti Web",
+  title: "Voti's Journal",
   description: "보티의 웹페이지",
 };
 

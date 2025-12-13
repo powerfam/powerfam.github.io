@@ -266,7 +266,7 @@ export default function StoicOfTodayPage() {
     // 워터마크 (하단)
     ctx.font = '22px Arial, sans-serif';
     ctx.fillStyle = isDark ? 'rgba(217, 144, 88, 0.6)' : 'rgba(130, 102, 68, 0.6)';
-    ctx.fillText('Stoic of Today | Voti Web', canvas.width / 2, canvas.height - padding - 25);
+    ctx.fillText('Stoic of Today | Voti\'s Journal', canvas.width / 2, canvas.height - padding - 25);
 
     return canvas.toDataURL('image/png');
   };
