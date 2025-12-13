@@ -1,14 +1,14 @@
 ---
-title: "투자는 남이 아닌, 자신과의 대화다"
+title: 투자는 남이 아닌, 자신과의 대화다
 date: 2025-08-05
-description: "SCHD vs QQQ 논쟁을 통해 배우는 투자 철학"
-summary: "투자는 남과의 경쟁이 아니라 자신과의 대화"
+description: SCHD vs QQQ 논쟁을 통해 배우는 투자 철학
+summary: 투자는 남과의 경쟁이 아니라 자신과의 대화
 tags:
   - 편지
   - 투자
   - ETF
   - 자기이해
-section: section3
+section: section1
 ---
 
 사랑하는 딸에게.
@@ -16,6 +16,11 @@ section: section3
 얼마전 증권 앱에서 웃픈 광경을 봤어.
 
 SCHD라는 미국 배당 ETF 관련 게시글에 댓글이 써져있더라고.
+
+
+![이미지 설명](https://raw.githubusercontent.com/powerfam/voti-backup/main/public/images/1765605085452-image.png)
+*해외주식 커뮤니티의 조롱 댓글*
+
 
 "슈슬람이네 ㅋㅋ"
 
