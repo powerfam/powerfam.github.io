@@ -11,7 +11,7 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const { slug, title, description, tags, content, date } = await request.json();
+  const { slug, title, description, summary, tags, content, date, section } = await request.json();
   const filePath = `posts/${slug}.md`;
 
   const octokit = new Octokit({
@@ -44,8 +44,10 @@ export async function PUT(request: NextRequest) {
       `title: ${title}`,
       `date: ${postDate}`,
       description ? `description: ${description}` : '',
+      summary ? `summary: ${summary}` : '',
       tagsArray.length > 0 ? 'tags:' : '',
       ...tagsArray.map((tag: string) => `  - ${tag}`),
+      section ? `section: ${section}` : '',
       '---',
     ].filter(Boolean);
 
