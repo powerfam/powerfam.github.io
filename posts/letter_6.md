@@ -1,14 +1,14 @@
 ---
 title: 투자는 남이 아닌, 자신과의 대화다
-date: 2025-08-05
+date: 2025-12-12
 description: SCHD vs QQQ 논쟁을 통해 배우는 투자 철학
-summary: 투자는 남과의 경쟁이 아니라 자신과의 대화
+summary: 남의 평가에 흔들리지 말고 자신만의 투자 철학을 세우기
 tags:
   - 편지
   - 투자
   - ETF
   - 자기이해
-section: section1
+section: section3
 ---
 
 사랑하는 딸에게.
