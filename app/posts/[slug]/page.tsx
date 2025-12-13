@@ -1,7 +1,7 @@
 import { allPosts } from 'contentlayer/generated';
 import { notFound } from 'next/navigation';
 import { format } from 'date-fns';
-import { HeartIcon, Share2Icon, ClockIcon } from 'lucide-react';
+import { HeartIcon, ClockIcon } from 'lucide-react';
 import {
   ToggleGroup,
   ToggleGroupItem,
@@ -11,6 +11,7 @@ import CopyUrlButton from '@/components/CopyUrlButton';
 import TableOfContents from '@/components/TableOfContents';
 import FontSizeControl from '@/components/FontSizeControl';
 import ReadingProgress from '@/components/ReadingProgress';
+import ShareButton from '@/components/ShareButton';
 
 // 동적 임포트로 번들 크기 최적화
 const FirebaseComments = dynamic(() => import('@/components/FirebaseComments'), {
@@ -103,35 +104,32 @@ export default function PostPage({ params }: { params: { slug: string } }) {
         dangerouslySetInnerHTML={{ __html: post.body.html }}
       />
 
-      {/* 좋아요/공유 토글 버튼 */}
+      {/* 좋아요/공유 버튼 */}
       <div className="pt-8 border-t" style={{ borderColor: 'var(--menu-main)' }}>
-        <div className="flex justify-center">
-          <ToggleGroup type="multiple" variant="outline" className="gap-2">
-            {/* 좋아요 버튼 */}
+        <div className="flex justify-center items-center gap-4">
+          {/* 좋아요 버튼 (아이콘만) */}
+          <ToggleGroup type="multiple" variant="outline">
             <ToggleGroupItem
               value="heart"
               aria-label="좋아요"
-              className="data-[state=on]:bg-transparent data-[state=on]:*:[svg]:fill-red-500 data-[state=on]:*:[svg]:stroke-red-500 px-6 py-3 text-base"
+              className="w-10 h-10 p-0 rounded-full border-2 transition-all hover:scale-110 data-[state=on]:bg-transparent data-[state=on]:*:[svg]:fill-red-500 data-[state=on]:*:[svg]:stroke-red-500 flex items-center justify-center"
+              style={{
+                borderColor: 'var(--menu-main)',
+                color: 'var(--menu-main)',
+              }}
             >
-              <HeartIcon className="mr-2 h-5 w-5" />
-              <span>좋아요</span>
-            </ToggleGroupItem>
-
-            {/* 공유 버튼 */}
-            <ToggleGroupItem
-              value="share"
-              aria-label="공유하기"
-              className="data-[state=on]:bg-transparent data-[state=on]:*:[svg]:fill-blue-500 data-[state=on]:*:[svg]:stroke-blue-500 px-6 py-3 text-base"
-            >
-              <Share2Icon className="mr-2 h-5 w-5" />
-              <span>공유</span>
+              <HeartIcon size={20} />
             </ToggleGroupItem>
           </ToggleGroup>
-        </div>
 
-        {/* 좋아요 개수 표시 */}
-        <div className="mt-4 text-center text-sm opacity-60">
-          <p>좋아요 0개</p>
+          {/* 공유 버튼 (Drawer) */}
+          <ShareButton
+            title={post.title}
+            summary={post.summary || post.description}
+            tags={post.tags}
+            date={format(new Date(post.date), 'yyyy.MM.dd')}
+            slug={post._raw.flattenedPath}
+          />
         </div>
       </div>
 
