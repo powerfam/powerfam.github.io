@@ -501,8 +501,8 @@ export default function StoicOfTodayPage() {
               onClick={handleShare}
               className="p-2.5 sm:p-3 rounded-full transition-all hover:scale-110 border-2"
               style={{
-                borderColor: 'var(--menu-sub)',
-                color: 'var(--menu-sub)'
+                borderColor: 'var(--menu-main)',
+                color: 'var(--menu-main)'
               }}
               title="공유"
             >

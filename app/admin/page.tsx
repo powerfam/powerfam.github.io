@@ -2,7 +2,9 @@
 
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { useState, useEffect } from 'react';
-import { Trash2Icon, EditIcon, ImageIcon, LinkIcon, CalendarIcon, TableIcon } from 'lucide-react';
+import { Trash2Icon, EditIcon, ImageIcon, LinkIcon, CalendarIcon, TableIcon, HeartIcon } from 'lucide-react';
+import { db } from '@/lib/firebase';
+import { collection, getDocs } from 'firebase/firestore';
 // PlusIcon and FileTextIcon were removed - not needed
 import { Calendar } from '@/components/ui/calendar';
 import { Progress } from '@/components/ui/progress';
@@ -413,6 +415,7 @@ interface Post {
   slug: string;
   title: string;
   date: string;
+  likeCount?: number;
 }
 
 type TabType = 'write' | 'list' | 'about';
@@ -485,7 +488,30 @@ export default function AdminPage() {
     try {
       const res = await fetch('/api/posts/list');
       const data = await res.json();
-      setPosts(data.posts || []);
+      const postList = data.posts || [];
+
+      // Firebase에서 좋아요 수 가져오기
+      if (db) {
+        try {
+          const likesSnapshot = await getDocs(collection(db, 'likes'));
+          const likesMap: Record<string, number> = {};
+          likesSnapshot.forEach((doc) => {
+            likesMap[doc.id] = doc.data().count || 0;
+          });
+
+          // 글 목록에 좋아요 수 추가
+          const postsWithLikes = postList.map((post: Post) => ({
+            ...post,
+            likeCount: likesMap[post.slug] || 0,
+          }));
+
+          setPosts(postsWithLikes);
+        } catch {
+          setPosts(postList);
+        }
+      } else {
+        setPosts(postList);
+      }
     } catch (err) {
       console.error('글 목록 로드 실패:', err);
     }
@@ -1071,9 +1097,17 @@ export default function AdminPage() {
                   className="flex justify-between items-center p-4 rounded-lg border hover:shadow-md transition-shadow"
                   style={{ borderColor: 'var(--menu-main)' }}
                 >
-                  <div>
+                  <div className="flex-1">
                     <h3 className="font-medium text-lg">{post.title}</h3>
-                    <p className="text-sm opacity-60">{post.date}</p>
+                    <div className="flex items-center gap-4 text-sm opacity-60">
+                      <span>{post.date}</span>
+                      {(post.likeCount ?? 0) > 0 && (
+                        <span className="flex items-center gap-1 text-red-500">
+                          <HeartIcon size={14} fill="#ef4444" />
+                          {post.likeCount}
+                        </span>
+                      )}
+                    </div>
                   </div>
                   <div className="flex gap-2">
                     <button

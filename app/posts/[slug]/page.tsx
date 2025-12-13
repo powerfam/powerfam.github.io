@@ -1,11 +1,7 @@
 import { allPosts } from 'contentlayer/generated';
 import { notFound } from 'next/navigation';
 import { format } from 'date-fns';
-import { HeartIcon, ClockIcon } from 'lucide-react';
-import {
-  ToggleGroup,
-  ToggleGroupItem,
-} from '@/components/ui/toggle-group';
+import { ClockIcon } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import CopyUrlButton from '@/components/CopyUrlButton';
 import TableOfContents from '@/components/TableOfContents';
@@ -16,6 +12,10 @@ import ShareButton from '@/components/ShareButton';
 // 동적 임포트로 번들 크기 최적화
 const FirebaseComments = dynamic(() => import('@/components/FirebaseComments'), {
   loading: () => <div className="text-center py-8 opacity-60">댓글 로딩 중...</div>,
+  ssr: false,
+});
+
+const LikeButton = dynamic(() => import('@/components/LikeButton'), {
   ssr: false,
 });
 
@@ -114,20 +114,8 @@ export default function PostPage({ params }: { params: { slug: string } }) {
       {/* 좋아요/공유 버튼 */}
       <div className="pt-8 border-t" style={{ borderColor: 'var(--menu-main)' }}>
         <div className="flex justify-center items-center gap-4">
-          {/* 좋아요 버튼 (아이콘만) */}
-          <ToggleGroup type="multiple" variant="outline">
-            <ToggleGroupItem
-              value="heart"
-              aria-label="좋아요"
-              className="w-10 h-10 p-0 rounded-full border-2 transition-all hover:scale-110 data-[state=on]:bg-transparent data-[state=on]:*:[svg]:fill-red-500 data-[state=on]:*:[svg]:stroke-red-500 flex items-center justify-center"
-              style={{
-                borderColor: 'var(--menu-main)',
-                color: 'var(--menu-main)',
-              }}
-            >
-              <HeartIcon size={20} />
-            </ToggleGroupItem>
-          </ToggleGroup>
+          {/* 좋아요 버튼 (Firebase 저장) */}
+          <LikeButton postSlug={post._raw.flattenedPath} />
 
           {/* 공유 버튼 (Drawer) */}
           <ShareButton

@@ -9,6 +9,14 @@ service cloud.firestore {
         request.auth.uid == userId;
     }
 
+    // 좋아요 컬렉션 규칙
+    match /likes/{postSlug} {
+      // 읽기: 누구나
+      allow read: if true;
+      // 쓰기: 누구나 (익명 좋아요 허용, localStorage로 중복 방지)
+      allow write: if true;
+    }
+
     // 댓글 컬렉션 규칙
     match /comments/{commentId} {
 
