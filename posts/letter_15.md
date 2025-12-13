@@ -91,7 +91,8 @@ section: section1
 아빠가.
 
 
-![이미지 설명](https://raw.githubusercontent.com/powerfam/voti-backup/main/public/images/1765550387022-image.png)
+
+![이미지 설명](https://raw.githubusercontent.com/powerfam/voti-backup/main/public/images/1765604346180-image.png)
 *엄마가 여자친구일때 준 2015년 생일선물 @voti*
 
 
